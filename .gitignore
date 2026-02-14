@@ -40,3 +40,4 @@ build/
 
 # Cursor / IDE
 .cursor/
+.vscode/
