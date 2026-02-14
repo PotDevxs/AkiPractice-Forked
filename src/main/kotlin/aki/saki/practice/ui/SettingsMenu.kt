@@ -9,6 +9,8 @@
 package aki.saki.practice.ui
 
 import aki.saki.practice.PracticePlugin
+import aki.saki.practice.theme.ThemeHelper
+import aki.saki.practice.ui.ThemeMenu
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
 import org.bukkit.Material
@@ -216,7 +218,22 @@ class SettingsMenu: Menu() {
             }
         }
 
-
+        if (player.hasPermission(ThemeHelper.PERMISSION)) {
+            toReturn[5] = object : Button() {
+                override fun getButtonItem(p0: Player?): ItemStack = ItemBuilder(Material.INK_SACK).durability(10)
+                    .name("${ThemeHelper.getPrimary(player)}Tema (Cores)")
+                    .lore(
+                        "${CC.GRAY}Cor primária: ${ThemeHelper.getPrimary(player)}${settings?.themePrimary ?: "Padrão"}",
+                        "${CC.GRAY}Cor secundária: ${ThemeHelper.getSecondary(player)}${settings?.themeSecondary ?: "Padrão"}",
+                        "",
+                        "${CC.GRAY}Clique para personalizar cores."
+                    ).build()
+                override fun clicked(p: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                    ThemeMenu().openMenu(p!!)
+                }
+                override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean = true
+            }
+        }
 
         return toReturn
     }

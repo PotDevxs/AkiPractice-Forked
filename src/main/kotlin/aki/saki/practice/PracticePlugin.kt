@@ -41,6 +41,7 @@ import aki.saki.practice.listener.PreventionListener
 import aki.saki.practice.listener.WorldListener
 import aki.saki.practice.manager.*
 import aki.saki.practice.match.Match
+import aki.saki.practice.theme.AkiPracticePlaceholders
 import aki.saki.practice.match.ffa.listener.FFAListener
 import aki.saki.practice.match.listener.MatchListener
 import aki.saki.practice.profile.ProfileListener
@@ -160,6 +161,14 @@ class PracticePlugin : JavaPlugin() {
         // Register Listeners
         registerListeners()
         logger.info("Listeners registered")
+
+        // PlaceholderAPI (opcional: %akipractice_primary%, %akipractice_secondary%)
+        try {
+            if (server.pluginManager.getPlugin("PlaceholderAPI") != null) {
+                AkiPracticePlaceholders().register()
+                logger.info("PlaceholderAPI expansion registered")
+            }
+        } catch (_: Throwable) { }
     }
 
     private fun loadConfigFiles() {
@@ -207,6 +216,12 @@ class PracticePlugin : JavaPlugin() {
 
             logger.info("Loading RankedBanManager...")
             RankedBanManager.load()
+            logger.info("Loading FFABanManager...")
+            FFABanManager.load()
+            logger.info("Loading EventBanManager...")
+            EventBanManager.load()
+            logger.info("Loading DuelBanManager...")
+            DuelBanManager.load()
 
             logger.info("Initializing DailyWinStreakManager...")
             dailyWinstreakManager = DailyWinStreakManager(this)
@@ -306,7 +321,12 @@ class PracticePlugin : JavaPlugin() {
             "ratemap" to RateMapCommand(),
             "party" to PartyCommand(),
             "camp" to CampCommand(),
-            "banranked" to BanRankedCommand()
+            "banranked" to BanRankedCommand(),
+            "unbanranked" to UnbanRankedCommand(),
+            "banffa" to BanFFACommand(),
+            "banevent" to BanEventCommand(),
+            "banduel" to BanDuelCommand(),
+            "theme" to ThemeCommand()
         )
 
         commands.forEach { (name, command) ->

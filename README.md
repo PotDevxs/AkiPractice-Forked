@@ -2,9 +2,15 @@
  
 Feito por saki
 
-Forked por yek4h
+Forked por Faastyzin
 
 # Novidades
+- RankedBan
+- EventBan
+- TournamentBan
+- Holograms
+- New LeaderBoards
+- Kill Effects
 - Queues
 - Duels
 - Party

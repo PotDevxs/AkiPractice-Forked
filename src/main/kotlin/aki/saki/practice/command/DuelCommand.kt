@@ -14,6 +14,7 @@ import com.jonahseguin.drink.annotation.Sender
 import aki.saki.practice.Locale
 import aki.saki.practice.duel.procedure.DuelProcedure
 import aki.saki.practice.ui.duels.DuelSelectKitMenu
+import aki.saki.practice.manager.DuelBanManager
 import aki.saki.practice.manager.MatchManager
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.profile.ProfileState
@@ -37,6 +38,15 @@ class DuelCommand {
 
         if (player.uniqueId == target.uniqueId) {
             player.sendMessage(Locale.CANT_DUEL_YOURSELF.getMessage())
+            return
+        }
+
+        if (DuelBanManager.isBanned(player.uniqueId)) {
+            player.sendMessage(Locale.DUEL_BAN_BANNED_MSG.getMessage())
+            return
+        }
+        if (DuelBanManager.isBanned(target.uniqueId)) {
+            player.sendMessage(Locale.DUEL_BAN_BANNED_OTHER.getMessage())
             return
         }
 
@@ -67,6 +77,10 @@ class DuelCommand {
     @Require("practice.command.duel.accept")
     fun accept(@Sender sender: CommandSender, target: Player) {
         val player = sender as? Player ?: return
+        if (DuelBanManager.isBanned(player.uniqueId)) {
+            player.sendMessage(Locale.DUEL_BAN_BANNED_MSG.getMessage())
+            return
+        }
         val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
         val duelRequest = profile?.getDuelRequest(target.uniqueId)
 

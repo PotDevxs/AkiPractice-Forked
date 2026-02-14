@@ -57,6 +57,10 @@ class FFAChoosingMenu: Menu() {
 
                 override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
                     if (clickType?.isLeftClick!!) {
+                        if (aki.saki.practice.manager.FFABanManager.isBanned(player.uniqueId)) {
+                            player.sendMessage(aki.saki.practice.Locale.FFA_BAN_BANNED_MSG.getMessage())
+                            return
+                        }
                         val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
 
                         profile.state = ProfileState.FFA

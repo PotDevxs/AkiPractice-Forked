@@ -101,6 +101,10 @@ open class Event(val host: UUID, val eventMap: EventMap) {
     }
 
     open fun addPlayer(player: Player) {
+        if (aki.saki.practice.manager.EventBanManager.isBanned(player.uniqueId)) {
+            player.sendMessage(aki.saki.practice.Locale.EVENT_BAN_BANNED_MSG.getMessage())
+            return
+        }
         val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
         val eventPlayer = EventPlayer(player.uniqueId, player.name)
 

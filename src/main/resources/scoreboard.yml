@@ -1,12 +1,3 @@
-/*
- * This project can't be redistributed without
- * authorization of the developer
- *
- * Project @ AkiPractice
- * @author saki © 2026
- * Date: 11/02/2026
- */
-
 Scoreboard:
   enabled: true
   # Título animado: defina animated: true e liste os frames (caso queira um título animado)
@@ -22,6 +13,7 @@ Scoreboard:
     - "&b&lAkiPractice"
   # Intervalo em ticks (deixe em 0.3 caso queira um intervalo menor)
   title-frame-interval: 0.5
+  # Placeholder de tema: <theme> = cor primária do jogador (quem tem akipractice.theme.access)
   lobby:
     - "&7&m-------------------"
     - "&fOnline: &b<online>"

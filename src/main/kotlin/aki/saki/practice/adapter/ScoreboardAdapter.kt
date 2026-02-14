@@ -28,6 +28,7 @@ import aki.saki.practice.party.PartyType
 import aki.saki.practice.profile.Profile
 import aki.saki.practice.profile.ProfileState
 import aki.saki.practice.queue.QueueType
+import aki.saki.practice.theme.ThemeHelper
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ConfigFile
 import aki.saki.practice.utils.PlayerUtil
@@ -88,7 +89,7 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
         if (title.contains("ANIMATED-TEXT")) {
             return PracticePlugin.instance.animatedTextManagerTitle.getText()
         }
-        return CC.translate(title)
+        return ThemeHelper.replacePlaceholders(CC.translate(title), player)
     }
 
     override fun getLines(player: Player): List<String> {
@@ -98,7 +99,7 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
             return emptyList()
         }
 
-        return when (profile.state) {
+        val lines = when (profile.state) {
             ProfileState.LOBBY -> getLobbyLines(player)
             ProfileState.MATCH -> getMatchLines(player, profile)
             ProfileState.QUEUE -> getQueueLines(profile)
@@ -106,6 +107,7 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
             ProfileState.EVENT -> getEventLines(player)
             ProfileState.SPECTATING -> getSpectateLines(player, profile)
         }
+        return ThemeHelper.replacePlaceholders(lines, player)
     }
 
     private fun getLobbyLines(player: Player): MutableList<String> {

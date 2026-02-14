@@ -104,3 +104,32 @@ RANKED-BAN:
   NOT-BANNED: "&cEste jogador não está banido da ranked."
   LIST-HEADER: "&eJogadores banidos da ranked: &f<count>"
   LIST-ENTRY: "&7- &f<player> &7(&e<reason>&7)"
+  LIST-ENTRY-EXPIRES: "&7- &f<player> &7(&e<reason>&7) &8expira em <time>"
+
+FFA-BAN:
+  PLAYER-BANNED: "&a<player> &efoi banido do FFA."
+  PLAYER-UNBANNED: "&a<player> &efoi desbanido do FFA."
+  ALREADY-BANNED: "&cEste jogador já está banido do FFA."
+  NOT-BANNED: "&cEste jogador não está banido do FFA."
+  LIST-HEADER: "&eJogadores banidos do FFA: &f<count>"
+  LIST-ENTRY: "&7- &f<player> &7(&e<reason>&7)"
+  BANNED-MESSAGE: "&cVocê está banido do FFA."
+
+EVENT-BAN:
+  PLAYER-BANNED: "&a<player> &efoi banido de eventos."
+  PLAYER-UNBANNED: "&a<player> &efoi desbanido de eventos."
+  ALREADY-BANNED: "&cEste jogador já está banido de eventos."
+  NOT-BANNED: "&cEste jogador não está banido de eventos."
+  LIST-HEADER: "&eJogadores banidos de eventos: &f<count>"
+  LIST-ENTRY: "&7- &f<player> &7(&e<reason>&7)"
+  BANNED-MESSAGE: "&cVocê está banido de eventos."
+
+DUEL-BAN:
+  PLAYER-BANNED: "&a<player> &efoi banido de duelos."
+  PLAYER-UNBANNED: "&a<player> &efoi desbanido de duelos."
+  ALREADY-BANNED: "&cEste jogador já está banido de duelos."
+  NOT-BANNED: "&cEste jogador não está banido de duelos."
+  LIST-HEADER: "&eJogadores banidos de duelos: &f<count>"
+  LIST-ENTRY: "&7- &f<player> &7(&e<reason>&7)"
+  BANNED-MESSAGE: "&cVocê está banido de duelos."
+  BANNED-MESSAGE-OTHER: "&cEste jogador está banido de duelos."

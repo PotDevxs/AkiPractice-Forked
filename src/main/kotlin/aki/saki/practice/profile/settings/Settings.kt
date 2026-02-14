@@ -26,4 +26,8 @@ class Settings {
     var mapRating = true
     var pingRestriction = 0
 
+    /** Nome do ChatColor para cor primária do tema (ex: "AQUA"). null = usar padrão do servidor. */
+    var themePrimary: String? = null
+    /** Nome do ChatColor para cor secundária do tema (ex: "GRAY"). null = usar padrão do servidor. */
+    var themeSecondary: String? = null
 }

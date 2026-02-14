@@ -1,7 +1,3 @@
-#
-# AkiPractice feito por saki
-#
-
 MONGODB:
   URI-MODE: false
   DATABASE: "saki"
