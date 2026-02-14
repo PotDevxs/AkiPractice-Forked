@@ -1,0 +1,5 @@
+name: AkiPractice
+version: '${git.commit.id.abbrev}'
+main: aki.saki.practice.PracticePlugin
+authors: [ Zowpy, saki ]
+softdepend: [ Multiverse-Core, SlimeWorldManager ]

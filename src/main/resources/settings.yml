@@ -1,0 +1,77 @@
+#
+# AkiPractice feito por saki
+#
+
+MONGODB:
+  URI-MODE: false
+  DATABASE: "saki"
+  NORMAL:
+    HOST: "127.0.0.1"
+    PORT: 27017
+    AUTH:
+      ENABLED: false
+      USERNAME: "user"
+      PASSWORD: "pass"
+      AUTH-DATABASE: "admin"
+  URI:
+    CONNECTION-STRING: ""
+
+SPAWN: ""
+
+COLOR:
+  PRIMARY: "AQUA"
+  SECONDARY: "WHITE"
+
+MATCH:
+  REMOVE-EMPTY-BOTTLE: true
+
+HOLOGRAMS:
+  WIN-STREAK-LEADERBOARDS:
+    FORMAT: "<top>. <name> STREAK: <streak>"
+    LOCATION: world:-414.5:159.0:-2842.5
+    UPDATABLE-TIME: 20
+    UPDATABLE: true
+    REFRESH-TIME: 1
+    LINES:
+      - ""
+      - "<lines>"
+  KIT-ELO-LEADERBOARDS:
+    FORMAT: "<top>. <name> ELO: <elo>"
+    LOCATION: world:-414.5:159.0:-2842.5
+    UPDATABLE-TIME: 20
+    UPDATABLE: true
+    REFRESH-TIME: 1
+    LINES:
+      - ""
+      - "<lines>"
+
+  GLOBAL-LEADERBOARDS:
+    FORMAT: "<top>. <name> ELO: <elo>"
+    LOCATION: world:-414.5:159.0:-2842.5
+    UPDATABLE-TIME: 20
+    UPDATABLE: true
+    REFRESH-TIME: 1
+    LINES:
+      - ""
+      - "<lines>"
+
+ANIMATIONS:
+  FOOTER:
+    WRITE-EFFECT: false
+    COLOR-TRAIL-EFFECT: false
+    COLOR-TRAIL-MAIN: "&b"
+    COLOR-TRAIL-SECONDARY: "&f"
+    FLASH-COLOURS-ON-FINISH-ANIMATION: true
+    TIME: 0.5 #Calculated in seconds
+    TEXT:
+      - "saki.dev"
+      - "twitter.com/sakidev"
+  TITLE:
+    WRITE-EFFECT: false
+    COLOR-TRAIL-EFFECT: false
+    COLOR-TRAIL-MAIN: "&b"
+    COLOR-TRAIL-SECONDARY: "&f"
+    FLASH-COLOURS-ON-FINISH-ANIMATION: false
+    TIME: 0.5 #Calculated in seconds
+    TEXT:
+      - "Saki Practice"

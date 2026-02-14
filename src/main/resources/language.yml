@@ -1,0 +1,106 @@
+/*
+ * This project can't be redistributed without
+ * authorization of the developer
+ *
+ * Project @ AkiPractice
+ * @author saki © 2026
+ * Date: 11/02/2026
+ */
+
+CANT-DO-THIS: "&cVocê não pode fazer isso agora!"
+CLICK-TO-JOIN: " &a[Clique para entrar]"
+CLICK-TO-ACCEPT: " &a[Clique para aceitar]"
+
+DUEL:
+  DUEL-REQUEST: "&r<sender>&6 (<ping> ms)&a enviou um convite de duelo com o kit &r<kit>&a em"
+  DUEL-REQUEST-FOOTER: "&a arena &e<arena>&a."
+  CANT-DUEL-YOURSELF: "&cVocê não pode duelar consigo mesmo!"
+  ONGOING-DUEL: "&cVocê já tem um convite de duelo pendente para <target>."
+  BUSY-PLAYER: "&cEste jogador está ocupado no momento!"
+  DUELS-DISABLED: "&cO jogador <target> está com os duelos desativados."
+  INVALID-DUEL: "&cConvite de duelo inválido!"
+
+MATCH:
+  DISCONNECTED: "&c<player> &adesconectou-se!"
+  DIED-NATURALLY: "&c<player> &amorreu por causas naturais!"
+  KILLED-BY-PLAYER: "&c<player> &afoi morto por &c<killer>!"
+
+ELO:
+  SEARCH: "&aProcurando na faixa de ELO &e[<min> -> <max>]&a..."
+
+PARTY:
+  NOT-IN-A-PARTY: "&cVocê não está em um grupo!"
+  OTHER-NOT-IN-A-PARTY: "&cEsse jogador não está em um grupo!"
+  JOINED-PARTY: "&eVocê entrou no grupo de &a<target>&e!"
+  JOINED-PARTY-BROADCAST: "&a<party>&e entrou no grupo!"
+  CANT-ACCEPT-DUEL-REQUEST: "&cApenas o líder do grupo pode aceitar convites de duelo!"
+  ALREADY-IN-PARTY: "&cVocê já está em um grupo!"
+  CREATED-PARTY: "&aGrupo criado com sucesso!"
+  DISBANDED-PARTY: "&cO grupo foi desfeito."
+  LEFT-PARTY: "&a<player>&e saiu do grupo."
+  CANT-INVITE-YOURSELF: "&cVocê não pode convidar a si mesmo!"
+  PLAYER-ALREADY-IN-PARTY: "&cEsse jogador já está em um grupo!"
+  ALREADY-INVITED-PLAYER: "&cVocê já convidou esse jogador!"
+  INVITED-MESSAGE: "&aVocê foi convidado para o grupo de &e<player>&a!"
+  SUCCESSFULY-INVITED: "&eSucesso! &a<player> &efoi convidado!"
+  JOIN-OWN-PARTY: "&cVocê não pode entrar no seu próprio grupo!"
+  ISNT-IN-PARTY: "&cEsse jogador não está em um grupo."
+  BANNED-FROM-PARTY: "&cVocê está banido deste grupo!"
+  NOT-INVITED: "&cVocê não foi convidado para este grupo!"
+  PARTY-EXPIRED: "&cO convite para o grupo expirou!"
+
+EVENT:
+  NO-ACTIVE-EVENTS: "&cNão há eventos ativos no momento!"
+  EVENT-FULL: "&cO evento está lotado!"
+  ALREADY-IN: "&cVocê já está no evento!"
+  ALREADY-STARTED: "&cO evento já começou!"
+  NOT-ENOUGH-PLAYERS: "&cVocê precisa de pelo menos 2 jogadores para iniciar forçado!"
+
+FFA:
+  NOT-IN-FFA: "&cVocê não está no FFA!"
+  LEFT-FFA: "&eVocê saiu do &aFFA."
+
+BEDFIGHTS:
+  BREAK-OWN-BED: "&cVocê não pode quebrar sua própria cama."
+  BED-ALREADY-BROKEN: "&cA cama já foi quebrada."
+  BED-DESTROYED: "&a&lCAMA DESTRUÍDA > &aA cama do time &l<team> &afoi destruída por &l<player>!"
+  PLAYER-KILLED: "&c<player> &afoi morto!"
+  FINAL-TAG: " &7(&eFINAL&7)"
+
+COOLDOWN:
+  FIREBALL-COOLDOWN-TIME: "&eCooldown de Fireball: &a<seconds>s"
+  ENDERPEARL-COOLDOWN-DONE: "&aVocê já pode usar a Enderpearl novamente."
+  ENDERPEARL-COOLDOWN-TIME: "&eCooldown de Enderpearl: &a<seconds>s"
+
+BUILD:
+  CANT-PLACE: "&cVocê não pode colocar blocos aqui."
+
+SPECTATE:
+  NOT-IN-A-MATCH: "&cEste jogador não está em uma partida!"
+  SPECTATING-DISABLED: "&cO jogador <player> está com o modo espectador desativado."
+  STOPPED-SPECTATING: "&a<player>&e parou de assistir!"
+  STOPPED-SPECTATING-SILENT: "&7[S] &a<player>&e parou de assistir!"
+  STARTED-SPECTATING: "&a<player>&e começou a assistir!"
+  STARTED-SPECTATING-SILENT: "&7[S] &a<player>&e começou a assistir!"
+
+INVENTORY:
+  COULDNT-FIND: "&cNão foi possível encontrar o inventário solicitado."
+
+RATING:
+  DISABLED-RATING: "&cVocê desativou a avaliação de mapas. Ative nas configurações."
+  ALREADY-RATED: "&cVocê já avaliou este mapa!"
+  THANK-YOU: "&aObrigado pelo seu voto! Seu feedback é importante."
+
+EXCEPTION:
+  CANT-FIND-KIT: "&cEsse kit não existe!"
+  CANT-FIND-ARENA: "&cEssa arena específica não existe!"
+
+RANKED-BAN:
+  BANNED-FROM-QUEUE: "&cVocê está banido da fila ranked. Motivo: &e<reason>"
+  BANNED-FROM-QUEUE-NO-REASON: "&cVocê está banido da fila ranked."
+  PLAYER-BANNED: "&a<player> &efoi banido da fila ranked."
+  PLAYER-UNBANNED: "&a<player> &efoi desbanido da fila ranked."
+  ALREADY-BANNED: "&cEste jogador já está banido da ranked."
+  NOT-BANNED: "&cEste jogador não está banido da ranked."
+  LIST-HEADER: "&eJogadores banidos da ranked: &f<count>"
+  LIST-ENTRY: "&7- &f<player> &7(&e<reason>&7)"

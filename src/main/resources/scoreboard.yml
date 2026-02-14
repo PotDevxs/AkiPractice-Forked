@@ -1,0 +1,142 @@
+/*
+ * This project can't be redistributed without
+ * authorization of the developer
+ *
+ * Project @ AkiPractice
+ * @author saki © 2026
+ * Date: 11/02/2026
+ */
+
+Scoreboard:
+  enabled: true
+  # Título animado: defina animated: true e liste os frames (caso queira um título animado)
+  # Deixe em "false" caso não queira um título animado
+  animated: true
+  title: "&b&lAkiPractice"
+  title-frames:
+    - "&b&lAkiPractice"
+    - "&f&lAkiPractice"
+    - "&b&lAki&f&lPractice"
+    - "&f&lAki&b&lPractice"
+    - "&e&lAkiPractice"
+    - "&b&lAkiPractice"
+  # Intervalo em ticks (deixe em 0.3 caso queira um intervalo menor)
+  title-frame-interval: 0.5
+  lobby:
+    - "&7&m-------------------"
+    - "&fOnline: &b<online>"
+    - "&fNa Fila: &b<queuing>"
+    - ""
+    - "&fEm Partida: &b<in_match>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  match:
+    - "&7&m-------------------"
+    - "&fOponente: &c<opponent>"
+    - "&fKit: &b<kit>"
+    - ""
+    - "&fDuração: &b<time>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  mlgrush:
+    - "&7&m-------------------"
+    - "&fOponente: &c<opponent>"
+    - "&fKit: &b<kit>"
+    - ""
+    - "&fDuração: &b<time>"
+    - ""
+    - "&fPontos: &a<points>"
+    - "&fOponente: &c<opponent_points>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  bridge:
+    - "&7&m-------------------"
+    - "&fOponente: &c<opponent>"
+    - "&fKit: &b<kit>"
+    - ""
+    - "&fDuração: &b<time>"
+    - ""
+    - "&fGols: &a<points>"
+    - "&fOponente: &c<opponent_points>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  bedfight:
+    - "&7&m-------------------"
+    - "&fOponente: &c<opponent>"
+    - "&fKit: &b<kit>"
+    - ""
+    - "&fDuração: &b<time>"
+    - ""
+    - "&9Azul: <blue>"
+    - "&cVermelho: <red>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  boxing:
+    - "&7&m-------------------"
+    - "&fOponente: &c<opponent>"
+    - "&fKit: &b<kit>"
+    - ""
+    - "&fDuração: &b<time>"
+    - ""
+    - "&fSeus Hits: &a<hits> <diff>"
+    - "&fHits Dele: &c<opponent-hits>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  queue:
+    - "&7&m-------------------"
+    - "&fOnline: &b<online>"
+    - "&fNa Fila: &b<queuing>"
+    - ""
+    - "&fTempo: &b<time>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  ffa:
+    - "&7&m-------------------"
+    - "&b&lJogando FFA"
+    - "&7 Modo: &f<kit>"
+    - ""
+    - "&fKills: &b<kills>"
+    - "&fMortes: &b<deaths>"
+    - ""
+    - "&fKillstreak: &b<killstreak>"
+    - ""
+    - "&fSeu Ping: &a<ping>ms"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  event:
+    - "&7&m-------------------"
+    - "&fEvento: &b<type>"
+    - "&fEstado: &b<state>"
+    - ""
+    - "&fLutando:"
+    - "&a<playing1> &7vs &c<playing2>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  ffa-event:
+    - "&7&m-------------------"
+    - "&fEvento: &b<type>"
+    - "&fEstado: &b<state>"
+    - ""
+    - "&fJogadores: &b<remainingPlayers>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"
+  spectate:
+    - "&7&m-------------------"
+    - "&fKit: &b<kit>"
+    - "&fDuração: &b<time>"
+    - ""
+    - "&fPartida:"
+    - "&a<team1> &7vs &c<team2>"
+    - ""
+    - "&7akipractice.net"
+    - "&7&m-------------------"

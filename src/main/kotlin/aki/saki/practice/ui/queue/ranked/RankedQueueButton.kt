@@ -1,0 +1,112 @@
+/*
+ * This project can	 be redistributed without
+ * authorization of the developer
+ *
+ * Project @ AkiPractice
+ * @author saki © 2026
+ * Date: 11/02/2026
+ */
+package aki.saki.practice.ui.queue.ranked
+
+import dev.ryu.core.bukkit.CoreAPI
+import aki.saki.practice.kit.Kit
+import aki.saki.practice.manager.QueueManager
+import aki.saki.practice.manager.RankedBanManager
+import aki.saki.practice.PracticePlugin
+import aki.saki.practice.Locale
+import aki.saki.practice.leaderboards.Leaderboards
+import aki.saki.practice.profile.ProfileState
+import aki.saki.practice.profile.hotbar.Hotbar
+import aki.saki.practice.queue.Queue
+import aki.saki.practice.queue.QueueType
+import aki.saki.practice.utils.CC
+import org.bukkit.ChatColor
+import org.bukkit.entity.Player
+import org.bukkit.event.inventory.ClickType
+import org.bukkit.inventory.ItemStack
+import rip.katz.api.menu.Button
+import rip.katz.api.utils.ItemBuilder
+
+
+/*
+ * This project can't be redistributed without
+ * authorization of the developer
+ *
+ * Project @ lPractice
+ * @author yek4h © 2024
+ * Date: 15/06/2024
+*/
+
+class RankedQueueButton(
+    val queue: Queue,
+    val kit: Kit
+): Button() {
+    override fun getButtonItem(p0: Player): ItemStack {
+        val playing = QueueManager.getPlayingCount(kit, QueueType.RANKED)
+
+        val profile = PracticePlugin.instance.profileManager.findByIdRealTime(p0.uniqueId)!!
+        val topThree = PracticePlugin.instance.leaderboards.getTopProfilesByKitElo(kit, 3)
+
+        val lore = mutableListOf(
+            "",
+            "&fIn Queue: ${CC.PRIMARY}${queue.getPlayerCount()}",
+            "&fFighting: ${CC.PRIMARY}$playing",
+            "&fYour elo: ${CC.PRIMARY}${profile.getKitStatistic(kit.name)?.elo ?: 0}",
+        )
+
+        lore.add("")
+        lore.add("${CC.PRIMARY}Top Elo:")
+
+        // Construir el top 3 lore con espacios vacíos si es necesario
+        for (i in 0 until 3) {
+            val line = if (i < topThree.size) {
+                val (profile, elo) = topThree[i]
+                "&f${i + 1}.- ${ChatColor.valueOf(CoreAPI.grantSystem.findBestRank(CoreAPI.grantSystem.repository.findAllByPlayer(profile.uuid)).color)}${profile.name}&7: ${CC.PRIMARY}$elo"
+            } else {
+                "&f${i + 1}.- &c???&7: ${CC.PRIMARY}0"
+            }
+            lore.add(line)
+        }
+
+        lore.add("")
+        lore.add("&aClick here to select ${kit.displayName}")
+
+        return ItemBuilder(kit.displayItem.type)
+            .name(kit.displayName ?: kit.name)
+            .durability(kit.displayItem.durability.toInt())
+            .lore(lore).build()
+    }
+
+
+
+    override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+        if (clickType?.isLeftClick == true) {
+            val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
+
+            if (RankedBanManager.isBanned(player.uniqueId)) {
+                val reason = RankedBanManager.getReason(player.uniqueId)
+                player.sendMessage(if (reason != null) Locale.RANKED_BAN_BANNED_QUEUE.getNormalMessage().replace("<reason>", reason)
+                    else Locale.RANKED_BAN_BANNED_QUEUE_NO_REASON.getNormalMessage())
+                player.sendMessage(CC.translate(""))
+                return
+            }
+
+            if (profile.state == ProfileState.QUEUE) {
+                player.sendMessage("${CC.RED}You are already in a queue!")
+                return
+            }
+
+            QueueManager.addToQueue(player, queue.kit, queue.type)
+            player.sendMessage(CC.translate("&aYou're now queued for Ranked ${kit.displayName}"))
+
+            /*player.sendMessage(" ")
+            player.sendMessage("${CC.PRIMARY}${CC.BOLD}${queue.type.name}")
+            player.sendMessage("${CC.PRIMARY} ⚫ Ping Range: ${CC.SECONDARY}[${if (profile.settings.pingRestriction == 0) "Unrestricted" else profile.settings.pingRestriction}]")
+            player.sendMessage("${CC.GRAY}${CC.ITALIC} Searching for match...")
+            player.sendMessage(" ")*/
+
+            Hotbar.giveHotbar(profile)
+            player.closeInventory()
+        }
+    }
+}
