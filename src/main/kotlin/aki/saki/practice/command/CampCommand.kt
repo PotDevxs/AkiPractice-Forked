@@ -9,6 +9,7 @@ package aki.saki.practice.command
 
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.camp.Camp
+import aki.saki.practice.camp.CampInvitation
 import aki.saki.practice.manager.CampManager
 import aki.saki.practice.utils.CC
 import com.jonahseguin.drink.annotation.Command
@@ -20,7 +21,6 @@ class CampCommand {
 
     @Command(name = "create", desc = "Create a camp (clan)")
     fun create(@Sender player: Player, name: String, tag: String) {
-        val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId) ?: return
         if (CampManager.getByPlayer(player.uniqueId) != null) {
             player.sendMessage(CC.translate("&cVocê já está em um camp! Use /camp leave primeiro."))
             return
@@ -44,6 +44,7 @@ class CampCommand {
             return
         }
         camp.members.remove(player.uniqueId)
+        CampManager.saveCamp(camp)
         player.sendMessage(CC.translate("&eVocê saiu do camp &a${camp.name}&e."))
         camp.sendMessage("&7${player.name} &esaiu do camp.")
     }
@@ -94,9 +95,62 @@ class CampCommand {
             player.sendMessage(CC.translate("&cEste jogador já está no camp."))
             return
         }
-        // TODO: CampInvitation system (like PartyInvitation) para aceitar/recusar
-        camp.members.add(target.uniqueId)
-        player.sendMessage(CC.translate("&a${target.name} foi adicionado ao camp."))
-        target.sendMessage(CC.translate("&eVocê entrou no camp &a${camp.name} &7[${camp.tag}]&e!"))
+        if (CampManager.getInvitation(target.uniqueId, camp.uuid) != null) {
+            player.sendMessage(CC.translate("&cVocê já convidou este jogador."))
+            return
+        }
+        val list = CampManager.pendingInvites.getOrPut(target.uniqueId) { mutableListOf() }
+        list.removeAll { it.campUUID == camp.uuid }
+        list.add(CampInvitation(camp.uuid, player.uniqueId, target.uniqueId))
+        player.sendMessage(CC.translate("&aConvite enviado para &e${target.name}&a."))
+        target.sendMessage(CC.translate("&eVocê foi convidado para o camp &a${camp.name} &7[${camp.tag}]&e! Use &a/camp accept ${camp.name} &eou &c/camp decline ${camp.name}&e."))
+    }
+
+    @Command(name = "accept", desc = "Accept a camp invitation")
+    fun accept(@Sender player: Player, campName: String) {
+        val camp = CampManager.getByName(campName) ?: run {
+            player.sendMessage(CC.translate("&cCamp não encontrado."))
+            return
+        }
+        val inv = CampManager.getInvitation(player.uniqueId, camp.uuid) ?: run {
+            player.sendMessage(CC.translate("&cConvite não encontrado ou expirado."))
+            return
+        }
+        CampManager.pendingInvites[player.uniqueId]?.remove(inv)
+        if (CampManager.getByPlayer(player.uniqueId) != null) {
+            player.sendMessage(CC.translate("&cVocê já está em um camp."))
+            return
+        }
+        camp.members.add(player.uniqueId)
+        CampManager.saveCamp(camp)
+        player.sendMessage(CC.translate("&aVocê entrou no camp &e${camp.name} &7[${camp.tag}]&a!"))
+        camp.sendMessage("&a${player.name} &eentrou no camp.")
+    }
+
+    @Command(name = "decline", desc = "Decline a camp invitation")
+    fun decline(@Sender player: Player, campName: String) {
+        val camp = CampManager.getByName(campName) ?: run {
+            player.sendMessage(CC.translate("&cCamp não encontrado."))
+            return
+        }
+        val inv = CampManager.getInvitation(player.uniqueId, camp.uuid) ?: run {
+            player.sendMessage(CC.translate("&cConvite não encontrado ou expirado."))
+            return
+        }
+        CampManager.pendingInvites[player.uniqueId]?.remove(inv)
+        player.sendMessage(CC.translate("&eVocê recusou o convite do camp &c${camp.name}&e."))
+    }
+
+    @Command(name = "top", desc = "Leaderboard of camps by wins")
+    fun top(@Sender player: Player) {
+        val list = CampManager.camps.values.sortedByDescending { it.totalWins }.take(10)
+        player.sendMessage(CC.translate("&7&m--------&r &eTop Camps &7&m--------"))
+        if (list.isEmpty()) {
+            player.sendMessage(CC.translate("&7Nenhum camp cadastrado."))
+            return
+        }
+        list.forEachIndexed { i, camp ->
+            player.sendMessage(CC.translate("&f${i + 1}. &e${camp.name} &7[${camp.tag}] &a${camp.totalWins} vitórias"))
+        }
     }
 }

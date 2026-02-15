@@ -67,6 +67,17 @@ public class PlayerUtil {
         }
     }
 
+    /** Returns player IP for anti-boost (same-IP check). Null if unavailable (e.g. Bungee). */
+    public static String getAddress(Player player) {
+        try {
+            Object addr = player.getClass().getMethod("getAddress").invoke(player);
+            if (addr != null && addr instanceof java.net.InetSocketAddress) {
+                return ((java.net.InetSocketAddress) addr).getAddress().getHostAddress();
+            }
+        } catch (Exception ignored) { }
+        return null;
+    }
+
     private static void resetBase(Player player) {
         player.getActivePotionEffects().clear();
         player.setHealth(20.0D);

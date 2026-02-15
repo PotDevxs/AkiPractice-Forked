@@ -106,6 +106,7 @@ class BracketsEvent(host: UUID, eventMap: EventMap, val kit: Kit) : Event(host, 
     }
 
     override fun end(winner: EventPlayer?) {
+        aki.saki.practice.event.EventRewardManager.giveWinnerReward(this, winner)
         Bukkit.broadcastMessage("${CC.GREEN}${if (winner != null) winner.player.name else "N/A"} won the event!")
 
         players.forEach {

@@ -19,6 +19,7 @@ class Camp(val uuid: UUID, var name: String, var tag: String, val leader: UUID) 
 
     val members: MutableList<UUID> = mutableListOf(leader)
     val createdAt: Long = System.currentTimeMillis()
+    var totalWins: Int = 0
 
     fun sendMessage(message: String) {
         members.forEach { id ->

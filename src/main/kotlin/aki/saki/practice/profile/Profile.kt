@@ -65,6 +65,17 @@ class Profile(val uuid: UUID, var name: String? = null) : IProfile {
     var arrowCooldown: Cooldown? = null
     var fireBallCooldown: Cooldown? = null
     var lastWinStreakUpdate: Date? = null
+    var lastOpponent: UUID? = null
+    var matchHistory: MutableList<MatchHistoryEntry> = mutableListOf()
+    var xp: Long = 0
+    var dailyMissionType: String? = null
+    var dailyMissionProgress: Int = 0
+    var dailyMissionTarget: Int = 0
+    var dailyMissionResetDay: Long = 0
+
+    private val maxMatchHistory = 20
+
+    val level: Int get() = (xp / 100).coerceAtLeast(0).toInt()
 
     val player: Player
         get() = Bukkit.getPlayer(uuid) ?: throw IllegalStateException("Player not found")
@@ -79,6 +90,12 @@ class Profile(val uuid: UUID, var name: String? = null) : IProfile {
             append("settings", PracticePlugin.GSON.toJson(settings))
             append("silent", silent)
             append("lastWinStreakUpdate", lastWinStreakUpdate?.time)
+            append("matchHistory", matchHistory.take(maxMatchHistory).map { PracticePlugin.GSON.toJson(it) })
+            append("xp", xp)
+            append("dailyMissionType", dailyMissionType)
+            append("dailyMissionProgress", dailyMissionProgress)
+            append("dailyMissionTarget", dailyMissionTarget)
+            append("dailyMissionResetDay", dailyMissionResetDay)
         }
     }
 
@@ -146,6 +163,14 @@ class Profile(val uuid: UUID, var name: String? = null) : IProfile {
 
         silent = document.getBoolean("silent", false)
         lastWinStreakUpdate = document.getLong("lastWinStreakUpdate")?.let { Date(it) }
+        matchHistory = document.getList("matchHistory", String::class.java)?.mapNotNull {
+            try { PracticePlugin.GSON.fromJson(it, MatchHistoryEntry::class.java) } catch (_: Exception) { null }
+        }?.toMutableList() ?: mutableListOf()
+        xp = document.getLong("xp", 0L)
+        dailyMissionType = document.getString("dailyMissionType")
+        dailyMissionProgress = (document["dailyMissionProgress"] as? Number)?.toInt() ?: 0
+        dailyMissionTarget = (document["dailyMissionTarget"] as? Number)?.toInt() ?: 0
+        dailyMissionResetDay = document.getLong("dailyMissionResetDay", 0L)
 
         PracticePlugin.instance.kitManager.kits.values.forEach { kit ->
             if (kitStatistics.none { it.kit.equals(kit.name, false) }) {
@@ -167,6 +192,16 @@ class Profile(val uuid: UUID, var name: String? = null) : IProfile {
 
     fun getKitStatistic(kit: String): KitStatistic? {
         return kitStatistics.firstOrNull { it.kit.equals(kit, true) }
+    }
+
+    fun addMatchHistory(entry: MatchHistoryEntry) {
+        matchHistory.add(0, entry)
+        if (matchHistory.size > maxMatchHistory) matchHistory = matchHistory.take(maxMatchHistory).toMutableList()
+    }
+
+    fun addXp(amount: Long) {
+        if (amount <= 0) return
+        xp += amount
     }
 
     override fun delete() {

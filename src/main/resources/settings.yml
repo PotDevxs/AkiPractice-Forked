@@ -21,6 +21,36 @@ COLOR:
 MATCH:
   REMOVE-EMPTY-BOTTLE: true
 
+# Efeitos ao matar (no local da morte) e ao vencer (no vencedor). Valores: FLAME, EXPLOSION, VILLAGER_HAPPY, CRIT, NONE
+COSMETICS:
+  KILL-EFFECT: FLAME
+  VICTORY-EFFECT: FIREWORK
+
+# XP por partida (win/loss). Nível = xp / 100 (ex.: 500 xp = nível 5). Use 0 para desativar.
+XP:
+  PER-WIN: 25
+  PER-LOSS: 5
+
+# Missão diária: objetivo aleatório, reset a cada dia. Recompensa em XP.
+MISSION:
+  REWARD-XP: 100
+  TARGET-WIN-RANKED: 3
+  TARGET-WIN-CASUAL: 3
+  TARGET-PLAY-FFA: 5
+
+# Recompensa em XP para o vencedor de qualquer evento (Brackets, Sumo, TNT Run, TNT Tag). 0 = desativado.
+EVENT:
+  REWARD-XP: 50
+
+QUEUE:
+  # Ranked: ping máximo para matchmaking (0 = desativado). Ex: 150 = só emparelha se ambos tiverem ping <= 150
+  RANKED-MAX-PING: 0
+  # Backfill: range inicial de ELO e incremento a cada 3 segundos (já existente no código)
+  INITIAL-ELO-RANGE: 25
+  ELO-RANGE-STEP: 5
+  # Anti-boost: não emparelhar jogadores com mesmo IP na ranked (true/false)
+  ANTI-BOOST-SAME-IP: true
+
 HOLOGRAMS:
   WIN-STREAK-LEADERBOARDS:
     FORMAT: "<top>. <name> STREAK: <streak>"

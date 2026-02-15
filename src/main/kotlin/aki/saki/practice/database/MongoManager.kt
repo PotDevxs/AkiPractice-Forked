@@ -11,8 +11,6 @@ package aki.saki.practice.database
 import com.mongodb.*
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
-import dev.ryu.core.shared.backend.mongodb.MongoManager
-import dev.ryu.core.shared.system.module.BackendModule
 import org.bson.Document
 import java.util.concurrent.CompletableFuture
 
@@ -32,6 +30,7 @@ class MongoManager {
     lateinit var mongoDatabase: MongoDatabase
     lateinit var profileCollection: MongoCollection<Document>
     lateinit var arenaRatingsCollection: MongoCollection<Document>
+    lateinit var campCollection: MongoCollection<Document>
 
     fun initialize(useCredentials: Boolean = false): CompletableFuture<Void> {
         return CompletableFuture.runAsync {
@@ -47,6 +46,7 @@ class MongoManager {
             mongoDatabase = mongoClient.getDatabase("practice")
             profileCollection = mongoDatabase.getCollection("profiles")
             arenaRatingsCollection = mongoDatabase.getCollection("arenaRatings")
+            campCollection = mongoDatabase.getCollection("camps")
         }
     }
 

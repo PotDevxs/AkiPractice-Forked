@@ -65,6 +65,7 @@ class FFAChoosingMenu: Menu() {
 
                         profile.state = ProfileState.FFA
                         profile.ffa = ffa.uuid
+                        aki.saki.practice.mission.MissionManager.advance(profile, aki.saki.practice.mission.DailyMissionType.PLAY_FFA)
 
                         if (Constants.FFA_SPAWN != null ){
                             player.teleport(Constants.FFA_SPAWN)

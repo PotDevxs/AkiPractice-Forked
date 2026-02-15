@@ -129,6 +129,7 @@ class TNTTagEvent(host: UUID, eventMap: EventMap) : Event(host, eventMap) {
     }
 
     override fun end(winner: EventPlayer?) {
+        aki.saki.practice.event.EventRewardManager.giveWinnerReward(this, winner)
         Bukkit.broadcastMessage("${CC.GREEN}${if (winner != null) winner.player.name else "N/A"} won the event!")
 
         players.forEach {

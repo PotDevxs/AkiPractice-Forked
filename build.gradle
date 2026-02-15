@@ -44,20 +44,19 @@ dependencies {
     compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
     compileOnly 'org.projectlombok:lombok:1.18.20'
 
-    implementation 'com.jonahseguin:drink:1.0.5'
+    implementation 'com.github.jonahseguin:drink:master'
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'org.mongodb:mongo-java-driver:3.12.10'
-    implementation 'io.github.thatkawaiisam:assemble:1.1-OPTIMIZED'
+    implementation 'com.github.ThatKawaiiSam:Assemble:master'
     implementation 'com.github.cryptomorin:XSeries:7.9.1.1'
 
-    compileOnly 'dev.ryu.core:bukkit:1.5-SNAPSHOT'
-    compileOnly 'com.comphenix.protocol:ProtocolLib:4.7.0'
     compileOnly 'me.clip:placeholderapi:2.11.6'
-    compileOnly 'com.github.ben-manes.caffeine:caffeine:3.1.8'
-
-    compileOnly 'rip.katz.api:Katto:1.0-SNAPSHOT'
-    compileOnly files('libs/samurai.jar')
+    compileOnly 'com.github.ben-manes.caffeine:caffeine:2.9.3'
+    compileOnly 'net.dmulloy2:ProtocolLib:5.1.0'
     implementation files('libs/FAWE.jar')
+    // Ryu Core e Katto: o projeto inclui stubs em dev.ryu.core.bukkit e rip.katz.api para compilar sem os JARs.
+    // Se tiver os JARs originais, coloque em libs/ryu-bukkit.jar e libs/katto.jar e remova os stubs em src/main/kotlin/dev e src/main/kotlin/rip.
+    if (file('libs/samurai.jar').exists()) compileOnly files('libs/samurai.jar')
 
     compileOnly 'com.sk89q.worldedit:worldedit-core:6.0.0-SNAPSHOT'
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:6.0.0-SNAPSHOT'

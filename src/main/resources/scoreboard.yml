@@ -13,9 +13,10 @@ Scoreboard:
     - "&b&lAkiPractice"
   # Intervalo em ticks (deixe em 0.3 caso queira um intervalo menor)
   title-frame-interval: 0.5
-  # Placeholder de tema: <theme> = cor primária do jogador (quem tem akipractice.theme.access)
+  # Placeholders: <theme> = cor do tema; <camp> = tag do camp; <level> = nível (XP/100); <xp> = XP total
   lobby:
     - "&7&m-------------------"
+    - "&fNível: &e<level> &7| XP: &a<xp>"
     - "&fOnline: &b<online>"
     - "&fNa Fila: &b<queuing>"
     - ""

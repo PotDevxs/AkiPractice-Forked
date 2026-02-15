@@ -49,6 +49,7 @@ object QueueTask : BukkitRunnable() {
         if (queue.getQueueingPlayers().size < 2) return
 
         val queuePlayers = queue.getQueueingPlayers().toMutableList()
+            .sortedWith(compareByDescending<QueuePlayer> { it.priority }.thenBy { it.started })
         for (firstQueueProfile in queuePlayers) {
             val firstPlayer = Bukkit.getPlayer(firstQueueProfile.uuid) ?: continue
 
@@ -89,12 +90,15 @@ object QueueTask : BukkitRunnable() {
     }
 
     private fun isValidMatch(firstQueueProfile: QueuePlayer, secondQueueProfile: QueuePlayer, firstPlayer: Player, secondPlayer: Player, queueType: QueueType): Boolean {
-        return when {
-            secondQueueProfile.pingFactor != 0 && PlayerUtil.getPing(firstPlayer) > secondQueueProfile.pingFactor -> false
-            firstQueueProfile.pingFactor != 0 && PlayerUtil.getPing(secondPlayer) > firstQueueProfile.pingFactor -> false
-            queueType == QueueType.RANKED && (!firstQueueProfile.isInRange(secondQueueProfile.elo) || !secondQueueProfile.isInRange(firstQueueProfile.elo)) -> false
-            else -> true
+        if (secondQueueProfile.pingFactor != 0 && PlayerUtil.getPing(firstPlayer) > secondQueueProfile.pingFactor) return false
+        if (firstQueueProfile.pingFactor != 0 && PlayerUtil.getPing(secondPlayer) > firstQueueProfile.pingFactor) return false
+        if (queueType == QueueType.RANKED && (!firstQueueProfile.isInRange(secondQueueProfile.elo) || !secondQueueProfile.isInRange(firstQueueProfile.elo))) return false
+        if (queueType == QueueType.RANKED && PracticePlugin.instance.settingsFile.getBoolean("QUEUE.ANTI-BOOST-SAME-IP")) {
+            val a = PlayerUtil.getAddress(firstPlayer)
+            val b = PlayerUtil.getAddress(secondPlayer)
+            if (a != null && b != null && a == b) return false
         }
+        return true
     }
 
     private fun addFollowersAsSpectators(profile: Profile?, player: Player, match: Match, vararg excludeUUIDs: UUID) {

@@ -8,7 +8,10 @@
  */
 package aki.saki.practice.manager
 
+import aki.saki.practice.PracticePlugin
 import aki.saki.practice.kit.Kit
+import aki.saki.practice.mission.DailyMissionType
+import aki.saki.practice.mission.MissionManager
 import aki.saki.practice.profile.Profile
 import aki.saki.practice.utils.EloUtil
 
@@ -61,6 +64,10 @@ object StatisticManager {
                 }
 
                 loserProfile.save()
+                aki.saki.practice.manager.CampManager.getByPlayer(profile.uuid)?.let { camp ->
+                    camp.totalWins++
+                    aki.saki.practice.manager.CampManager.saveCamp(camp)
+                }
             }
 
             kitStatistic.apply {
@@ -88,6 +95,9 @@ object StatisticManager {
             profile.updateGlobalElo()
         }
 
+        val winXp = PracticePlugin.instance.settingsFile.getInt("XP.PER-WIN", 0).toLong()
+        if (winXp > 0) profile.addXp(winXp)
+        MissionManager.advance(profile, if (ranked) DailyMissionType.WIN_RANKED else DailyMissionType.WIN_CASUAL)
         profile.save(true)
     }
 
@@ -122,6 +132,8 @@ object StatisticManager {
             profile.updateGlobalElo()
         } ?: println("Loser profile is null for $kit")
 
+        val lossXp = PracticePlugin.instance.settingsFile.getInt("XP.PER-LOSS", 0).toLong()
+        if (lossXp > 0) profile.addXp(lossXp)
         profile.save(true)
     }
 }

@@ -1,6 +1,7 @@
 package aki.saki.practice.theme
 
 import aki.saki.practice.PracticePlugin
+import aki.saki.practice.manager.CampManager
 import aki.saki.practice.utils.CC
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -42,7 +43,13 @@ object ThemeHelper {
     }
 
     fun replacePlaceholders(text: String, player: Player): String {
-        return text.replace(PLACEHOLDER_THEME, getPrimary(player))
+        val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)
+        val campTag = CampManager.getByPlayer(player.uniqueId)?.let { "[${it.tag}] " } ?: ""
+        var result = text.replace(PLACEHOLDER_THEME, getPrimary(player)).replace("<camp>", campTag)
+        if (profile != null) {
+            result = result.replace("<level>", profile.level.toString()).replace("<xp>", profile.xp.toString())
+        }
+        return result
     }
 
     fun replacePlaceholders(lines: List<String>, player: Player): List<String> =

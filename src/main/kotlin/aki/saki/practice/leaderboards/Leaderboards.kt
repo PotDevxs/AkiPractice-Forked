@@ -1,11 +1,3 @@
-/*
- * This project can	 be redistributed without
- * authorization of the developer
- *
- * Project @ AkiPractice
- * @author saki © 2026
- * Date: 11/02/2026
- */
 package aki.saki.practice.leaderboards
 
 import com.mongodb.client.MongoCursor
@@ -20,15 +12,6 @@ import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
-
-/*
- * This project can't be redistributed without
- * authorization of the developer
- *
- * Project @ lPractice
- * Author: yek4h © 2024
- * Date: 22/06/2024
- */
 
 class Leaderboards(
     private val configFile: ConfigFile,

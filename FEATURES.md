@@ -21,10 +21,10 @@ Sugestões de módulos e melhorias para o AkiPractice.
 ## Sugestões de adições
 
 ### Punishments / moderação
-- **Mute** – silenciar no chat (global ou por tempo).
-- **Ban de FFA** – impedir de entrar em FFA.
-- **Ban de eventos** – impedir de participar de eventos.
-- **Ban de duelos** – além do BanRanked, banir de duelos por convite.
+- **Mute** – `/mute <jogador> [motivo]`, `/mute <jogador> [motivo] 7d`, `/mute unmute`, `/mute list`. Persiste em `mutes.yml`.
+- **Ban de FFA** – impedir de entrar em FFA. ✅
+- **Ban de eventos** – impedir de participar de eventos. ✅
+- **Ban de duelos** – além do BanRanked, banir de duelos por convite. ✅
 
 ### Ranked / competitivo
 - **BanRanked com tempo** – expiração (ex.: 7 dias, 30 dias).

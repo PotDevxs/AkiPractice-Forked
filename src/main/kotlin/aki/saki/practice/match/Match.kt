@@ -23,11 +23,14 @@ import aki.saki.practice.match.player.MatchPlayer
 import aki.saki.practice.match.snapshot.MatchSnapshot
 import aki.saki.practice.match.spectator.MatchSpectator
 import aki.saki.practice.PracticePlugin
+import aki.saki.practice.manager.MatchLogManager
 import aki.saki.practice.manager.QueueManager
+import aki.saki.practice.profile.MatchHistoryEntry
 import aki.saki.practice.profile.Profile
 import aki.saki.practice.profile.ProfileState
 import aki.saki.practice.profile.hotbar.Hotbar
 import aki.saki.practice.utils.CC
+import aki.saki.practice.utils.CosmeticsHelper
 import aki.saki.practice.utils.PlayerUtil
 import aki.saki.practice.utils.TextBuilder
 import aki.saki.practice.utils.TimeUtil
@@ -220,6 +223,7 @@ open class Match(val kit: Kit, val arena: Arena, val ranked: Boolean, var friend
         }
 
         sendMessage(deathMessage)
+        if (!player.offline) CosmeticsHelper.playKillEffect(player.player.location)
         end(mutableListOf(player))
     }
 
@@ -285,6 +289,7 @@ open class Match(val kit: Kit, val arena: Arena, val ranked: Boolean, var friend
         }
 
         sendTitleBar(winners)
+        winners.filterNot { it.offline }.forEach { CosmeticsHelper.playVictoryEffect(it.player) }
         endMessage(winners, losers)
 
         if (ranked) {
@@ -308,6 +313,17 @@ open class Match(val kit: Kit, val arena: Arena, val ranked: Boolean, var friend
             val messages = createEloMessages(winners, losers, numsTotalMovedFromTheLeaderboards, losernumsTotalMovedFromTheLeaderboards, nextToReachInLeaderboardName, eloNeededToReachNextPlayer, newWinnerPosition, newLoserPosition)
 
             sendEloMessages(winner, loser, messages)
+        }
+
+        if (winners.size == 1 && losers.size == 1) {
+            winnerProfile.lastOpponent = losers[0].uuid
+            loserProfile.lastOpponent = winners[0].uuid
+            val winnerName = winner?.name ?: winners[0].name
+            val loserName = loser?.name ?: losers[0].name
+            winnerProfile.addMatchHistory(MatchHistoryEntry(losers[0].uuid, loserName, kit.name, true, ranked))
+            loserProfile.addMatchHistory(MatchHistoryEntry(winners[0].uuid, winnerName, kit.name, false, ranked))
+            val durationMs = (System.currentTimeMillis() - started).coerceAtLeast(0L)
+            MatchLogManager.log(uuid, kit.name, winners[0].uuid, winnerName, losers[0].uuid, loserName, ranked, durationMs)
         }
 
         QueueManager.updatePlayingCount(this, -players.size)

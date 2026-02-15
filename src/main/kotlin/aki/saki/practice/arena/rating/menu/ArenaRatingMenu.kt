@@ -1,11 +1,3 @@
-/*
- * This project can	 be redistributed without
- * authorization of the developer
- *
- * Project @ AkiPractice
- * @author saki © 2026
- * Date: 11/02/2026
- */
 package aki.saki.practice.arena.rating.menu
 
 import rip.katz.api.menu.Menu
@@ -18,14 +10,6 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-/**
- * This Project is property of Zowpy © 2022
- * Redistribution of this Project is not allowed
- *
- * @author Zowpy
- * Created: 6/3/2022
- * Project: lPractice
- */
 class ArenaRatingMenu(val arena: Arena): Menu() {
 
     override fun getTitle(player: Player): String {

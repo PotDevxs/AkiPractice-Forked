@@ -36,6 +36,7 @@ import aki.saki.practice.kit.Kit
 import aki.saki.practice.kit.editor.listener.KitEditorListener
 import aki.saki.practice.kit.serializer.EditKitSerializer
 import aki.saki.practice.leaderboards.Leaderboards
+import aki.saki.practice.listener.ChatListener
 import aki.saki.practice.listener.MoveListener
 import aki.saki.practice.listener.PreventionListener
 import aki.saki.practice.listener.WorldListener
@@ -222,6 +223,12 @@ class PracticePlugin : JavaPlugin() {
             EventBanManager.load()
             logger.info("Loading DuelBanManager...")
             DuelBanManager.load()
+            logger.info("Loading MuteManager...")
+            MuteManager.load()
+            logger.info("Loading ReportManager...")
+            ReportManager.load()
+            logger.info("Loading CampManager...")
+            CampManager.load()
 
             logger.info("Initializing DailyWinStreakManager...")
             dailyWinstreakManager = DailyWinStreakManager(this)
@@ -326,7 +333,16 @@ class PracticePlugin : JavaPlugin() {
             "banffa" to BanFFACommand(),
             "banevent" to BanEventCommand(),
             "banduel" to BanDuelCommand(),
-            "theme" to ThemeCommand()
+            "mute" to MuteCommand(),
+            "stats" to StatsCommand(),
+            "spectators" to SpectatorsCommand(),
+            "rematch" to RematchCommand(),
+            "theme" to ThemeCommand(),
+            "report" to ReportCommand(),
+            "reports" to ReportsCommand(),
+            "history" to HistoryCommand(),
+            "mission" to MissionCommand(),
+            "ping" to PingCommand()
         )
 
         commands.forEach { (name, command) ->
@@ -357,6 +373,7 @@ class PracticePlugin : JavaPlugin() {
             registerEvents(KitEditorListener, this@PracticePlugin)
             registerEvents(PreventionListener, this@PracticePlugin)
             registerEvents(MoveListener, this@PracticePlugin)
+            registerEvents(ChatListener, this@PracticePlugin)
             registerEvents(ItemListener(), this@PracticePlugin)
         }
     }

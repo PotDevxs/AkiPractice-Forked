@@ -42,7 +42,12 @@ object QueueManager {
         val queue = findQueue(kit, queueType) ?: return
 
         val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
-        val queuePlayer = QueuePlayer(player.uniqueId, player.name ?: "", queue, 0).apply {
+        val settings = PracticePlugin.instance.settingsFile
+        val maxPing = if (queueType == QueueType.RANKED) settings.getInt("QUEUE.RANKED-MAX-PING") else 0
+        val initialRange = settings.getInt("QUEUE.INITIAL-ELO-RANGE").takeIf { it > 0 } ?: 25
+        val rangeStep = settings.getInt("QUEUE.ELO-RANGE-STEP").takeIf { it > 0 } ?: 5
+        val priority = player.hasPermission("practice.queue.priority")
+        val queuePlayer = QueuePlayer(player.uniqueId, player.name ?: "", queue, maxPing, 0, initialRange, rangeStep, priority).apply {
             elo = profile.getKitStatistic(queue.kit.name)?.elo ?: 0
         }
 
