@@ -34,7 +34,7 @@ import org.bukkit.inventory.ItemStack
 class PartyDuelKitSelectMenu: Menu() {
 
     override fun getTitle(p0: Player?): String {
-        return "Select a kit"
+        return "Selecione um kit"
     }
 
     override fun onClose(player: Player?) {
@@ -63,7 +63,7 @@ class PartyDuelKitSelectMenu: Menu() {
                         val duelProcedure = PartyDuelProcedure.getByUUID(player.uniqueId)
 
                         if (duelProcedure == null) {
-                            player.sendMessage("${CC.RED}Something went wrong!")
+                            player.sendMessage("${CC.RED}Algo deu errado!")
                             player.closeInventory()
                             return
                         }
@@ -77,7 +77,7 @@ class PartyDuelKitSelectMenu: Menu() {
                             val arena = ArenaManager.getFreeArena(kit)
 
                             if (arena == null) {
-                                player.sendMessage("${CC.RED}There is no free arena!")
+                                player.sendMessage("${CC.RED}Não há arena livre!")
                                 isClosedByMenu = false
                                 player.closeInventory()
                                 return
@@ -89,7 +89,7 @@ class PartyDuelKitSelectMenu: Menu() {
 
                             duelProcedure.create().send()
 
-                            player.sendMessage("${CC.GREEN}Successfully sent duel request!")
+                            player.sendMessage("${CC.GREEN}Convite de duelo enviado com sucesso!")
 
                         }
 

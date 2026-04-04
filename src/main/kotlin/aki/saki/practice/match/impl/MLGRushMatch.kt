@@ -60,7 +60,7 @@ class MLGRushMatch(kit: Kit, arena: Arena, ranked: Boolean) : TeamMatch(kit, are
 
         if (event.block.type == Material.BED || event.block.type == Material.BED_BLOCK) {
             if (player.bedLocations.contains(event.block.location)) {
-                player.player.sendMessage("${CC.RED}You cannot break your own bed.")
+                player.player.sendMessage("${CC.RED}Você não pode quebrar sua própria cama.")
                 event.isCancelled = true
                 return
             }
@@ -176,7 +176,7 @@ class MLGRushMatch(kit: Kit, arena: Arena, ranked: Boolean) : TeamMatch(kit, are
                     null,
                     6
                 ) {
-                    player.sendMessage("${CC.PRIMARY}Round started!")
+                    player.sendMessage("${CC.PRIMARY}Rodada iniciada!")
                     matchState = MatchState.FIGHTING
                     PlayerUtil.allowMovement(player)
                 })

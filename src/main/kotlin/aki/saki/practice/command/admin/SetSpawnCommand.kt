@@ -37,6 +37,6 @@ class SetSpawnCommand {
         PracticePlugin.instance.settingsFile.config.set("SPAWN", LocationUtil.serialize(player.location))
         PracticePlugin.instance.settingsFile.save()
 
-        player.sendMessage("${CC.GREEN}Successfully set spawn!")
+        player.sendMessage("${CC.GREEN}Spawn definido com sucesso!")
     }
 }

@@ -61,7 +61,7 @@ class TNTTagEvent(host: UUID, eventMap: EventMap) : Event(host, eventMap) {
             }
             tagger.player.updateInventory()
 
-            sendMessage("${CC.SECONDARY}${tagger.player.name}${CC.PRIMARY} is the tagger!")
+            sendMessage("${CC.SECONDARY}${tagger.player.name}${CC.PRIMARY} está com a TNT!")
         }, 6 * 20L)
 
         for (eventPlayer in playingPlayers) {
@@ -69,10 +69,10 @@ class TNTTagEvent(host: UUID, eventMap: EventMap) : Event(host, eventMap) {
 
             countdowns.add(Countdown(
                 eventPlayer.player,
-                "&aRound $round starting in <seconds> seconds!",
+                "&aRound $round começando em  <seconds> segundos!",
                 6
             ) {
-                eventPlayer.player.sendMessage("${CC.GREEN}Round started!")
+                eventPlayer.player.sendMessage("${CC.GREEN}Round iniciado!")
                 state = EventState.FIGHTING
 
                 started = System.currentTimeMillis()
@@ -110,7 +110,7 @@ class TNTTagEvent(host: UUID, eventMap: EventMap) : Event(host, eventMap) {
     }
 
     override fun handleDisconnect(eventPlayer: EventPlayer) {
-        sendMessage("${CC.SECONDARY}${eventPlayer.name}${CC.PRIMARY} disconnected.")
+        sendMessage("${CC.SECONDARY}${eventPlayer.name}${CC.PRIMARY} desconectou.")
 
         eventPlayer.dead = true
         eventPlayer.offline = true
@@ -130,7 +130,7 @@ class TNTTagEvent(host: UUID, eventMap: EventMap) : Event(host, eventMap) {
 
     override fun end(winner: EventPlayer?) {
         aki.saki.practice.event.EventRewardManager.giveWinnerReward(this, winner)
-        Bukkit.broadcastMessage("${CC.GREEN}${if (winner != null) winner.player.name else "N/A"} won the event!")
+        Bukkit.broadcastMessage("${CC.GREEN}${if (winner != null) winner.player.name else "N/D"} venceu o evento!")
 
         players.forEach {
             forceRemove(it)

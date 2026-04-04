@@ -105,7 +105,7 @@ class FireballFightMatch(kit: Kit, arena: Arena, ranked: Boolean): TeamMatch(kit
         if (event.block.type == Material.BED || event.block.type == Material.BED_BLOCK) {
 
             if (matchPlayer.bedLocations.contains(event.block.location)) {
-                event.player.sendMessage("${CC.RED}You cannot break your own bed.")
+                event.player.sendMessage("${CC.RED}Você não pode quebrar sua própria cama.")
                 return
             }
 

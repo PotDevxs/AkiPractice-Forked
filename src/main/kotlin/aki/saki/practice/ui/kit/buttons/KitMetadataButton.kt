@@ -34,10 +34,10 @@ class KitMetadataButton(
     override fun getButtonItem(p0: Player?): ItemStack {
         return ItemBuilder(Material.ENCHANTED_BOOK)
             .enchantment(Enchantment.DURABILITY, 10)
-            .name("&b&lKit Metadata")
+            .name("&b&lMetadados do kit")
             .lore(listOf(
                 "",
-                "&7Click to edit the metadata of this kit",
+                "&7Clique para editar os metadados deste kit",
                 "&7this option is for enable or disable some values",
                 ""
             ))

@@ -35,7 +35,7 @@ import rip.katz.api.utils.ItemBuilder
 
 class KitMenu: PaginatedMenu() {
     override fun getPrePaginatedTitle(p0: Player): String {
-        return CC.color("&bKit menu editor!")
+        return CC.color("&bMenu de kits!")
     }
 
     override fun getAllPagesButtons(p0: Player): MutableMap<Int, Button> {
@@ -51,7 +51,7 @@ class KitMenu: PaginatedMenu() {
                         .lore(CC.color(
                             listOf(
                                 "",
-                                "&7Click to edit this kit!"
+                                "&7Clique para editar este kit!"
                             )))
                         .build()
                 }
@@ -61,7 +61,7 @@ class KitMenu: PaginatedMenu() {
                         KitCommandMenuEditor(kit).openMenu(player)
                     } else if (clickType.isRightClick) {
                         PracticePlugin.instance.kitManager.deleteKit(kit.name)
-                        player.sendMessage(CC.color("&aThe kit has been successfully deleted!"))
+                        player.sendMessage(CC.color("&aO kit foi removido com sucesso!"))
                     }
                 }
             }
@@ -75,7 +75,7 @@ class KitMenu: PaginatedMenu() {
         buttons[4] = object : Button () {
             override fun getButtonItem(p0: Player?): ItemStack {
                 return ItemBuilder(Material.GOLD_NUGGET)
-                    .name("&bClick here to create a kit!")
+                    .name("&bClique aqui para criar um kit!")
                     .build()
             }
 
@@ -84,7 +84,7 @@ class KitMenu: PaginatedMenu() {
                 player.beginConversation(
                     ConversationFactory(PracticePlugin.instance).withModality(true).withPrefix(NullConversationPrefix())
                         .withFirstPrompt(KitCreatePrompt(player)).withEscapeSequence("/no").withLocalEcho(false)
-                        .withTimeout(25).thatExcludesNonPlayersWithMessage("Go away evil console").buildConversation(player)
+                        .withTimeout(25).thatExcludesNonPlayersWithMessage("Somente jogadores podem usar isso").buildConversation(player)
                 )
             }
         }

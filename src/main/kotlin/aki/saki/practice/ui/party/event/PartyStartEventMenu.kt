@@ -34,7 +34,7 @@ import org.bukkit.inventory.ItemStack
 class PartyStartEventMenu: Menu() {
 
     override fun getTitle(player: Player): String {
-        return "Start a party event!"
+        return "Iniciar evento do grupo!"
     }
 
     override fun getSize(): Int {
@@ -63,7 +63,7 @@ class PartyStartEventMenu: Menu() {
 
                             PartyFFAKitSelect(party!!).openMenu(player)
                         }else {
-                            player.sendMessage("${CC.RED}Only party leader can start party events!")
+                            player.sendMessage("${CC.RED}Apenas o líder do grupo pode iniciar eventos do grupo!")
                         }
                     }
                 }
@@ -90,7 +90,7 @@ class PartyStartEventMenu: Menu() {
                             PartySplitKitSelect(party!!).openMenu(player)
 
                         }else {
-                            player.sendMessage("${CC.RED}Only party leader can start party events!")
+                            player.sendMessage("${CC.RED}Apenas o líder do grupo pode iniciar eventos do grupo!")
                         }
                     }
                 }

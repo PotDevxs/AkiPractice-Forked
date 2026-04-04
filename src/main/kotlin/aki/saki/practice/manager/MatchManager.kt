@@ -8,14 +8,12 @@
  */
 package aki.saki.practice.manager
 
-import dev.yek4h.spigot.knockback.KnockbackAPI
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.arena.Arena
 import aki.saki.practice.arena.type.ArenaType
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.match.Match
 import aki.saki.practice.match.impl.*
-import aki.saki.practice.profile.Profile
 import aki.saki.practice.profile.ProfileState
 import aki.saki.practice.profile.hotbar.Hotbar
 import aki.saki.practice.queue.QueueType
@@ -23,6 +21,7 @@ import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
 import aki.saki.practice.utils.PlayerUtil
 import aki.saki.practice.utils.item.CustomItemStack
+import dev.yek4h.spigot.knockback.KnockbackAPI
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -96,8 +95,8 @@ object MatchManager {
     }
 
     private fun generateMatchMessage(firstPlayer: Player, secondPlayer: Player, ranked: Boolean, arena: Arena, kit: Kit, friendly: Boolean) {
-        val messageType = if (ranked) "Competitive" else "Casual"
-        val msg = if (friendly) "Private" else messageType
+        val messageType = if (ranked) "Competitivo" else "Casual"
+        val msg = if (friendly) "Privado" else messageType
         val firstPlayerPing = PlayerUtil.getPing(secondPlayer)
         val secondPlayerPing = PlayerUtil.getPing(firstPlayer)
 
@@ -107,8 +106,8 @@ object MatchManager {
         listOf(firstPlayer, secondPlayer).forEach { player ->
             player.sendMessage(" ")
             player.sendMessage("${CC.PRIMARY}${CC.BOLD}$msg ${kit.name}")
-            player.sendMessage("${CC.PRIMARY} Map: ${CC.SECONDARY}${arena.name}")
-            player.sendMessage("${CC.PRIMARY} Opponent: ${CC.RED}${if (player == firstPlayer) secondPlayer.name else firstPlayer.name}")
+            player.sendMessage("${CC.PRIMARY} Mapa: ${CC.SECONDARY}${arena.name}")
+            player.sendMessage("${CC.PRIMARY} Oponente: ${CC.RED}${if (player == firstPlayer) secondPlayer.name else firstPlayer.name}")
             player.sendMessage("${CC.PRIMARY} Ping: ${CC.RED}${if (player == firstPlayer) firstPlayerPing else secondPlayerPing} ms")
             if (ranked) {
                 player.sendMessage("${CC.PRIMARY} ELO: ${CC.SECONDARY}${if (player == firstPlayer) secondPlayerElo else firstPlayerElo}")
@@ -211,7 +210,7 @@ object MatchManager {
     }
 
     fun createReQueueItem(player: Player, match: Match) {
-        val item = CustomItemStack(player.uniqueId, ItemBuilder(Material.PAPER).name("${CC.SECONDARY}Play again!").build())
+        val item = CustomItemStack(player.uniqueId, ItemBuilder(Material.PAPER).name("${CC.SECONDARY}Jogar novamente!").build())
         item.apply {
             rightClick = true
             removeOnClick = true
@@ -223,7 +222,7 @@ object MatchManager {
             }
         }
         item.create()
-        player.inventory.setItemInHand(item.itemStack)
+        player.inventory.itemInHand = item.itemStack
         player.updateInventory()
     }
 }

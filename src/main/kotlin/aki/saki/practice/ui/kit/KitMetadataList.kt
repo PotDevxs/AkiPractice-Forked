@@ -35,7 +35,7 @@ import rip.katz.api.utils.ItemBuilder
 class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
 
     override fun getPrePaginatedTitle(p0: Player?): String {
-        return CC.color("&b&lKit Metadata Editor")
+        return CC.color("&b&lEditor de metadados do kit")
     }
 
     override fun isUpdateAfterClick(): Boolean {
@@ -63,29 +63,29 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
         buttons[1] = KitInfoButton(kit)
         buttons[10] = KitDescriptionButton(kit)
 
-        buttons[3] = createToggleButton(Material.DIAMOND_SWORD, "&b&lRanked Mode", "&7This value toggles if the kit can be playable on ranked to win elo", kit.ranked) {
+        buttons[3] = createToggleButton(Material.DIAMOND_SWORD, "&b&lModo competitivo", "&7Define se o kit pode ser jogado no competitivo para ganhar ELO", kit.ranked) {
             kit.ranked = !kit.ranked
         }
 
-        buttons[4] = createToggleButton(Material.COOKED_BEEF, "&b&lNo Hunger Value", "&7This value enables or disables the hunger on the matches using this kit", kit.hunger) {
+        buttons[4] = createToggleButton(Material.COOKED_BEEF, "&b&lSem fome", "&7Ativa ou desativa a fome nas partidas com este kit", kit.hunger) {
             kit.hunger = !kit.hunger
         }
 
-        buttons[5] = createInfoButton(Material.INK_SACK, 11, "&b&lPlayable on Party", "&7This value toggles if the kit can be playable on Party Games", "&bWe're working on this feature!")
+        buttons[5] = createInfoButton(Material.INK_SACK, 11, "&b&lJogável em grupo", "&7Define se o kit pode ser usado em jogos de grupo", "&bEstamos trabalhando nessa função!")
 
-        buttons[6] = createInfoButton(Material.INK_SACK, 3, "&b&lPlayable on Party FFA", "&7This value toggles if the kit can be playable on Party FFA Games", "&bWe're working on this feature!")
+        buttons[6] = createInfoButton(Material.INK_SACK, 3, "&b&lJogável em grupo FFA", "&7Define se o kit pode ser usado em FFA de grupo", "&bEstamos trabalhando nessa função!")
 
-        buttons[7] = createToggleButton(Material.BED, "&b&lBedFight", "&7This value enables bed fights. The first player breaking the bed of the opponent can do a final kill and win the match. Funny, no?", kit.bedFights) {
+        buttons[7] = createToggleButton(Material.BED, "&b&lBedFight", "&7Ativa BedFight. O primeiro jogador que quebrar a cama do oponente poderá dar o abate final e vencer a partida.", kit.bedFights) {
             kit.bedFights = !kit.bedFights
         }
 
-        buttons[12] = createInfoButton(Material.NAME_TAG, 0, "&b&lKnockback Select", "&7Click to select what knockback you want for your kit. This value enables custom knockbacks in a match!", "&bThe current knockback set for this kit is: &cnull")
+        buttons[12] = createInfoButton(Material.NAME_TAG, 0, "&b&lSelecionar knockback", "&7Clique para selecionar o knockback do seu kit. Isso ativa knockbacks personalizados na partida!", "&bO knockback atual deste kit é: &cnull")
 
-        buttons[14] = createToggleButton(Material.FEATHER, "&b&lNo Fall Damage Value", "&7This value enables or disables the fall damage on the matches using this kit.", kit.fallDamage) {
+        buttons[14] = createToggleButton(Material.FEATHER, "&b&lSem dano de queda", "&7Ativa ou desativa o dano de queda nas partidas com este kit.", kit.fallDamage) {
             kit.fallDamage = !kit.fallDamage
         }
 
-        buttons[16] = createToggleButton(Material.WOOD, "&b&lBuild Mode", "&7This value enables the build mode. With this, you can build in the match. &cTHIS VALUE REQUIRES STANDALONE ARENAS", kit.build) {
+        buttons[16] = createToggleButton(Material.WOOD, "&b&lModo construção", "&7Ativa o modo construção. Com isso, você pode construir na partida. &cESTE VALOR EXIGE ARENAS STANDALONE", kit.build) {
             kit.build = !kit.build
         }
 
@@ -94,21 +94,21 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
 
         buttons[21] = createInfoButton(Material.WATER_LILY, 0, "&b&lBattle Rush", "", "&cWe're working on this, sorry :c")
 
-        buttons[22] = createToggleButton(Material.DIAMOND_CHESTPLATE, "&b&lBoxing Mode", "&7This value enables the boxing type to a kit. When boxing is enabled, the first player who reaches 100 hits will win :D", kit.boxing) {
+        buttons[22] = createToggleButton(Material.DIAMOND_CHESTPLATE, "&b&lModo boxing", "&7Ativa o modo boxing para o kit. Quando boxing está ativo, o primeiro jogador a alcançar 100 hits vence :D", kit.boxing) {
             kit.boxing = !kit.boxing
         }
 
-        buttons[23] = createInfoButton(Material.DIAMOND_HOE, 0, "&b&lSpleef Mode", "&7This value enables the spleef mode. You can make your opponent fall down using shovels!", "&cWe're working on this :c sorry!")
+        buttons[23] = createInfoButton(Material.DIAMOND_HOE, 0, "&b&lModo spleef", "&7Ativa o modo spleef. Você pode derrubar seu oponente usando pás!", "&cAinda estamos trabalhando nisso :c desculpe!")
 
-        buttons[24] = createToggleButton(Material.FENCE, "&b&lHCF Mode", "&7Enables the build on the fight and the players need to trap the opponent and kill him to win", kit.hcf) {
+        buttons[24] = createToggleButton(Material.FENCE, "&b&lModo HCF", "&7Ativa construção na luta e os jogadores precisam prender o oponente e matá-lo para vencer", kit.hcf) {
             kit.hcf = !kit.hcf
         }
 
-        buttons[25] = createToggleButton(Material.WATER_BUCKET, "&b&lMLGRush Mode", "&7Enables MLGRush mode.", kit.mlgRush) {
+        buttons[25] = createToggleButton(Material.WATER_BUCKET, "&b&lModo MLGRush", "&7Ativa o modo MLGRush.", kit.mlgRush) {
             kit.mlgRush = !kit.mlgRush
         }
 
-        buttons[31] = createToggleButton(Material.LEASH, "&b&lSumo Mode", "&7This value enables the sumo mode. If you fall down from the platform into the water, you will die.", kit.sumo) {
+        buttons[31] = createToggleButton(Material.LEASH, "&b&lModo sumô", "&7Ativa o modo sumô. Se você cair da plataforma na água, morrerá.", kit.sumo) {
             kit.sumo = !kit.sumo
         }
 
@@ -117,8 +117,8 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
                 return ItemBuilder(Material.RAW_FISH).durability(3)
                     .name("&b&lDamage Ticks Value")
                     .lore(CC.color(listOf(
-                        "&7This values modifies the damageticks value in kits",
-                        "&7Current value: &f${kit.damageTicks}"
+                        "&7Esse valor modifica o damageticks dos kits",
+                        "&7Valor atual: &f${kit.damageTicks}"
                     )))
                     .build()
             }
@@ -143,17 +143,17 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
     private fun createToggleButton(material: Material, name: String, description: String, value: Boolean, toggleAction: () -> Unit): Button {
         return object : Button() {
             override fun getButtonItem(p0: Player?): ItemStack {
-                val status = if (value) "&aEnabled" else "&cDisabled"
+                val status = if (value) "&aAtivado" else "&cDesativado"
                 return ItemBuilder(material)
                     .name(CC.color(name))
-                    .lore("", CC.color(description), "", "&bThe current value is: $status", "")
+                    .lore("", CC.color(description), "", "&bO valor atual é: $status", "")
                     .build()
             }
 
             override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 PracticePlugin.instance.kitManager.save()
                 toggleAction()
-                player.sendMessage(CC.color("$name is now: ${if (value) "&aEnabled" else "&cDisabled"}"))
+                player.sendMessage(CC.color("$name is now: ${if (value) "&aAtivado" else "&cDesativado"}"))
             }
         }
     }

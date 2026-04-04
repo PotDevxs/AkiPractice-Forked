@@ -38,7 +38,7 @@ class UnrankedQueueMenu : Menu() {
     }
 
     override fun getTitle(player: Player?): String {
-        return "Unranked Queue Menu"
+        return "Menu da fila casual"
     }
 
     override fun getSize(): Int {

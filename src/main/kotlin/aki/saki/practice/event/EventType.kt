@@ -20,5 +20,5 @@ package aki.saki.practice.event
 
 enum class EventType(val eventName: String) {
 
-    SUMO("Sumo"), BRACKETS("Brackets"), TNT_RUN("TNT Run"), TNT_TAG("TNT Tag"), UNKNOWN("Unknown")
+    SUMO("Sumo"), BRACKETS("Brackets"), TNT_RUN("TNT Run"), TNT_TAG("TNT Tag"), UNKNOWN("Desconhecido")
 }

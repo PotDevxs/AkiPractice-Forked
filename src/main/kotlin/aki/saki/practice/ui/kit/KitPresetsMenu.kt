@@ -37,7 +37,7 @@ class KitPresetsMenu(
     val player: Player
 ) : Menu() {
     override fun getTitle(p0: Player?): String {
-        return CC.translate("&bKit Preset")
+        return CC.translate("&bPreset de kit")
     }
 
     override fun getButtons(p0: Player?): MutableMap<Int, Button> {
@@ -48,43 +48,43 @@ class KitPresetsMenu(
 
         buttons[10] = createPresetButton(
             Material.POTION, "&b&lNoDebuff Preset", 16421,
-            listOf("", "&7Click to apply the NoDebuff preset to the &f${kit.name} &bkit", ""),
+            listOf("", "&7Clique para aplicar o preset NoDebuff ao kit &f${kit.name}&b", ""),
             createNoDebuffPreset()
         )
 
         buttons[12] = createPresetButton(
             Material.GOLDEN_APPLE, "&b&lGApple Preset", 1,
-            listOf("", "&7Click to enable the GApple preset to the ${kit.name} kit", ""),
+            listOf("", "&7Clique para aplicar o preset GApple ao kit ${kit.name}", ""),
             createGApplePreset()
         )
 
         buttons[14] = createPresetButton(
             Material.BED, "&b&lBedFight Preset", 0,
-            listOf("", "&7Click to enable the BedFight preset to the ${kit.name} kit", ""),
+            listOf("", "&7Clique para aplicar o preset BedFight ao kit ${kit.name}", ""),
             createBedFightPreset()
         )
 
         buttons[16] = createPresetButton(
             Material.FLINT_AND_STEEL, "&b&lClassic Kit", 0,
-            listOf("", "&7Click to enable the Classic preset to the ${kit.name} kit", ""),
+            listOf("", "&7Clique para aplicar o preset Classic ao kit ${kit.name}", ""),
             createClassicPreset()
         )
 
         buttons[20] = createPresetButton(
             Material.LAVA_BUCKET, "&b&lBuildUHC Preset", 0,
-            listOf("", "&7Click to enable the BuildUHC preset to the ${kit.name} kit", ""),
+            listOf("", "&7Clique para aplicar o preset BuildUHC ao kit ${kit.name}", ""),
             createBuildUHCPreset()
         )
 
         buttons[22] = createPresetButton(
             Material.DIAMOND_PICKAXE, "&b&lFinalUHC Preset", 0,
-            listOf("", "&7Click to enable the FinalUHC preset to the ${kit.name} kit", ""),
+            listOf("", "&7Clique para aplicar o preset FinalUHC ao kit ${kit.name}", ""),
             createFinalUHCPreset()
         )
 
         buttons[24] = createPresetButton(
             Material.FENCE, "&b&lHCF Preset", 0,
-            listOf("", "&7Click to enable the HCF preset to the ${kit.name} kit", ""),
+            listOf("", "&7Clique para aplicar o preset HCF ao kit ${kit.name}", ""),
             createHCFPreset()
         )
 
@@ -114,7 +114,7 @@ class KitPresetsMenu(
 
             override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 presetAction()
-                player.sendMessage(CC.translate("&aThe preset has been successfully set to the kit ${kit.name}"))
+                player.sendMessage(CC.translate("&aO preset foi aplicado com sucesso ao kit ${kit.name}"))
                 PracticePlugin.instance.kitManager.save()
                 player.closeInventory()
                 KitCommandMenuEditor(kit).openMenu(player)
@@ -246,7 +246,7 @@ class KitPresetsMenu(
                 Enchantment.ARROW_DAMAGE to 3
             ))
             val fishingRod = ItemStack(Material.FISHING_ROD)
-            val goldenHead = ItemBuilder(Material.GOLDEN_APPLE).name("&eGolden Head").amount(3).build()
+            val goldenHead = ItemBuilder(Material.GOLDEN_APPLE).name("&eCabeça dourada").amount(3).build()
             val apple = ItemStack(Material.GOLDEN_APPLE, 6)
             val lavaBucket = ItemStack(Material.LAVA_BUCKET)
             val waterBucket = ItemStack(Material.WATER_BUCKET)
@@ -375,7 +375,7 @@ class KitPresetsMenu(
                 Enchantment.DAMAGE_ALL to 3
             ))
             val fishingRod = ItemStack(Material.FISHING_ROD)
-            val goldenHead = ItemBuilder(Material.GOLDEN_APPLE).name("&eGolden Head").amount(4).build()
+            val goldenHead = ItemBuilder(Material.GOLDEN_APPLE).name("&eCabeça dourada").amount(4).build()
             val apple = ItemStack(Material.GOLDEN_APPLE, 24)
             val lavaBucket = ItemStack(Material.LAVA_BUCKET)
             val waterBucket = ItemStack(Material.WATER_BUCKET)

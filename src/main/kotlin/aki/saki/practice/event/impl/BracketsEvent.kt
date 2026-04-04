@@ -68,10 +68,10 @@ class BracketsEvent(host: UUID, eventMap: EventMap, val kit: Kit) : Event(host, 
 
             countdowns.add(Countdown(
                 eventPlayer.player,
-                "&aRound $round starting in <seconds> seconds!",
+                "&aRound $round começando em <seconds> segundos!",
                 6
             ) {
-                eventPlayer.player.sendMessage(CC.GREEN + "Round started!")
+                eventPlayer.player.sendMessage(CC.GREEN + "Round iniciado!")
                 state = EventState.FIGHTING
 
                 started = System.currentTimeMillis()
@@ -107,7 +107,7 @@ class BracketsEvent(host: UUID, eventMap: EventMap, val kit: Kit) : Event(host, 
 
     override fun end(winner: EventPlayer?) {
         aki.saki.practice.event.EventRewardManager.giveWinnerReward(this, winner)
-        Bukkit.broadcastMessage("${CC.GREEN}${if (winner != null) winner.player.name else "N/A"} won the event!")
+        Bukkit.broadcastMessage("${CC.GREEN}${if (winner != null) winner.player.name else "N/D"} venceu o evento!")
 
         players.forEach {
             forceRemove(it)

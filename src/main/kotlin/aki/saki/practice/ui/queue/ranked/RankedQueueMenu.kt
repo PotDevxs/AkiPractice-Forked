@@ -38,7 +38,7 @@ class RankedQueueMenu : Menu() {
         isAutoUpdate = true
     }
     override fun getTitle(player: Player?): String {
-        return CC.color("&7Ranked Queue Menu")
+        return CC.color("&7Menu da fila competitiva")
     }
 
     override fun getSize(): Int {

@@ -19,6 +19,6 @@ package aki.saki.practice.queue
 */
 
 enum class QueueType(val displayName: String) {
-    UNRANKED("Unranked"),
-    RANKED("Ranked");
+    UNRANKED("Casual"),
+    RANKED("Competitivo");
 }

@@ -34,7 +34,7 @@ import java.util.stream.Collectors
 class PartyInformationMenu(private val party: Party): Menu() {
 
     override fun getTitle(player: Player): String {
-        return "Party Information"
+        return "Informações do grupo"
     }
 
     override fun getSize(): Int {
@@ -51,9 +51,9 @@ class PartyInformationMenu(private val party: Party): Menu() {
         toReturn[10] = object : Button() {
 
             override fun getButtonItem(p0: Player?): ItemStack {
-                return ItemBuilder(Material.NETHER_STAR).name("${CC.PRIMARY}Party Leader")
+                return ItemBuilder(Material.NETHER_STAR).name("${CC.PRIMARY}Líder do grupo")
                     .lore(listOf(
-                        "${CC.PRIMARY}Leader: ${CC.SECONDARY}${Bukkit.getPlayer(party.leader).name}"
+                        "${CC.PRIMARY}Líder: ${CC.SECONDARY}${Bukkit.getPlayer(party.leader).name}"
                     )).build()
             }
         }
@@ -61,17 +61,17 @@ class PartyInformationMenu(private val party: Party): Menu() {
         toReturn[13] = object : Button() {
 
             override fun getButtonItem(player: Player?): ItemStack {
-                return ItemBuilder(Material.HOPPER).name("${CC.PRIMARY}Privacy")
+                return ItemBuilder(Material.HOPPER).name("${CC.PRIMARY}Privacidade")
                     .lore(listOf(
-                        if (party.partyType == PartyType.PRIVATE) "&a⚫ &ePrivate" else "&7⚫ &ePrivate",
-                        if (party.partyType == PartyType.PRIVATE) "&7⚫ &ePublic" else "&a⚫ &ePublic"
+                        if (party.partyType == PartyType.PRIVATE) "&a⚫ &ePrivado" else "&7⚫ &ePrivado",
+                        if (party.partyType == PartyType.PRIVATE) "&7⚫ &ePúblico" else "&a⚫ &ePúblico"
                     ))
                     .build()
             }
 
             override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
                 if (party.leader != player.uniqueId) {
-                    player.sendMessage("${CC.RED}You can't change the party's privacy mode!")
+                    player.sendMessage("${CC.RED}Você não pode alterar a privacidade do grupo!")
                     return
                 }
 
@@ -81,7 +81,7 @@ class PartyInformationMenu(private val party: Party): Menu() {
                     party.partyType = PartyType.PRIVATE
                 }
 
-                player.sendMessage("${CC.GREEN}Successfully changed privacy mode!")
+                player.sendMessage("${CC.GREEN}Privacidade do grupo alterada com sucesso!")
             }
 
             override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
@@ -92,9 +92,9 @@ class PartyInformationMenu(private val party: Party): Menu() {
         toReturn[16] = object : Button() {
 
             override fun getButtonItem(p0: Player?): ItemStack {
-                return ItemBuilder(Material.BOOK).name("${CC.PRIMARY}Players")
+                return ItemBuilder(Material.BOOK).name("${CC.PRIMARY}Jogadores")
                     .lore(listOf(
-                        "${CC.PRIMARY}Players in party: ${CC.SECONDARY}${Joiner.on("&7, ${CC.SECONDARY}").join(party.players.stream()
+                        "${CC.PRIMARY}Jogadores no grupo: ${CC.SECONDARY}${Joiner.on("&7, ${CC.SECONDARY}").join(party.players.stream()
                             .map { Bukkit.getPlayer(it).name }.collect(Collectors.toList()))}"
                     )).build()
             }

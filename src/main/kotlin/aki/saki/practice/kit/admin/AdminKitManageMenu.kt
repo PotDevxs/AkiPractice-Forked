@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack
 class AdminKitManageMenu(private val kit: Kit): Menu() {
 
     override fun getTitle(p0: Player?): String {
-        return "Managing ${kit.name} kit"
+        return "Gerenciando kit ${kit.name}"
     }
 
     override fun getSize(): Int {
@@ -34,7 +34,7 @@ class AdminKitManageMenu(private val kit: Kit): Menu() {
         toReturn[11] = object : Button() {
             override fun getButtonItem(p0: Player?): ItemStack {
                 return ItemBuilder(Material.NAME_TAG)
-                    .name("${CC.SECONDARY}Choose from our presets")
+                    .name("${CC.SECONDARY}Escolha um dos seus presets")
                     .build()
             }
 
@@ -46,7 +46,7 @@ class AdminKitManageMenu(private val kit: Kit): Menu() {
         toReturn[15] = object : Button() {
             override fun getButtonItem(p0: Player?): ItemStack {
                 return ItemBuilder(Material.REDSTONE_BLOCK)
-                    .name("${CC.SECONDARY}Settings")
+                    .name("${CC.SECONDARY}Configurações")
                     .build()
             }
 

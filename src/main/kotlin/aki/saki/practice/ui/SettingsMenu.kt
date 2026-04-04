@@ -33,7 +33,7 @@ import rip.katz.api.menu.Menu
 class SettingsMenu: Menu() {
 
     override fun getTitle(p0: Player?): String {
-        return "Settings"
+        return "Configurações"
     }
 
     override fun getButtons(player: Player): MutableMap<Int, Button> {
@@ -44,10 +44,10 @@ class SettingsMenu: Menu() {
         toReturn[0] = object : Button() {
 
             override fun getButtonItem(p0: Player?): ItemStack {
-                return ItemBuilder(Material.PAINTING).name("${CC.PRIMARY}Scoreboard")
+                return ItemBuilder(Material.PAINTING).name("${CC.PRIMARY}Placar")
                     .lore(listOf(
-                        if (settings?.scoreboard!!) "${CC.GREEN}⚫ Enabled" else "${CC.RED}⚫ Enabled",
-                        if (!settings.scoreboard) "${CC.GREEN}⚫ Disabled" else "${CC.RED}⚫ Disabled"
+                        if (settings?.scoreboard!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
+                        if (!settings.scoreboard) "${CC.GREEN}⚫ Desativado" else "${CC.RED}⚫ Desativado"
                     )).build()
             }
 
@@ -64,10 +64,10 @@ class SettingsMenu: Menu() {
         toReturn[1] = object : Button() {
 
             override fun getButtonItem(p0: Player?): ItemStack {
-                return ItemBuilder(Material.DIAMOND_SWORD).name("${CC.PRIMARY}Duels")
+                return ItemBuilder(Material.DIAMOND_SWORD).name("${CC.PRIMARY}Duelos")
                     .lore(listOf(
-                        if (settings?.duels!!) "${CC.GREEN}⚫ Enabled" else "${CC.RED}⚫ Enabled",
-                        if (!settings.duels) "${CC.GREEN}⚫ Disabled" else "${CC.RED}⚫ Disabled"
+                        if (settings?.duels!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
+                        if (!settings.duels) "${CC.GREEN}⚫ Desativado" else "${CC.RED}⚫ Desativado"
                     )).build()
             }
 
@@ -84,10 +84,10 @@ class SettingsMenu: Menu() {
         toReturn[2] = object : Button() {
 
             override fun getButtonItem(p0: Player?): ItemStack {
-                return ItemBuilder(Material.REDSTONE).name("${CC.PRIMARY}Spectators")
+                return ItemBuilder(Material.REDSTONE).name("${CC.PRIMARY}Espectadores")
                     .lore(listOf(
-                        if (settings?.spectators!!) "${CC.GREEN}⚫ Enabled" else "${CC.RED}⚫ Enabled",
-                        if (!settings.spectators) "${CC.GREEN}⚫ Disabled" else "${CC.RED}⚫ Disabled"
+                        if (settings?.spectators!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
+                        if (!settings.spectators) "${CC.GREEN}⚫ Desativado" else "${CC.RED}⚫ Desativado"
                     )).build()
             }
 
@@ -104,9 +104,9 @@ class SettingsMenu: Menu() {
         toReturn[3] = object : Button() {
 
             override fun getButtonItem(p0: Player?): ItemStack {
-                return ItemBuilder(Material.ENCHANTED_BOOK).name("${CC.PRIMARY}Ping Restriction")
+                return ItemBuilder(Material.ENCHANTED_BOOK).name("${CC.PRIMARY}Restrição de ping")
                     .lore(listOf(
-                        "${CC.PRIMARY}Ping Restriction: ${CC.SECONDARY}${if (settings?.pingRestriction == 0) "Unrestricted" else settings?.pingRestriction}"
+                        "${CC.PRIMARY}Restrição de ping: ${CC.SECONDARY}${if (settings?.pingRestriction == 0) "Sem limite" else settings?.pingRestriction}"
                     )).build()
             }
 
@@ -201,10 +201,10 @@ class SettingsMenu: Menu() {
         toReturn[4] = object : Button() {
 
             override fun getButtonItem(p0: Player?): ItemStack {
-                return ItemBuilder(Material.NETHER_STAR).name("${CC.PRIMARY}Map Rating")
+                return ItemBuilder(Material.NETHER_STAR).name("${CC.PRIMARY}Avaliação de mapa")
                     .lore(listOf(
-                        if (settings?.mapRating!!) "${CC.GREEN}⚫ Enabled" else "${CC.RED}⚫ Enabled",
-                        if (!settings.mapRating) "${CC.GREEN}⚫ Disabled" else "${CC.RED}⚫ Disabled"
+                        if (settings?.mapRating!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
+                        if (!settings.mapRating) "${CC.GREEN}⚫ Desativado" else "${CC.RED}⚫ Desativado"
                     )).build()
             }
 

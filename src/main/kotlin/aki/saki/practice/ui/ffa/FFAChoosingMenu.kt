@@ -51,7 +51,7 @@ class FFAChoosingMenu: Menu() {
 
                 override fun getButtonItem(p0: Player?): ItemStack {
                     return ItemBuilder(kit.displayItem.clone()).name("${CC.PRIMARY}${kit.name}")
-                        .lore("${CC.PRIMARY}Currently playing: ${CC.SECONDARY}${ffa.players.size}")
+                        .lore("${CC.PRIMARY}Jogando agora: ${CC.SECONDARY}${ffa.players.size}")
                         .build()
                 }
 
@@ -78,7 +78,7 @@ class FFAChoosingMenu: Menu() {
                         ffa.firstSetup(ffaPlayer)
 
                         player.closeInventory()
-                        player.sendMessage("${CC.GREEN}Successfully joined FFA!")
+                        player.sendMessage("${CC.GREEN}Você entrou no FFA com sucesso!")
                     }
                 }
             }

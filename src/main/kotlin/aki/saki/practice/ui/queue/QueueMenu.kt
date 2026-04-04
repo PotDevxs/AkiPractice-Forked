@@ -23,8 +23,8 @@ class QueueMenu(private val queueType: QueueType) : Menu() {
 
     override fun getTitle(player: Player?): String {
         return when (queueType) {
-            QueueType.RANKED -> "${CC.SECONDARY}${CC.BOLD}Ranked Queue"
-            QueueType.UNRANKED -> "${CC.SECONDARY}${CC.BOLD}Unranked Queue"
+            QueueType.RANKED -> "${CC.SECONDARY}${CC.BOLD}Fila Competitiva"
+            QueueType.UNRANKED -> "${CC.SECONDARY}${CC.BOLD}Fila Casual"
         }
     }
 

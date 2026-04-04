@@ -33,7 +33,7 @@ import org.bukkit.inventory.ItemStack
 class PartyDuelArenaSelectMenu: PaginatedMenu() {
 
     override fun getPrePaginatedTitle(p0: Player?): String {
-        return "Select an arena"
+        return "Selecione uma arena"
     }
 
     override fun onClose(player: Player?) {
@@ -70,13 +70,13 @@ class PartyDuelArenaSelectMenu: PaginatedMenu() {
                     if (clickType?.isLeftClick!!) {
 
                         if (duelProcedure == null) {
-                            player.sendMessage("${CC.RED}Something went wrong!")
+                            player.sendMessage("${CC.RED}Algo deu errado!")
                             player.closeInventory()
                             return
                         }
 
                         if (!arena.isFree()) {
-                            player.sendMessage("${CC.RED}This arena is not free!")
+                            player.sendMessage("${CC.RED}Essa arena não está livre!")
                             return
                         }
 
@@ -87,7 +87,7 @@ class PartyDuelArenaSelectMenu: PaginatedMenu() {
 
                         duelProcedure.create().send()
 
-                        player.sendMessage("${CC.GREEN}Successfully sent duel request!")
+                        player.sendMessage("${CC.GREEN}Convite de duelo enviado com sucesso!")
                     }
                 }
             }

@@ -35,12 +35,12 @@ class KitContentsButton(
 ): Button() {
     override fun getButtonItem(p0: Player?): ItemStack {
         return ItemBuilder(Material.DIAMOND_SWORD)
-            .name("&b&lContents Editor")
+            .name("&b&lEditor de conteúdo")
             .lore(listOf(
                 "",
-                "&7Click to edit the kit contents (includes armor and full inventory)",
-                "&cYOU MUST BE HAVE THE ARMOR EQUIPPED",
-                "&cIN YOUR INVENTORY",
+                "&7Clique para editar o conteúdo do kit (inclui armadura e inventário completo)",
+                "&cVOCÊ DEVE ESTAR COM A ARMADURA EQUIPADA",
+                "&cNO SEU INVENTÁRIO",
                 ""
             ))
             .build()
@@ -51,7 +51,7 @@ class KitContentsButton(
         player.beginConversation(
             ConversationFactory(PracticePlugin.instance).withModality(true).withPrefix(NullConversationPrefix())
                 .withFirstPrompt(KitContentsEditPrompt(kit, player)).withEscapeSequence("/no").withLocalEcho(false)
-                .withTimeout(25).thatExcludesNonPlayersWithMessage("Go away evil console").buildConversation(player)
+                .withTimeout(25).thatExcludesNonPlayersWithMessage("Somente jogadores podem usar isso").buildConversation(player)
         )
     }
 }

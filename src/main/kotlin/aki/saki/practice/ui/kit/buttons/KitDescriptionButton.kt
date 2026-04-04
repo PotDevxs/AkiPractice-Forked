@@ -30,36 +30,36 @@ class KitDescriptionButton(
 ) : Button() {
     override fun getButtonItem(player: Player?): ItemStack {
         val modes = mapOf(
-            "Ranked Mode" to kit.ranked,
-            "BedFights Mode" to kit.bedFights,
-            "Combo Mode" to kit.combo,
-            "Sumo Mode" to kit.sumo,
-            "Build Mode" to kit.build,
-            "HCF Mode" to kit.hcf,
-            "Boxing Mode" to kit.boxing,
-            "FFA Mode" to kit.ffa,
-            "MLGRush Mode" to kit.mlgRush,
-            "Bridge Mode" to kit.bridge,
-            "Fireball Fight Mode" to kit.fireballFight,
-            "Hunger Event" to kit.hunger,
-            "Regeneration Event" to kit.regeneration,
-            "Fall Damage Event" to kit.fallDamage
+            "Modo competitivo" to kit.ranked,
+            "Modo BedFights" to kit.bedFights,
+            "Modo combo" to kit.combo,
+            "Modo sumô" to kit.sumo,
+            "Modo construção" to kit.build,
+            "Modo HCF" to kit.hcf,
+            "Modo boxing" to kit.boxing,
+            "Modo FFA" to kit.ffa,
+            "Modo MLGRush" to kit.mlgRush,
+            "Modo bridge" to kit.bridge,
+            "Modo fireball fight" to kit.fireballFight,
+            "Fome" to kit.hunger,
+            "Regeneração" to kit.regeneration,
+            "Dano de queda" to kit.fallDamage
         )
 
         val modeDescriptions = modes.map { (mode, isEnabled) ->
-            "&b$mode: &f${if (isEnabled) "&atrue" else "&cfalse"}"
+            "&b$mode: &f${if (isEnabled) "&aSim" else "&cNão"}"
         }
 
         return ItemBuilder(Material.SIGN)
-            .name("&b&lKit Description")
+            .name("&b&lDescrição do kit")
             .lore(listOf(
                 "",
-                "&bYou're currently editing this kit!",
+                "&bVocê está editando este kit agora!",
                 "",
-                "&bKit name: &f${kit.name}",
-                "&bDisplay Name: &f${kit.displayName}",
-                "&bUnranked Position: &f${kit.unrankedPosition}",
-                "&bRanked Position: &f${kit.rankedPosition}"
+                "&bNome do kit: &f${kit.name}",
+                "&bNome de exibição: &f${kit.displayName}",
+                "&bPosição casual: &f${kit.unrankedPosition}",
+                "&bPosição competitiva: &f${kit.rankedPosition}"
             ) + modeDescriptions)
             .build()
     }

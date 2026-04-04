@@ -34,7 +34,7 @@ import org.bukkit.inventory.ItemStack
 class PartyPlayersMenu(private val party: Party) : PaginatedMenu() {
 
     override fun getPrePaginatedTitle(player: Player?): String {
-        return "Party Players"
+        return "Jogadores do grupo"
     }
 
     override fun getSize(): Int {
@@ -53,8 +53,8 @@ class PartyPlayersMenu(private val party: Party) : PaginatedMenu() {
                         .lore(
                             listOf(
                                 "",
-                                "&e&o(( left click to kick player ))",
-                                "&e&o(( right click to ban player ))"
+                                "&e&o(( clique esquerdo para expulsar ))",
+                                "&e&o(( clique direito para banir ))"
                             )
                         )
                         .skullBuilder()
@@ -64,7 +64,7 @@ class PartyPlayersMenu(private val party: Party) : PaginatedMenu() {
 
                 override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
                     if (player?.uniqueId != party.leader) {
-                        player?.sendMessage("${CC.RED}You can't do this!")
+                        player?.sendMessage("${CC.RED}Você não pode fazer isso!")
                         return
                     }
 
@@ -76,13 +76,13 @@ class PartyPlayersMenu(private val party: Party) : PaginatedMenu() {
                             party.players.remove(partyPlayer.uniqueId)
                             profile.party = null
                             Hotbar.giveHotbar(profile)
-                            party.sendMessage("${CC.SECONDARY}${partyPlayer.name}${CC.PRIMARY} has been banned from the party!")
+                            party.sendMessage("${CC.SECONDARY}${partyPlayer.name}${CC.PRIMARY} foi banido do grupo!")
                         }
                         clickType?.isLeftClick == true -> {
                             party.players.remove(partyPlayer.uniqueId)
                             profile.party = null
                             Hotbar.giveHotbar(profile)
-                            party.sendMessage("${CC.SECONDARY}${partyPlayer.name}${CC.PRIMARY} has been kicked from the party!")
+                            party.sendMessage("${CC.SECONDARY}${partyPlayer.name}${CC.PRIMARY} foi removido do grupo!")
                         }
                     }
 

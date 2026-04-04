@@ -39,7 +39,7 @@ class KitCommandMenuEditor(
     val kit: Kit
 ): Menu() {
     override fun getTitle(p0: Player?): String {
-         return CC.color("&bKit editor prompt!")
+         return CC.color("&bEditor de kits!")
     }
 
     override fun isUpdateAfterClick(): Boolean {

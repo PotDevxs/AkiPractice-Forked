@@ -34,10 +34,10 @@ class FFACommand {
     @Require("practice.command.ffa.setup")
     fun help(@Sender sender: CommandSender) {
         sender.sendMessage("""
-            ${CC.PRIMARY}FFA Commands:
-            ${CC.SECONDARY}/ffa spawn - Set the spawn of the FFA arena
-            ${CC.SECONDARY}/ffa min - Set the minimum point of the FFA safezone
-            ${CC.SECONDARY}/ffa max - Set the maximum point of the FFA safezone
+            ${CC.PRIMARY}Comandos de FFA:
+            ${CC.SECONDARY}/ffa spawn - Define o spawn da arena de FFA
+            ${CC.SECONDARY}/ffa min - Define o ponto mínimo da safezone do FFA
+            ${CC.SECONDARY}/ffa max - Define o ponto máximo da safezone do FFA
         """.trimIndent())
     }
 
@@ -48,7 +48,7 @@ class FFACommand {
         Constants.FFA_SPAWN = player.location
         PracticePlugin.instance.ffaFile.config.set("SPAWN", LocationUtil.serialize(player.location))
         PracticePlugin.instance.ffaFile.save()
-        player.sendMessage("${CC.GREEN}Successfully set FFA spawn point!")
+        player.sendMessage("${CC.GREEN}Spawn do FFA definido com sucesso!")
     }
 
     @Command(name = "min", desc = "Set the minimum point of the FFA safezone")
@@ -58,7 +58,7 @@ class FFACommand {
         Constants.MIN = player.location
         PracticePlugin.instance.ffaFile.config.set("SAFE-ZONE.MIN", LocationUtil.serialize(player.location))
         PracticePlugin.instance.ffaFile.save()
-        player.sendMessage("${CC.GREEN}Successfully set FFA min location!")
+        player.sendMessage("${CC.GREEN}Localização mínima do FFA definida com sucesso!")
         updateSafeZone()
     }
 
@@ -69,7 +69,7 @@ class FFACommand {
         Constants.MAX = player.location
         PracticePlugin.instance.ffaFile.config.set("SAFE-ZONE.MAX", LocationUtil.serialize(player.location))
         PracticePlugin.instance.ffaFile.save()
-        player.sendMessage("${CC.GREEN}Successfully set FFA max location!")
+        player.sendMessage("${CC.GREEN}Localização máxima do FFA definida com sucesso!")
         updateSafeZone()
     }
 

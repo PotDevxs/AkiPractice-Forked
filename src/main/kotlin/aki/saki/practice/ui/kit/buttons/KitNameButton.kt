@@ -36,12 +36,12 @@ class KitNameButton(
 ): Button() {
     override fun getButtonItem(p0: Player?): ItemStack {
         return ItemBuilder(Material.EMERALD)
-            .name("&bEdit the name")
+            .name("&bEditar nome")
             .lore(listOf(
                 "",
-                "&7Click to edit the name",
+                "&7Clique para editar o nome",
                 "",
-                "&eThe current name is: ${ChatColor.WHITE}${kit.name}",
+                "&eO nome atual é: ${ChatColor.WHITE}${kit.name}",
                 ""
             ))
             .build()
@@ -52,6 +52,6 @@ class KitNameButton(
         player.beginConversation(
             ConversationFactory(PracticePlugin.instance).withModality(true).withPrefix(NullConversationPrefix())
                 .withFirstPrompt(KitNameEditPrompt(kit, player)).withEscapeSequence("/no").withLocalEcho(false)
-                .withTimeout(25).thatExcludesNonPlayersWithMessage("Go away evil console!").buildConversation(player))
+                .withTimeout(25).thatExcludesNonPlayersWithMessage("Somente jogadores podem usar isso!").buildConversation(player))
     }
 }

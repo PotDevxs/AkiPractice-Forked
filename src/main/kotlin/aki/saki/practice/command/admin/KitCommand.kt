@@ -41,14 +41,14 @@ class KitCommand {
     @Require("practice.command.kit.setup")
     fun help(@Sender sender: CommandSender) {
         sender.sendMessage("""
-            ${CC.PRIMARY}Kit Commands:
-            ${CC.SECONDARY}/create <name> - Create a Kit
-            ${CC.SECONDARY}/content <kit> - Set the content of a Kit
-            ${CC.SECONDARY}/items <kit> - Receive the item of a Kit
-            ${CC.SECONDARY}/icon <kit> - Set the icon of a Kit
-            ${CC.SECONDARY}/displayname <kit> <name> - Set the display name of a Kit
-            ${CC.SECONDARY}/admin <kit> - Open the kit management menu
-            ${CC.SECONDARY}/manage - Open the general management menu
+            ${CC.PRIMARY}Comandos de kit:
+            ${CC.SECONDARY}/create <name> - Cria um kit
+            ${CC.SECONDARY}/content <kit> - Define o conteúdo de um kit
+            ${CC.SECONDARY}/items <kit> - Recebe os itens de um kit
+            ${CC.SECONDARY}/icon <kit> - Define o ícone de um kit
+            ${CC.SECONDARY}/displayname <kit> <name> - Define o nome de exibição de um kit
+            ${CC.SECONDARY}/admin <kit> - Abre o menu de gerenciamento do kit
+            ${CC.SECONDARY}/manage - Abre o menu geral de gerenciamento
         """.trimIndent())
     }
 
@@ -56,7 +56,7 @@ class KitCommand {
     @Require("practice.command.kit.create")
     fun create(@Sender sender: CommandSender, name: String) {
         if (PracticePlugin.instance.kitManager.getKit(name) != null) {
-            sender.sendMessage(CC.RED + "That kit already exists!")
+            sender.sendMessage(CC.RED + "Esse kit já existe!")
             return
         }
 
@@ -72,7 +72,7 @@ class KitCommand {
             }
         }
 
-        sender.sendMessage("${CC.PRIMARY}Successfully created ${CC.SECONDARY}$name${CC.PRIMARY}!")
+        sender.sendMessage("${CC.PRIMARY}Kit ${CC.SECONDARY}$name${CC.PRIMARY} criado com sucesso!")
     }
 
     @Command(name = "content", desc = "Set the content of a kit")
@@ -81,7 +81,7 @@ class KitCommand {
         val player = sender as? Player ?: return
 
         if (player.gameMode != GameMode.SURVIVAL) {
-            player.sendMessage("${CC.RED}You must be in survival mode to set inventory contents!")
+            player.sendMessage("${CC.RED}Você precisa estar no modo sobrevivência para definir o conteúdo do inventário!")
             return
         }
 
@@ -102,7 +102,7 @@ class KitCommand {
             }
         }
 
-        player.sendMessage("${CC.PRIMARY}Successfully set ${CC.SECONDARY}${kit.name}${CC.PRIMARY}'s item contents!")
+        player.sendMessage("${CC.PRIMARY}Conteúdo de itens do kit ${CC.SECONDARY}${kit.name}${CC.PRIMARY} definido com sucesso!")
     }
 
     @Command(name = "items", desc = "Receive the item of a Kit")
@@ -112,7 +112,7 @@ class KitCommand {
 
         player.inventory.contents = kit.content
         player.inventory.armorContents = kit.armorContent
-        player.sendMessage("${CC.PRIMARY}Successfully retrieved ${CC.SECONDARY}${kit.name}${CC.PRIMARY}'s item contents!")
+        player.sendMessage("${CC.PRIMARY}Conteúdo de itens do kit ${CC.SECONDARY}${kit.name}${CC.PRIMARY} carregado com sucesso!")
     }
 
     @Command(name = "kb", desc = "Receive the item of a Kit")
@@ -121,7 +121,7 @@ class KitCommand {
         val player = sender as? Player ?: return
 
         kit.knockbackProfile = string
-        player.sendMessage("${CC.PRIMARY}Successfully set ${CC.SECONDARY}${kit.name}${CC.PRIMARY} the kb named ${CC.SECONDARY}$string${CC.PRIMARY}!")
+        player.sendMessage("${CC.PRIMARY}KB do kit ${CC.SECONDARY}${kit.name}${CC.PRIMARY} definido para ${CC.SECONDARY}$string${CC.PRIMARY} com sucesso!")
     }
 
     @Command(name = "icon", desc = "Set the icon of a Kit")
@@ -130,7 +130,7 @@ class KitCommand {
         val player = sender as? Player ?: return
 
         if (player.itemInHand == null || player.itemInHand.type == Material.AIR) {
-            player.sendMessage("${CC.RED}You are not holding an item!")
+            player.sendMessage("${CC.RED}Você não está segurando nenhum item!")
             return
         }
         kit.displayItem = player.itemInHand
@@ -140,7 +140,7 @@ class KitCommand {
             queue.kit.displayItem = player.itemInHand
         }
 
-        player.sendMessage("${CC.PRIMARY}Successfully set ${CC.SECONDARY}${kit.name}${CC.PRIMARY}'s display item!")
+        player.sendMessage("${CC.PRIMARY}Item de exibição do kit ${CC.SECONDARY}${kit.name}${CC.PRIMARY} definido com sucesso!")
     }
 
     @Command(name = "admin", desc = "Open the kit management menu")
@@ -156,7 +156,7 @@ class KitCommand {
         val player = sender as? Player ?: return
 
         kit.displayName = name
-        player.sendMessage("${CC.YELLOW}You have updated ${CC.AQUA}${kit.name}${CC.YELLOW} to display as ${CC.GREEN}${kit.displayName}")
+        player.sendMessage("${CC.YELLOW}Você atualizou ${CC.AQUA}${kit.name}${CC.YELLOW} para exibir como ${CC.GREEN}${kit.displayName}")
     }
 
     @Command(name = "manage", desc = "Open the general management menu")

@@ -34,20 +34,20 @@ class KitQueuePosButton(
 
     override fun getButtonItem(player: Player?): ItemStack {
         val unrankedOrNot = PracticePlugin.instance.kitManager.unrankedOrNot
-        val positionType = if (unrankedOrNot) "&aUnranked" else "&cRanked"
+        val positionType = if (unrankedOrNot) "&aCasual" else "&cCompetitivo"
         val position = if (unrankedOrNot) kit.unrankedPosition else kit.rankedPosition
         return ItemBuilder(Material.NETHER_STAR)
-            .name("&b&lQueue Position Editor &7($positionType&7)")
+            .name("&b&lEditor de posição da fila &7($positionType&7)")
             .lore(listOf(
                 "",
-                "&7Left-Click to add a value",
-                "&7Right-Click to subtract a value",
-                "&7Shift-Click to switch between Unranked and Ranked Menu position",
+                "&7Clique esquerdo para adicionar um valor",
+                "&7Clique direito para diminuir um valor",
+                "&7Shift + clique para alternar entre a posição do menu casual e competitivo",
                 "",
-                "&cWHEN YOU MODIFY THIS VALUE YOU NEED TO RESTART",
-                "&cTHE SERVER TO APPLY CHANGES!",
+                "&cQUANDO VOCÊ ALTERAR ESTE VALOR, SERÁ NECESSÁRIO REINICIAR",
+                "&cO SERVIDOR PARA APLICAR AS MUDANÇAS!",
                 "",
-                "${if (unrankedOrNot) "&aUnranked" else "&cRanked"} &eMenu Position: &f$position",
+                "${if (unrankedOrNot) "&aCasual" else "&cCompetitivo"} &ePosição no menu: &f$position",
                 ""
             ))
             .build()

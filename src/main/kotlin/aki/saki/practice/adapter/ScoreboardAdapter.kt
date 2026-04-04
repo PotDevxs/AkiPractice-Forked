@@ -117,7 +117,7 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
             configFile.getStringList("scoreboard.party.lobby").stream()
                 .map { CC.translate(it.replacePlaceholders()
                     .replace("<partyLeader>", Bukkit.getPlayer(party!!.leader).name)
-                    .replace("<status>", if (party.partyType == PartyType.PRIVATE) "&cLocked ✘" else "&aOpen ✔")
+                    .replace("<status>", if (party.partyType == PartyType.PRIVATE) "&cFechado ✘" else "&aAberto ✔")
                     .replace("<partyPlayers>", party.players.size.toString())) }
                 .collect(Collectors.toList())
         } else {
@@ -198,8 +198,8 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
                         it.replacePlaceholders()
                             .replace("<state>", event.state.stateName)
                             .replace("<type>", event.type.eventName)
-                            .replace("<playing1>", event.playingPlayers.getOrNull(0)?.player?.name ?: "N/A")
-                            .replace("<playing2>", event.playingPlayers.getOrNull(1)?.player?.name ?: "N/A")
+                            .replace("<playing1>", event.playingPlayers.getOrNull(0)?.player?.name ?: "N/D")
+                            .replace("<playing2>", event.playingPlayers.getOrNull(1)?.player?.name ?: "N/D")
                     )
                 }
                 .collect(Collectors.toList())
@@ -284,8 +284,8 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
         val alive = "✔"
         val matchPlayer = match.getMatchPlayer(player.uniqueId) as TeamMatchPlayer
         val team = match.getTeam(matchPlayer.teamUniqueId)
-        val red = match.teams.find { it.name.equals("Red", true) }?.let { "${if (it.broken) "${CC.RED}${it.alivePlayers()}" else "${CC.GREEN}$alive"} ${if (it.uuid == team!!.uuid) "${CC.GRAY}YOU" else ""}" } ?: ""
-        val blue = match.teams.find { it.name.equals("Blue", true) }?.let { "${if (it.broken) "${CC.BLUE}${it.alivePlayers()}" else "${CC.GREEN}$alive"} ${if (it.uuid == team!!.uuid) "${CC.GRAY}YOU" else ""}" } ?: ""
+        val red = match.teams.find { it.name.equals("Red", true) }?.let { "${if (it.broken) "${CC.RED}${it.alivePlayers()}" else "${CC.GREEN}$alive"} ${if (it.uuid == team!!.uuid) "${CC.GRAY}VOCÊ" else ""}" } ?: ""
+        val blue = match.teams.find { it.name.equals("Blue", true) }?.let { "${if (it.broken) "${CC.BLUE}${it.alivePlayers()}" else "${CC.GREEN}$alive"} ${if (it.uuid == team!!.uuid) "${CC.GRAY}VOCÊ" else ""}" } ?: ""
 
         return configFile.getStringList("scoreboard.bedfight").stream()
             .map {
@@ -384,11 +384,11 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
 
             val opponentName = match.getOpponentString(player.uniqueId)
             val opponent = if (opponentName != null) Bukkit.getPlayer(opponentName) else null
-            val playerPing = (player as? CraftPlayer)?.handle?.ping?.toString() ?: "N/A"
+            val playerPing = (player as? CraftPlayer)?.handle?.ping?.toString() ?: "N/D"
             val opponentPing = if (opponent != null && opponent is CraftPlayer) {
                 opponent.handle.ping.toString()
             } else {
-                "N/A"
+                "N/D"
             }
 
             return configFile.getStringList(matchSection).stream()
@@ -397,7 +397,7 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
                         it.replacePlaceholders()
                             .replace("<enemys>", match.getAlivePlayers().joinToString(", "))
                             .replace("<player>", player.name)
-                            .replace("<opponent>", opponentName ?: "Unknown")
+                            .replace("<opponent>", opponentName ?: "Desconhecido")
                             .replace("<kit>", match.kit.name)
                             .replace("<time>", match.getTime())
                             .replace("<ping>", playerPing)
@@ -415,11 +415,11 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
 
         val opponentName = match.getOpponentString(player.uniqueId)
         val opponent = if (opponentName != null) Bukkit.getPlayer(opponentName) else null
-        val playerPing = (player as? CraftPlayer)?.handle?.ping?.toString() ?: "N/A"
+        val playerPing = (player as? CraftPlayer)?.handle?.ping?.toString() ?: "N/D"
         val opponentPing = if (opponent != null && opponent is CraftPlayer) {
             opponent.handle.ping.toString()
         } else {
-            "N/A"
+            "N/D"
         }
 
         return configFile.getStringList(matchSection).stream()
@@ -427,7 +427,7 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
                 CC.translate(
                     it.replacePlaceholders()
                         .replace("<player>", player.name)
-                        .replace("<opponent>", opponentName ?: "Unknown")
+                        .replace("<opponent>", opponentName ?: "Desconhecido")
                         .replace("<kit>", match.kit.name)
                         .replace("<time>", match.getTime())
                         .replace("<ping>", playerPing)

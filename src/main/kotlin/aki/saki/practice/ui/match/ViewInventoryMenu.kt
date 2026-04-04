@@ -32,7 +32,7 @@ import kotlin.math.roundToInt
 class ViewInventoryMenu(private val target: Player) : Menu() {
 
     override fun getTitle(player: Player?): String {
-        return "${CC.PRIMARY}${target.name}'s Inventory"
+        return "${CC.PRIMARY}Inventário de ${target.name}"
     }
 
     override fun getButtons(player: Player?): Map<Int, Button> {
@@ -69,7 +69,7 @@ class ViewInventoryMenu(private val target: Player) : Menu() {
     private class HealthButton(private val health: Int) : Button() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.MELON)
-                .name("${CC.PRIMARY}Health: ${CC.SECONDARY}$health/10 ${StringEscapeUtils.unescapeJava("\u2764")}")
+                .name("${CC.PRIMARY}Vida: ${CC.SECONDARY}$health/10 ${StringEscapeUtils.unescapeJava("\u2764")}")
                 .amount(if (health == 0) 1 else health)
                 .build()
         }
@@ -78,7 +78,7 @@ class ViewInventoryMenu(private val target: Player) : Menu() {
     private class HungerButton(private val hunger: Int) : Button() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.COOKED_BEEF)
-                .name("${CC.PRIMARY}Hunger: ${CC.SECONDARY}$hunger/20")
+                .name("${CC.PRIMARY}Fome: ${CC.SECONDARY}$hunger/20")
                 .amount(if (hunger == 0) 1 else hunger)
                 .build()
         }
@@ -86,10 +86,10 @@ class ViewInventoryMenu(private val target: Player) : Menu() {
 
     private class EffectsButton(private val effects: Collection<PotionEffect>) : Button() {
         override fun getButtonItem(player: Player?): ItemStack {
-            val builder = ItemBuilder(Material.POTION).name("${CC.PRIMARY}Potion Effects")
+            val builder = ItemBuilder(Material.POTION).name("${CC.PRIMARY}Efeitos de poção")
 
             if (effects.isEmpty()) {
-                builder.lore("${CC.PRIMARY}No effects")
+                builder.lore("${CC.PRIMARY}Sem efeitos")
             } else {
                 val lore = effects.map { effect ->
                     val name = "${PotionUtil.getName(effect.type)} ${effect.amplifier + 1}"

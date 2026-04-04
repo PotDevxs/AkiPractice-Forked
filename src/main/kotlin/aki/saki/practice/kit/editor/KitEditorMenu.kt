@@ -48,7 +48,7 @@ class KitEditorMenu(private val index: Int): Menu() {
 
     override fun getTitle(player: Player): String {
         val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
-        return "${CC.PRIMARY}Editing: ${CC.SECONDARY}" + profile.kitEditorData?.kit?.name
+        return "${CC.PRIMARY}Editando: ${CC.SECONDARY}" + profile.kitEditorData?.kit?.name
     }
 
     override fun getButtons(player: Player): Map<Int, Button> {
@@ -123,7 +123,7 @@ class KitEditorMenu(private val index: Int): Menu() {
                 ItemStack(Material.AIR)
             } else ItemBuilder(itemStack.clone())
                 .name(CC.AQUA + itemStack.type.name)
-                .lore(CC.YELLOW + "This is automatically equipped.")
+                .lore(CC.YELLOW + "Isso é equipado automaticamente.")
                 .build()
         }
     }
@@ -141,11 +141,11 @@ class KitEditorMenu(private val index: Int): Menu() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .durability(7)
-                .name("${CC.PRIMARY}Clear Inventory")
+                .name("${CC.PRIMARY}Limpar inventário")
                 .lore(
                     listOf(
-                        "&eThis will clear your inventory",
-                        "&eso you can start over."
+                        "&eIsso limpará seu inventário",
+                        "&epara que você possa começar de novo."
                     )
                 )
                 .build()
@@ -167,11 +167,11 @@ class KitEditorMenu(private val index: Int): Menu() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .durability(7)
-                .name("${CC.PRIMARY}Load default kit")
+                .name("${CC.PRIMARY}Carregar kit padrão")
                 .lore(
                     listOf(
-                        "${CC.PRIMARY}Click this to load the default kit",
-                        "${CC.PRIMARY}into the kit editing menu."
+                        "${CC.PRIMARY}Clique aqui para carregar o kit",
+                        "${CC.PRIMARY}padrão dentro do menu de edição."
                     )
                 )
                 .build()
@@ -194,8 +194,8 @@ class KitEditorMenu(private val index: Int): Menu() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .durability(5)
-                .name("&aSave")
-                .lore("${CC.PRIMARY}Click this to save your kit.")
+                .name("&aSalvar")
+                .lore("${CC.PRIMARY}Clique aqui para salvar seu kit.")
                 .build()
         }
 
@@ -215,11 +215,11 @@ class KitEditorMenu(private val index: Int): Menu() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .durability(14)
-                .name("&cCancel")
+                .name("&cCancelar")
                 .lore(
                     listOf(
-                        "${CC.PRIMARY}Click this to abort editing your kit,",
-                        "${CC.PRIMARY}and return to the kit menu."
+                        "${CC.PRIMARY}Clique aqui para cancelar a edição",
+                        "${CC.PRIMARY}e retornar para o menu de kits."
                     )
                 )
                 .build()

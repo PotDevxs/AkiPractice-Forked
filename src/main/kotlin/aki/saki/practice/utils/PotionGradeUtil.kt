@@ -36,6 +36,6 @@ object PotionGradeUtil {
             return "${CC.RED}F"
         }
 
-        return "${CC.RED}N/A"
+        return "${CC.RED}N/D"
     }
 }

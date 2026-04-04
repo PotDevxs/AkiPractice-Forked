@@ -37,7 +37,7 @@ import org.bukkit.inventory.ItemStack
 class PartyFFAKitSelect(private val party: Party): Menu() {
 
     override fun getTitle(p0: Player?): String {
-        return "Select a kit!"
+        return "Selecione um kit!"
     }
 
     override fun getButtons(player: Player): MutableMap<Int, Button> {
@@ -57,14 +57,14 @@ class PartyFFAKitSelect(private val party: Party): Menu() {
                     if (clickType?.isLeftClick!!) {
 
                         if (party.players.size < 2) {
-                            player.sendMessage("${CC.RED}You need at least 2 players to start a FFA match!")
+                            player.sendMessage("${CC.RED}Você precisa de pelo menos 2 jogadores para iniciar uma partida FFA!")
                             return
                         }
 
                         val arena = ArenaManager.getFreeArena(kit)
 
                         if (arena == null) {
-                            player.sendMessage("${CC.RED}There is no free arenas!")
+                            player.sendMessage("${CC.RED}Não há arenas livres!")
                             return
                         }
 

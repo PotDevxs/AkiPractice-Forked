@@ -8,18 +8,18 @@
  */
 package aki.saki.practice.kit.editor
 
-import lombok.AllArgsConstructor
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.PracticePlugin
 import aki.saki.practice.kit.EditedKit
 import aki.saki.practice.kit.Kit
-import aki.saki.practice.PracticePlugin
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
+import lombok.AllArgsConstructor
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
+import rip.katz.api.menu.Button
+import rip.katz.api.menu.Menu
 import rip.katz.api.menu.buttons.BackButton
 
 
@@ -42,7 +42,7 @@ class KitManagementMenu(val kit: Kit): Menu() {
     }
 
     override fun getTitle(player: Player): String {
-        return "Viewing " + kit.name + " kits"
+        return "Vendo kits de " + kit.name
     }
 
     override fun getButtons(player: Player): Map<Int, Button> {
@@ -85,13 +85,13 @@ class KitManagementMenu(val kit: Kit): Menu() {
     private class DeleteKitButton(private val kit: Kit?, private val kitLoadout: EditedKit) : Button() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
-                .name("&cDelete")
+                .name("&cApagar")
                 .durability(14)
                 .lore(
                     listOf(
-                        "&cClick to delete this kit.",
-                        "&cYou will &lNOT &cbe able to",
-                        "&crecover this Kit Loadout."
+                        "&cClique aqui para apagar esse kit.",
+                        "&cEssa opção &lNÃO &cpode ser",
+                        "&cdesfeita de nenhuma forma."
                     )
                 )
                 .build()
@@ -108,7 +108,7 @@ class KitManagementMenu(val kit: Kit): Menu() {
     private class CreateKitButton(private val index: Int) : Button() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.IRON_SWORD)
-                .name("${CC.PRIMARY}Create Kit")
+                .name("${CC.PRIMARY}Criar kit")
                 .build()
         }
 
@@ -139,8 +139,8 @@ class KitManagementMenu(val kit: Kit): Menu() {
     private class RenameKitButton(private val kit: Kit, private val kitLoadout: EditedKit) : Button() {
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.SIGN)
-                .name("${CC.PRIMARY}Rename")
-                .lore(CC.translate("${CC.PRIMARY}Click to rename this kit."))
+                .name("${CC.PRIMARY}Renomear")
+                .lore(CC.translate("${CC.PRIMARY}Clique aqui para renomear esse kit."))
                 .build()
         }
 
@@ -161,8 +161,8 @@ class KitManagementMenu(val kit: Kit): Menu() {
 
         override fun getButtonItem(player: Player?): ItemStack {
             return ItemBuilder(Material.BOOK)
-                .name("${CC.PRIMARY}Load/Edit")
-                .lore(CC.translate("${CC.PRIMARY}Click to edit this kit."))
+                .name("${CC.PRIMARY}Carregar/Editar")
+                .lore(CC.translate("${CC.PRIMARY}Clique aqui para editar esse kit."))
                 .build()
         }
 

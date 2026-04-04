@@ -35,7 +35,7 @@ import kotlin.math.roundToInt
 class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
 
     override fun getTitle(player: Player?): String {
-        return "Inventory of ${matchSnapshot.username}"
+        return "Inventário de ${matchSnapshot.username}"
     }
 
     override fun getButtons(player: Player?): Map<Int, Button> {
@@ -79,8 +79,8 @@ class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
 
             return opponentSnapshot?.let {
                 ItemBuilder(Material.LEVER)
-                    .name("${CC.PRIMARY}Opponent's Inventory")
-                    .lore("${CC.PRIMARY}Switch to ${CC.SECONDARY}${it.username}${CC.PRIMARY}'s inventory")
+                    .name("${CC.PRIMARY}Inventário do oponente")
+                    .lore("${CC.PRIMARY}Trocar para o inventário de ${CC.SECONDARY}${it.username}${CC.PRIMARY}")
                     .build()
             } ?: ItemStack(Material.AIR)
         }
@@ -97,7 +97,7 @@ class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
     private class HealthButton(private val healthAmount: Int) : Button() {
         override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.MELON)
-                .name("${CC.PRIMARY}Health: ${CC.SECONDARY}$healthAmount/10 ${StringEscapeUtils.unescapeJava("\u2764")}")
+                .name("${CC.PRIMARY}Vida: ${CC.SECONDARY}$healthAmount/10 ${StringEscapeUtils.unescapeJava("\u2764")}")
                 .amount(if (healthAmount == 0) 1 else healthAmount)
                 .build()
         }
@@ -106,7 +106,7 @@ class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
     private class HungerButton(private val hungerLevel: Int) : Button() {
         override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.COOKED_BEEF)
-                .name("${CC.PRIMARY}Hunger: ${CC.PRIMARY}$hungerLevel/20")
+                .name("${CC.PRIMARY}Fome: ${CC.PRIMARY}$hungerLevel/20")
                 .amount(if (hungerLevel == 0) 1 else hungerLevel)
                 .build()
         }
@@ -114,10 +114,10 @@ class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
 
     private class EffectsButton(private val potionEffects: Collection<PotionEffect>) : Button() {
         override fun getButtonItem(player: Player): ItemStack {
-            val itemBuilder = ItemBuilder(Material.POTION).name("${CC.PRIMARY}Potion Effects")
+            val itemBuilder = ItemBuilder(Material.POTION).name("${CC.PRIMARY}Efeitos de poção")
 
             if (potionEffects.isEmpty()) {
-                itemBuilder.lore("${CC.PRIMARY}No potion effects")
+                itemBuilder.lore("${CC.PRIMARY}Sem efeitos de poção")
             } else {
                 val effectLore = potionEffects.map { effect ->
                     val effectName = "${PotionUtil.getName(effect.type)} ${effect.amplifier + 1}"
@@ -136,8 +136,8 @@ class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
             return ItemBuilder(Material.POTION)
                 .durability(16421)
                 .amount(if (potionCount == 0) 1 else potionCount)
-                .name("${CC.PRIMARY}Potions")
-                .lore("${CC.SECONDARY}$playerName${CC.PRIMARY} had ${CC.SECONDARY}$potionCount${CC.PRIMARY} potion${if (potionCount != 1) "s" else ""} left.")
+                .name("${CC.PRIMARY}Poções")
+                .lore("${CC.SECONDARY}$playerName${CC.PRIMARY} terminou com ${CC.SECONDARY}$potionCount${CC.PRIMARY} poç${if (potionCount != 1) "ões" else "ão"} restante${if (potionCount != 1) "s" else ""}.")
                 .build()
         }
 
@@ -147,17 +147,17 @@ class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
     private class StatisticsButton(private val matchSnapshot: MatchSnapshot) : Button() {
         override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.PAPER)
-                .name("${CC.PRIMARY}Statistics")
+                .name("${CC.PRIMARY}Estatísticas")
                 .lore(
                     listOf(
-                        "${CC.PRIMARY}Total Hits: ${CC.SECONDARY}${matchSnapshot.totalHits}",
-                        "${CC.PRIMARY}Longest Combo: ${CC.SECONDARY}${matchSnapshot.longestCombo}",
-                        "${CC.PRIMARY}Potion Grade: ${PotionGradeUtil.getGrade(matchSnapshot.getPotionAccuracy())}",
-                        "${CC.PRIMARY}Potions Thrown: ${CC.SECONDARY}${matchSnapshot.potionsThrown}",
-                        "${CC.PRIMARY}Potions Missed: ${CC.SECONDARY}${matchSnapshot.potionsMissed}",
-                        "${CC.PRIMARY}Potion Accuracy: ${CC.SECONDARY}${matchSnapshot.getPotionAccuracy()}%",
-                        "&7 &7 ${CC.PRIMARY}Misc: ",
-                        "&7 &7 &7${CC.PRIMARY}W-Tap Accuracy: ${CC.SECONDARY}${matchSnapshot.wtapAccuracy}%",
+                        "${CC.PRIMARY}Hits totais: ${CC.SECONDARY}${matchSnapshot.totalHits}",
+                        "${CC.PRIMARY}Maior combo: ${CC.SECONDARY}${matchSnapshot.longestCombo}",
+                        "${CC.PRIMARY}Nota das poções: ${PotionGradeUtil.getGrade(matchSnapshot.getPotionAccuracy())}",
+                        "${CC.PRIMARY}Poções arremessadas: ${CC.SECONDARY}${matchSnapshot.potionsThrown}",
+                        "${CC.PRIMARY}Poções desperdiçadas: ${CC.SECONDARY}${matchSnapshot.potionsMissed}",
+                        "${CC.PRIMARY}Precisão das poções: ${CC.SECONDARY}${matchSnapshot.getPotionAccuracy()}%",
+                        "&7 &7 ${CC.PRIMARY}Diversos: ",
+                        "&7 &7 &7${CC.PRIMARY}Precisão do W-Tap: ${CC.SECONDARY}${matchSnapshot.wtapAccuracy}%",
                     )
                 )
                 .build()

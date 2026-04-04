@@ -55,10 +55,10 @@ class TNTRunEvent(host: UUID, eventMap: EventMap) : Event(host, eventMap) {
 
             countdowns.add(Countdown(
                 eventPlayer.player,
-                "&aEvent starting in <seconds> seconds!",
+                "&aEvento começando em <seconds> segundos!",
                 6
             ) {
-                eventPlayer.player.sendMessage("${CC.GREEN}Event started!")
+                eventPlayer.player.sendMessage("${CC.GREEN}Evento iniciado!")
                 state = EventState.FIGHTING
 
                 started = System.currentTimeMillis()
@@ -81,7 +81,7 @@ class TNTRunEvent(host: UUID, eventMap: EventMap) : Event(host, eventMap) {
     }
 
     override fun handleDisconnect(eventPlayer: EventPlayer) {
-        sendMessage("${CC.SECONDARY}${eventPlayer.name}${CC.PRIMARY} disconnected.")
+        sendMessage("${CC.SECONDARY}${eventPlayer.name}${CC.PRIMARY} desconectou.")
 
         eventPlayer.dead = true
         eventPlayer.offline = true
@@ -95,7 +95,7 @@ class TNTRunEvent(host: UUID, eventMap: EventMap) : Event(host, eventMap) {
 
     override fun end(winner: EventPlayer?) {
         aki.saki.practice.event.EventRewardManager.giveWinnerReward(this, winner)
-        Bukkit.broadcastMessage("${CC.GREEN}${if (winner != null) winner.player.name else "no one"} won the event!")
+        Bukkit.broadcastMessage("${CC.GREEN}${if (winner != null) winner.player.name else "ninguém"} venceu o evento!")
 
         players.forEach {
             forceRemove(it)

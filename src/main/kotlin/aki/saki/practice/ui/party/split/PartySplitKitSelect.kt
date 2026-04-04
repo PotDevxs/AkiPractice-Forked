@@ -25,7 +25,7 @@ import org.bukkit.inventory.ItemStack
 class PartySplitKitSelect(private val party: Party): Menu() {
 
     override fun getTitle(player: Player?): String {
-        return "Select a kit!"
+        return "Selecione um kit!"
     }
 
     override fun getButtons(player: Player): MutableMap<Int, Button> {
@@ -50,14 +50,14 @@ class PartySplitKitSelect(private val party: Party): Menu() {
         override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
             if (clickType?.isLeftClick == true) {
                 if (party.players.size < 2) {
-                    player.sendMessage("${CC.RED}You need at least 2 players to start a Split match!")
+                    player.sendMessage("${CC.RED}Você precisa de pelo menos 2 jogadores para iniciar uma partida Split!")
                     return
                 }
 
                 val arena = ArenaManager.getFreeArena(kit)
 
                 if (arena == null) {
-                    player.sendMessage("${CC.RED}There are no free arenas!")
+                    player.sendMessage("${CC.RED}Não há arenas livres!")
                     return
                 }
 

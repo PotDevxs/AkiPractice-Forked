@@ -34,7 +34,7 @@ import org.bukkit.inventory.ItemStack
 class PartyDuelSelectPartyMenu : PaginatedMenu() {
 
     override fun getPrePaginatedTitle(player: Player?): String {
-        return "Select a party!"
+        return "Selecione um grupo!"
     }
 
     override fun getAllPagesButtons(player: Player): MutableMap<Int, Button> {
@@ -49,8 +49,8 @@ class PartyDuelSelectPartyMenu : PaginatedMenu() {
                         .name("${CC.PRIMARY}${Bukkit.getPlayer(party.leader)?.name}")
                         .lore(
                             listOf(
-                                "${CC.PRIMARY}Member Count: ${CC.SECONDARY}${party.players.size}",
-                                "${CC.PRIMARY}Members: ${CC.SECONDARY}${party.players.joinToString(", ${CC.SECONDARY}") { Bukkit.getPlayer(it)?.name ?: "Unknown" }}"
+                                "${CC.PRIMARY}Quantidade de membros: ${CC.SECONDARY}${party.players.size}",
+                                "${CC.PRIMARY}Membros: ${CC.SECONDARY}${party.players.joinToString(", ${CC.SECONDARY}") { Bukkit.getPlayer(it)?.name ?: "Desconhecido" }}"
                             )
                         ).build()
                 }

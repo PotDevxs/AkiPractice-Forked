@@ -48,13 +48,13 @@ class UnrankedQueueButton(
 
         val lore = mutableListOf(
             "",
-            "&fIn Queue: ${CC.PRIMARY}${queue.getPlayerCount()}",
-            "&fFighting: ${CC.PRIMARY}$playing",
-            "&fYour daily streak: ${CC.PRIMARY}${profile.globalStatistic.dailyWinStreak}",
+            "&fNa fila: ${CC.PRIMARY}${queue.getPlayerCount()}",
+            "&fLutando: ${CC.PRIMARY}$playing",
+            "&fSua sequência diária: ${CC.PRIMARY}${profile.globalStatistic.dailyWinStreak}",
         )
 
         lore.add("")
-        lore.add("${CC.PRIMARY}Top Daily Win Streaks:")
+        lore.add("${CC.PRIMARY}Melhores sequências diárias:")
 
         // Construir el top 3 lore con espacios vacíos si es necesario
         for (i in 0 until 3) {
@@ -68,7 +68,7 @@ class UnrankedQueueButton(
         }
 
         lore.add("")
-        lore.add("&aClick here to select ${kit.displayName}")
+        lore.add("&aClique aqui para selecionar ${kit.displayName}")
         return ItemBuilder(kit.displayItem.type)
             .name(kit.displayName ?: kit.name)
             .durability(kit.displayItem.durability.toInt())
@@ -81,17 +81,17 @@ class UnrankedQueueButton(
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
 
             if (profile.state == ProfileState.QUEUE) {
-                player.sendMessage("${CC.RED}You are already in a queue!")
+                player.sendMessage("${CC.RED}Você já está em uma fila!")
                 return
             }
 
             QueueManager.addToQueue(player, queue.kit, queue.type)
-            player.sendMessage(CC.translate("&aYou're now queued for Unranked ${kit.displayName}"))
+            player.sendMessage(CC.translate("&aVocê entrou na fila casual de ${kit.displayName}"))
 
             /*player.sendMessage(" ")
             player.sendMessage("${CC.PRIMARY}${CC.BOLD}${queue.type.name}")
-            player.sendMessage("${CC.PRIMARY} ⚫ Ping Range: ${CC.SECONDARY}[${if (profile.settings.pingRestriction == 0) "Unrestricted" else profile.settings.pingRestriction}]")
-            player.sendMessage("${CC.GRAY}${CC.ITALIC} Searching for match...")
+            player.sendMessage("${CC.PRIMARY} ⚫ Faixa de ping: ${CC.SECONDARY}[${if (profile.settings.pingRestriction == 0) "Sem limite" else profile.settings.pingRestriction}]")
+            player.sendMessage("${CC.GRAY}${CC.ITALIC} Procurando partida...")
             player.sendMessage(" ")*/
 
             Hotbar.giveHotbar(profile)

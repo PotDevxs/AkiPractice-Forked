@@ -37,10 +37,10 @@ class BuildCommand {
 
         if (profile.canBuild == true) {
             profile.canBuild = false
-            player.sendMessage("${CC.RED}You can no longer build")
+            player.sendMessage("${CC.RED}Você não pode mais construir.")
         } else {
             profile.canBuild = true
-            player.sendMessage("${CC.GREEN}You may now build")
+            player.sendMessage("${CC.GREEN}Agora você pode construir.")
         }
     }
 }

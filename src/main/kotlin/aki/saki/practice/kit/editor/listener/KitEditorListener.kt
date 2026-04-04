@@ -42,12 +42,12 @@ object KitEditorListener: Listener {
         if (profile.kitEditorData?.isRenaming()!!) {
             event.isCancelled = true
             if (event.message.length > 16) {
-                event.player.sendMessage(CC.RED + "The kit name must be under 16 characters!")
+                event.player.sendMessage(CC.RED + "O nome do kit deve ter menos de 16 caracteres.!")
                 return
             }
             val previousName = profile.kitEditorData?.selectedKit?.name
             val newName = CC.translate(event.message)
-            event.player.sendMessage("${CC.PRIMARY}Successfully changed kit loadout name from ${CC.SECONDARY}${previousName}${CC.PRIMARY} to ${CC.SECONDARY}${newName}")
+            event.player.sendMessage("${CC.PRIMARY}Nome do preset de kit alterado com sucesso de ${CC.SECONDARY}${previousName}${CC.PRIMARY} para ${CC.SECONDARY}${newName}")
             val selectedKit = profile.kitEditorData?.kit
             profile.kitEditorData?.kit = null
             profile.kitEditorData?.selectedKit?.name = newName

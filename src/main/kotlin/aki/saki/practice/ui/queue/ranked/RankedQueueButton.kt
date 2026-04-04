@@ -49,13 +49,13 @@ class RankedQueueButton(
 
         val lore = mutableListOf(
             "",
-            "&fIn Queue: ${CC.PRIMARY}${queue.getPlayerCount()}",
-            "&fFighting: ${CC.PRIMARY}$playing",
-            "&fYour elo: ${CC.PRIMARY}${profile.getKitStatistic(kit.name)?.elo ?: 0}",
+            "&fNa fila: ${CC.PRIMARY}${queue.getPlayerCount()}",
+            "&fLutando: ${CC.PRIMARY}$playing",
+            "&fSeu ELO: ${CC.PRIMARY}${profile.getKitStatistic(kit.name)?.elo ?: 0}",
         )
 
         lore.add("")
-        lore.add("${CC.PRIMARY}Top Elo:")
+        lore.add("${CC.PRIMARY}Top ELO:")
 
         // Construir el top 3 lore con espacios vacíos si es necesario
         for (i in 0 until 3) {
@@ -69,7 +69,7 @@ class RankedQueueButton(
         }
 
         lore.add("")
-        lore.add("&aClick here to select ${kit.displayName}")
+        lore.add("&aClique aqui para selecionar ${kit.displayName}")
 
         return ItemBuilder(kit.displayItem.type)
             .name(kit.displayName ?: kit.name)
@@ -92,17 +92,17 @@ class RankedQueueButton(
             }
 
             if (profile.state == ProfileState.QUEUE) {
-                player.sendMessage("${CC.RED}You are already in a queue!")
+                player.sendMessage("${CC.RED}Você já está em uma fila!")
                 return
             }
 
             QueueManager.addToQueue(player, queue.kit, queue.type)
-            player.sendMessage(CC.translate("&aYou're now queued for Ranked ${kit.displayName}"))
+            player.sendMessage(CC.translate("&aVocê entrou na fila competitiva de ${kit.displayName}"))
 
             /*player.sendMessage(" ")
             player.sendMessage("${CC.PRIMARY}${CC.BOLD}${queue.type.name}")
-            player.sendMessage("${CC.PRIMARY} ⚫ Ping Range: ${CC.SECONDARY}[${if (profile.settings.pingRestriction == 0) "Unrestricted" else profile.settings.pingRestriction}]")
-            player.sendMessage("${CC.GRAY}${CC.ITALIC} Searching for match...")
+            player.sendMessage("${CC.PRIMARY} ⚫ Faixa de ping: ${CC.SECONDARY}[${if (profile.settings.pingRestriction == 0) "Sem limite" else profile.settings.pingRestriction}]")
+            player.sendMessage("${CC.GRAY}${CC.ITALIC} Procurando partida...")
             player.sendMessage(" ")*/
 
             Hotbar.giveHotbar(profile)

@@ -31,7 +31,7 @@ import org.bukkit.inventory.ItemStack
 class KitEditorSelectKitMenu: Menu() {
 
     override fun getTitle(player: Player?): String {
-        return "Select a kit"
+        return "Selecione um kit"
     }
 
     override fun getButtons(player: Player?): Map<Int, Button> {

@@ -38,7 +38,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                     .name("${CC.SECONDARY}Sumo")
                     .lore(listOf(
                         CC.CHAT_BAR,
-                        "${CC.GRAY}Load the optimal settings for Sumo",
+                        "${CC.GRAY}Carrega as configurações recomendadas para Sumo",
                         CC.CHAT_BAR
                     )).build()
             }
@@ -49,7 +49,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                 kit.ffa = false
 
                 PracticePlugin.instance.kitManager.save()
-                player.sendMessage("${CC.PRIMARY}You have loaded the ${CC.SECONDARY}Sumo${CC.PRIMARY} preset!")
+                player.sendMessage("${CC.PRIMARY}Você carregou o preset de ${CC.SECONDARY}Sumo${CC.PRIMARY}!")
             }
         }
 
@@ -59,7 +59,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                     .name("${CC.SECONDARY}Bed Fights ${CC.GRAY}(Bedwars)")
                     .lore(listOf(
                         CC.CHAT_BAR,
-                        "${CC.GRAY}Load the optimal settings for",
+                        "${CC.GRAY}Carrega as configurações recomendadas para",
                         "${CC.GRAY}Bed Fights (Bedwars)",
                         CC.CHAT_BAR
                     )).build()
@@ -72,7 +72,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                 kit.regeneration = true
 
                 PracticePlugin.instance.kitManager.save()
-                player.sendMessage("${CC.PRIMARY}You have loaded the ${CC.SECONDARY}BedFights${CC.PRIMARY} preset!")
+                player.sendMessage("${CC.PRIMARY}Você carregou o preset de  ${CC.SECONDARY}BedFights${CC.PRIMARY}!")
             }
         }
 
@@ -82,7 +82,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                     .name("${CC.SECONDARY}MLGRush")
                     .lore(listOf(
                         CC.CHAT_BAR,
-                        "${CC.GRAY}Load the optimal settings for",
+                        "${CC.GRAY}Carrega as configurações recomendadas para",
                         "${CC.GRAY}MLGRush",
                         CC.CHAT_BAR
                     )).build()
@@ -95,7 +95,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                 kit.regeneration = true
 
                 PracticePlugin.instance.kitManager.save()
-                player.sendMessage("${CC.PRIMARY}You have loaded the ${CC.SECONDARY}MLGRush${CC.PRIMARY} preset!")
+                player.sendMessage("${CC.PRIMARY}Você carregou o preset de ${CC.SECONDARY}MLGRush${CC.PRIMARY}!")
             }
         }
 
@@ -106,7 +106,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                     .name("${CC.SECONDARY}Bridge")
                     .lore(listOf(
                         CC.CHAT_BAR,
-                        "${CC.GRAY}Load the optimal settings for",
+                        "${CC.GRAY}Carrega as configurações recomendadas para",
                         "${CC.GRAY}Bridge",
                         CC.CHAT_BAR
                     )).build()
@@ -119,7 +119,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                 kit.regeneration = true
 
                 PracticePlugin.instance.kitManager.save()
-                player.sendMessage("${CC.PRIMARY}You have loaded the ${CC.SECONDARY}Bridge${CC.PRIMARY} preset!")
+                player.sendMessage("${CC.PRIMARY}Você carregou o preset de ${CC.SECONDARY}Bridge${CC.PRIMARY}!")
             }
         }
 
@@ -129,7 +129,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                     .name("${CC.SECONDARY}Fireball Fight")
                     .lore(listOf(
                         CC.CHAT_BAR,
-                        "${CC.GRAY}Load the optimal settings for",
+                        "${CC.GRAY}Carrega as configurações recomendadas para",
                         "${CC.GRAY}Fireball fights",
                         CC.CHAT_BAR
                     )).build()
@@ -142,7 +142,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                 kit.regeneration = true
 
                 PracticePlugin.instance.kitManager.save()
-                player.sendMessage("${CC.PRIMARY}You have loaded the ${CC.SECONDARY}Fireball fights${CC.PRIMARY} preset!")
+                player.sendMessage("${CC.PRIMARY}Você carregou o preset de ${CC.SECONDARY}Fireball fights${CC.PRIMARY}!")
             }
         }
 

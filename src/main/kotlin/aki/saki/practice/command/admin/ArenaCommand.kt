@@ -37,27 +37,27 @@ class ArenaCommand {
     fun help(@Sender sender: CommandSender) {
         val player = sender as Player
         val commands = listOf(
-            "&bArena Commands:",
+            "&bComandos de Arena:",
             "&7&m---------------------",
             "&b/arena create <name> <type>",
-            "&b/arena type <name> <type> &7- Sumo, MLGRush, BedFight, Bridge, Build and Normal",
+            "&b/arena type <name> <type> &7- Sumo, MLGRush, BedFight, Bridge, Build e Normal",
             "&b/arena delete <arena>",
             "&b/arena pos1 <arena>",
             "&b/arena pos2 <arena>",
             "&b/arena min <arena>",
             "&b/arena max <arena>",
-            "&b/arena deadzone <arena> <deadzone> &7- set an arena's lowest Y location (Used for bridges, bedfight, etc)",
-            "&b/arena bed1 <arena> &7- only supported for mlgrush (stand on bed)",
-            "&b/arena bed2 <arena> &7- only supported for mlgrush (stand on bed)",
+            "&b/arena deadzone <arena> <deadzone> &7- define o menor Y da arena (usado em Bridge, BedFight, etc)",
+            "&b/arena bed1 <arena> &7- suportado apenas em MLGRush (fique em cima da cama)",
+            "&b/arena bed2 <arena> &7- suportado apenas em MLGRush (fique em cima da cama)",
             "&7&m---------------------",
-            "&bBedWars Arena Command:",
+            "&bComandos de Arena BedWars:",
             "&7&m---------------------",
             "&b/arena redspawn <arena>",
             "&b/arena bluespawn <arena>",
             "&b/arena redbed <arena>",
             "&b/arena bluebed <arena>",
             "&7&m---------------------",
-            "&bBridge Arena Command:",
+            "&bComandos de Arena Bridge:",
             "&7&m---------------------",
             "&b/arena redspawn <arena>",
             "&b/arena bluespawn <arena>",
@@ -79,7 +79,7 @@ class ArenaCommand {
         val player = sender as Player
 
         if (Arena.getByName(name) != null) {
-            player.sendMessage(CC.color("&cThat arena already exists!"))
+            player.sendMessage(CC.color("&cEssa arena já existe!"))
             return
         }
         val arena = when (type) {
@@ -92,7 +92,7 @@ class ArenaCommand {
         arena.save()
         Arena.arenas.add(arena)
 
-        player.sendMessage(CC.color("&aSuccessfully created &b$name &aarena with &b${type.name} type!"))
+        player.sendMessage(CC.color("&aArena &b$name &acriada com sucesso com o tipo &b${type.name}&a!"))
     }
 
     @Command(name = "delete", desc = "")
@@ -102,7 +102,7 @@ class ArenaCommand {
         arena.delete()
         Arena.arenas.remove(arena)
 
-        player.sendMessage(CC.color("&aSuccessfully deleted &b${arena.name}&a!"))
+        player.sendMessage(CC.color("&aArena &b${arena.name}&a removida com sucesso!"))
     }
 
     @Command(name = "pos1", desc = "", aliases = ["a", "position1", "location1", "p1", "l1"])
@@ -112,7 +112,7 @@ class ArenaCommand {
         arena.l1 = player.location
         arena.save()
 
-        player.sendMessage(CC.color("&aSuccessfully set &b${arena.name}&b's position A!"))
+        player.sendMessage(CC.color("&aPosição A da arena &b${arena.name}&a definida com sucesso!"))
     }
 
     @Command(name = "pos2", desc = "", aliases = ["b", "position2", "location2", "p2", "l2"])
@@ -122,7 +122,7 @@ class ArenaCommand {
         arena.l2 = player.location
         arena.save()
 
-        player.sendMessage(CC.color("&aSuccessfully set &b${arena.name}'s position B!"))
+        player.sendMessage(CC.color("&aPosição B da arena &b${arena.name}&a definida com sucesso!"))
     }
 
     @Command(name = "min", desc = "", aliases = ["minimum"])
@@ -132,7 +132,7 @@ class ArenaCommand {
         arena.min = player.location
         arena.save()
 
-        player.sendMessage("&aSuccessfully set &b${arena.name}'s min location!")
+        player.sendMessage("&aLocalização mínima da arena &b${arena.name}&a definida com sucesso!")
     }
 
     @Command(name = "max", desc = "", aliases = ["maximum"])
@@ -150,7 +150,7 @@ class ArenaCommand {
         arena.deadzone = deadzone
         arena.save()
 
-        player.sendMessage(CC.color("&aSuccessfully set &b${arena.name}&a's deadzone to &b$deadzone&a!"))
+        player.sendMessage(CC.color("&aDeadzone da arena &b${arena.name}&a definida para &b$deadzone&a com sucesso!"))
     }
 
     @Command(name = "type", desc = "")
@@ -193,7 +193,7 @@ class ArenaCommand {
             arena.save()
         }
 
-        player.sendMessage(CC.color("&aSuccessfully set &b${arena.name}&a's type to &b${arenaType.name}&a!"))
+        player.sendMessage(CC.color("&aTipo da arena &b${arena.name}&a definido para &b${arenaType.name}&a com sucesso!"))
     }
 
     @Command(name = "menu", desc = "")

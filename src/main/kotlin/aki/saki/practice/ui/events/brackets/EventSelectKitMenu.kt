@@ -35,7 +35,7 @@ import org.bukkit.inventory.ItemStack
 class EventSelectKitMenu: Menu() {
 
     override fun getTitle(player: Player): String {
-        return "Select a kit!"
+        return "Selecione um kit!"
     }
 
     override fun onClose(player: Player?) {
@@ -63,7 +63,7 @@ class EventSelectKitMenu: Menu() {
                     val procedure = BracketEventProcedure.procedures[player?.uniqueId]
 
                     if (procedure == null) {
-                        player?.sendMessage("${CC.RED}Something went wrong!")
+                        player?.sendMessage("${CC.RED}Algo deu errado!")
                         return
                     }
 

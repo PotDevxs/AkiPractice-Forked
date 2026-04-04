@@ -30,7 +30,7 @@ import org.bukkit.inventory.ItemStack
 class ArenaManageMenu(private val arena: Arena): Menu() {
 
     override fun getTitle(p0: Player?): String {
-        return "Arena Management"
+        return "Gerenciamento de arena"
     }
 
     override fun getButtons(player: Player?): MutableMap<Int, Button> {
@@ -40,10 +40,10 @@ class ArenaManageMenu(private val arena: Arena): Menu() {
 
             override fun getButtonItem(p0: Player?): ItemStack {
                 return ItemBuilder(Material.PAPER)
-                    .name("&eDuplicates")
+                    .name("&eDuplicatas")
                     .lore(listOf(
-                        "&e&o(( left click to view ))",
-                        "&e&o(( right click to duplicate ))"
+                        "&e&o(( clique esquerdo para ver ))",
+                        "&e&o(( clique direito para duplicar ))"
                     )).build()
             }
 

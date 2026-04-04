@@ -38,7 +38,7 @@ import rip.katz.api.menu.Menu
 class EventHostMenu: Menu() {
 
     override fun getTitle(player: Player): String {
-        return "Host events"
+        return "Hospedar eventos"
     }
 
     override fun getSize(): Int {
@@ -56,19 +56,19 @@ class EventHostMenu: Menu() {
 
             override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
                 if (!player.hasPermission("lpractice.event.host")) {
-                    player.sendMessage("${CC.RED}You don't have permissions to host this event!")
+                    player.sendMessage("${CC.RED}Você não tem permissão para hospedar este evento!")
                     return
                 }
 
                 if (EventManager.event != null) {
-                    player.sendMessage("${CC.RED}There is already a running event!")
+                    player.sendMessage("${CC.RED}Já existe um evento em andamento!")
                     return
                 }
 
                 val map = EventMapManager.getFreeMap(EventMapType.SUMO)
 
                 if (map == null) {
-                    player.sendMessage("${CC.RED}There are no event maps available!")
+                    player.sendMessage("${CC.RED}Não há mapas de evento disponíveis!")
                     return
                 }
 
@@ -88,19 +88,19 @@ class EventHostMenu: Menu() {
 
             override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
                 if (!player.hasPermission("lpractice.event.host")) {
-                    player.sendMessage("${CC.RED}You don't have permissions to host this event!")
+                    player.sendMessage("${CC.RED}Você não tem permissão para hospedar este evento!")
                     return
                 }
 
                 if (EventManager.event != null) {
-                    player.sendMessage("${CC.RED}There is already a running event!")
+                    player.sendMessage("${CC.RED}Já existe um evento em andamento!")
                     return
                 }
 
                 val map = EventMapManager.getFreeMap(EventMapType.TNT_TAG)
 
                 if (map == null) {
-                    player.sendMessage("${CC.RED}There are no event maps available!")
+                    player.sendMessage("${CC.RED}Não há mapas de evento disponíveis!")
                     return
                 }
 
@@ -119,19 +119,19 @@ class EventHostMenu: Menu() {
 
             override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
                 if (!player.hasPermission("lpractice.event.host")) {
-                    player.sendMessage("${CC.RED}You don't have permissions to host this event!")
+                    player.sendMessage("${CC.RED}Você não tem permissão para hospedar este evento!")
                     return
                 }
 
                 if (EventManager.event != null) {
-                    player.sendMessage("${CC.RED}There is already a running event!")
+                    player.sendMessage("${CC.RED}Já existe um evento em andamento!")
                     return
                 }
 
                 val map = EventMapManager.getFreeMap(EventMapType.TNT_RUN)
 
                 if (map == null) {
-                    player.sendMessage("${CC.RED}There are no event maps available!")
+                    player.sendMessage("${CC.RED}Não há mapas de evento disponíveis!")
                     return
                 }
 
@@ -150,19 +150,19 @@ class EventHostMenu: Menu() {
 
             override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
                 if (!player.hasPermission("lpractice.event.host")) {
-                    player.sendMessage("${CC.RED}You don't have permissions to host this event!")
+                    player.sendMessage("${CC.RED}Você não tem permissão para hospedar este evento!")
                     return
                 }
 
                 if (EventManager.event != null) {
-                    player.sendMessage("${CC.RED}There is already a running event!")
+                    player.sendMessage("${CC.RED}Já existe um evento em andamento!")
                     return
                 }
 
                 val map = EventMapManager.getFreeMap(EventMapType.BRACKETS)
 
                 if (map == null) {
-                    player.sendMessage("${CC.RED}There are no event maps available!")
+                    player.sendMessage("${CC.RED}Não há mapas de evento disponíveis!")
                     return
                 }
 

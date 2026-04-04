@@ -35,14 +35,14 @@ class EventMapCommand {
     @Require("practice.command.eventmap")
     fun help(@Sender sender: CommandSender) {
         sender.sendMessage("""
-            ${CC.PRIMARY}EventMap Commands:
+            ${CC.PRIMARY}Comandos de mapas de evento:
             ${CC.SECONDARY}/eventmap create <name>
             ${CC.SECONDARY}/eventmap delete <name>
             ${CC.SECONDARY}/eventmap spawn <name>
             ${CC.SECONDARY}/eventmap pos1 <name>
             ${CC.SECONDARY}/eventmap pos2 <name>
             ${CC.SECONDARY}/eventmap deadzone <name> <deadzone>
-            ${CC.SECONDARY}/eventmap type <name> <type> - you can choose from Sumo & Brackets
+            ${CC.SECONDARY}/eventmap type <name> <type> - você pode escolher entre Sumo e Brackets
         """.trimIndent())
     }
 
@@ -50,14 +50,14 @@ class EventMapCommand {
     @Require("practice.command.eventmap.create")
     fun create(@Sender sender: CommandSender, name: String) {
         if (EventMapManager.getByName(name) != null) {
-            sender.sendMessage("${CC.RED}That event map already exists!")
+            sender.sendMessage("${CC.RED}Esse mapa de evento já existe!")
             return
         }
 
         val arena = EventMap(name)
         arena.save()
         EventMapManager.maps.add(arena)
-        sender.sendMessage("${CC.PRIMARY}Successfully created ${CC.SECONDARY}'$name'!")
+        sender.sendMessage("${CC.PRIMARY}Mapa de evento ${CC.SECONDARY}'$name'${CC.PRIMARY} criado com sucesso!")
     }
 
     @Command(name = "delete", desc = "Delete an event map")
@@ -65,7 +65,7 @@ class EventMapCommand {
     fun delete(@Sender sender: CommandSender, arena: EventMap) {
         arena.delete()
         EventMapManager.maps.remove(arena)
-        sender.sendMessage("${CC.PRIMARY}Successfully deleted ${CC.SECONDARY}'${arena.name}'!")
+        sender.sendMessage("${CC.PRIMARY}Mapa de evento ${CC.SECONDARY}'${arena.name}'${CC.PRIMARY} removido com sucesso!")
     }
 
     @Command(name = "spawn", desc = "Set the spawn location of an event map")
@@ -74,19 +74,19 @@ class EventMapCommand {
         val player = sender as? Player ?: return
         arena.spawn = player.location
         arena.save()
-        sender.sendMessage("${CC.PRIMARY}Successfully set ${CC.SECONDARY}${arena.name}${CC.PRIMARY} spawn point!")
+        sender.sendMessage("${CC.PRIMARY}Spawn do mapa ${CC.SECONDARY}${arena.name}${CC.PRIMARY} definido com sucesso!")
     }
 
     @Command(name = "deadzone", desc = "Set the deadzone of a TNT Run map")
     @Require("practice.command.eventmap.deadzone")
     fun setDeadzone(@Sender sender: CommandSender, arena: EventMap, deadzone: Int) {
         if (arena.type != EventMapType.TNT_RUN) {
-            sender.sendMessage("${CC.RED}That option is not supported for this map type!")
+            sender.sendMessage("${CC.RED}Essa opção não é suportada para esse tipo de mapa!")
             return
         }
         (arena as TNTRunMap).deadzone = deadzone
         arena.save()
-        sender.sendMessage("${CC.PRIMARY}Successfully set ${CC.SECONDARY}${arena.name}${CC.PRIMARY} deadzone!")
+        sender.sendMessage("${CC.PRIMARY}Deadzone do mapa ${CC.SECONDARY}${arena.name}${CC.PRIMARY} definida com sucesso!")
     }
 
     @Command(name = "pos1", desc = "Set the first position of an event map", aliases = ["position1", "l1", "location1"])
@@ -94,12 +94,12 @@ class EventMapCommand {
     fun setPos1(@Sender sender: CommandSender, arena: EventMap) {
         val player = sender as? Player ?: return
         if (arena.type in listOf(EventMapType.TNT_TAG, EventMapType.TNT_RUN)) {
-            sender.sendMessage("${CC.RED}That option is not supported for this map type!")
+            sender.sendMessage("${CC.RED}Essa opção não é suportada para esse tipo de mapa!")
             return
         }
         arena.l1 = player.location
         arena.save()
-        sender.sendMessage("${CC.PRIMARY}Successfully set ${CC.SECONDARY}${arena.name}${CC.PRIMARY} location 1!")
+        sender.sendMessage("${CC.PRIMARY}Localização 1 do mapa ${CC.SECONDARY}${arena.name}${CC.PRIMARY} definida com sucesso!")
     }
 
     @Command(name = "pos2", desc = "Set the second position of an event map", aliases = ["position2", "l2", "location2"])
@@ -107,12 +107,12 @@ class EventMapCommand {
     fun setPos2(@Sender sender: CommandSender, arena: EventMap) {
         val player = sender as? Player ?: return
         if (arena.type in listOf(EventMapType.TNT_TAG, EventMapType.TNT_RUN)) {
-            sender.sendMessage("${CC.RED}That option is not supported for this map type!")
+            sender.sendMessage("${CC.RED}Essa opção não é suportada para esse tipo de mapa!")
             return
         }
         arena.l2 = player.location
         arena.save()
-        sender.sendMessage("${CC.PRIMARY}Successfully set ${CC.SECONDARY}${arena.name}${CC.PRIMARY} location 2!")
+        sender.sendMessage("${CC.PRIMARY}Localização 2 do mapa ${CC.SECONDARY}${arena.name}${CC.PRIMARY} definida com sucesso!")
     }
 
     @Command(name = "type", desc = "Set the type of an event map")
@@ -136,7 +136,7 @@ class EventMapCommand {
             }
             else -> arena.save()
         }
-        sender.sendMessage("${CC.PRIMARY}Successfully set ${CC.SECONDARY}${arena.name}${CC.PRIMARY}'s type to ${CC.SECONDARY}${type.eventName}${CC.PRIMARY}!")
+        sender.sendMessage("${CC.PRIMARY}Tipo do mapa ${CC.SECONDARY}${arena.name}${CC.PRIMARY} definido para ${CC.SECONDARY}${type.eventName}${CC.PRIMARY} com sucesso!")
     }
 }
 

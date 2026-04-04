@@ -32,7 +32,7 @@ class FollowCommand {
     @Require("practice.command.follow")
     fun follow(@Sender sender: CommandSender, target: Player) {
         if (true) {
-            sender.sendMessage("${CC.RED}This command is currently disabled!")
+            sender.sendMessage("${CC.RED}Este comando está desativado no momento!")
             return
         }
 
@@ -43,13 +43,13 @@ class FollowCommand {
         if (playerProfile?.state != ProfileState.LOBBY) return
 
         if (targetProfile?.followers?.contains(player.uniqueId) == true) {
-            player.sendMessage("${CC.RED}You are already following ${target.name}.")
+            player.sendMessage("${CC.RED}Você já está seguindo ${target.name}.")
             return
         }
 
         targetProfile?.followers?.add(player.uniqueId)
         playerProfile?.following = true
 
-        player.sendMessage("${CC.PRIMARY}Started following ${CC.SECONDARY}${target.name}")
+        player.sendMessage("${CC.PRIMARY}Agora você está seguindo ${CC.SECONDARY}${target.name}")
     }
 }

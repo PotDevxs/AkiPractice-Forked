@@ -32,10 +32,10 @@ class QueueButton(private val queue: Queue) : Button() {
             .addFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_POTION_EFFECTS)
             .lore(
                 listOf(
-                    "${CC.PRIMARY}Playing: ${CC.SECONDARY}$playing",
-                    "${CC.PRIMARY}Queuing: ${CC.GREEN}${queue.getPlayerCount()}",
+                    "${CC.PRIMARY}Jogando: ${CC.SECONDARY}$playing",
+                    "${CC.PRIMARY}Na fila: ${CC.GREEN}${queue.getPlayerCount()}",
                     "",
-                    "${CC.PRIMARY}Click to play!"
+                    "${CC.PRIMARY}Clique para jogar!"
                 )
             ).build()
     }
@@ -45,16 +45,16 @@ class QueueButton(private val queue: Queue) : Button() {
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
 
             if (profile.state == ProfileState.QUEUE) {
-                player.sendMessage("${CC.RED}You are already in a queue!")
+                player.sendMessage("${CC.RED}Você já está em uma fila!")
                 return
             }
 
             QueueManager.addToQueue(player, queue.kit, queue.type)
 
             player.sendMessage(" ")
-            player.sendMessage("${CC.PRIMARY}${CC.BOLD}${queue.type.name}")
-            player.sendMessage("${CC.PRIMARY} ⚫ Ping Range: ${CC.SECONDARY}[${if (profile.settings.pingRestriction == 0) "Unrestricted" else profile.settings.pingRestriction}]")
-            player.sendMessage("${CC.GRAY}${CC.ITALIC} Searching for match...")
+            player.sendMessage("${CC.PRIMARY}${CC.BOLD}${if (queue.type == aki.saki.practice.queue.QueueType.RANKED) "COMPETITIVO" else "CASUAL"}")
+            player.sendMessage("${CC.PRIMARY} ⚫ Faixa de ping: ${CC.SECONDARY}[${if (profile.settings.pingRestriction == 0) "Sem limite" else profile.settings.pingRestriction}]")
+            player.sendMessage("${CC.GRAY}${CC.ITALIC}Procurando partida...")
             player.sendMessage(" ")
 
             Hotbar.giveHotbar(profile)

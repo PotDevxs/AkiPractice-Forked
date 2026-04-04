@@ -33,7 +33,7 @@ class KitInfoButton(
             .clearLore()
             .amount(1)
             .name("&b&l${kit.name} " +
-                    (if (kit.enabled) "&7(&aEnabled&7)" else "&7(&cDisabled&7)")
+                    (if (kit.enabled) "&7(&aAtivado&7)" else "&7(&cDesativado&7)")
             ).build()
     }
 }

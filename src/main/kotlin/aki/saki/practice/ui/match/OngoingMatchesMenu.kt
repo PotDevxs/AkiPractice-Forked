@@ -27,7 +27,7 @@ import rip.katz.api.menu.buttons.DisplayButton
  */
 
 class OngoingMatchesMenu : Menu() {
-    override fun getTitle(player: Player?) = "${CC.PRIMARY}Ongoing Matches"
+    override fun getTitle(player: Player?) = "${CC.PRIMARY}Partidas em andamento"
 
     override fun getButtons(player: Player?): MutableMap<Int, Button> {
         val buttonMap = mutableMapOf<Int, Button>()
@@ -35,15 +35,15 @@ class OngoingMatchesMenu : Menu() {
 
         ongoingMatches.forEachIndexed { index, match ->
             val itemBuilder = ItemBuilder(Material.DIAMOND_SWORD)
-                .name("${CC.PRIMARY}Match: ${CC.SECONDARY}${match.uuid}")
+                .name("${CC.PRIMARY}Partida: ${CC.SECONDARY}${match.uuid}")
                 .lore(
                     listOf(
-                        "${CC.PRIMARY}Type: ${CC.SECONDARY}${match.getMatchType()}",
+                        "${CC.PRIMARY}Tipo: ${CC.SECONDARY}${match.getMatchType()}",
                         "${CC.PRIMARY}Kit: ${CC.SECONDARY}${match.kit.name}",
                         "${CC.PRIMARY}Arena: ${CC.SECONDARY}${match.arena.name}",
-                        "${CC.PRIMARY}Players: ${CC.SECONDARY}${match.players.size}",
-                        "${CC.PRIMARY}State: ${CC.SECONDARY}${match.matchState}",
-                        "${CC.PRIMARY}Time: ${CC.SECONDARY}${match.getTime()}"
+                        "${CC.PRIMARY}Jogadores: ${CC.SECONDARY}${match.players.size}",
+                        "${CC.PRIMARY}Estado: ${CC.SECONDARY}${match.matchState}",
+                        "${CC.PRIMARY}Tempo: ${CC.SECONDARY}${match.getTime()}"
                     )
                 )
                 .amount(1)

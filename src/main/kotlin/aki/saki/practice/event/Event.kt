@@ -120,11 +120,11 @@ open class Event(val host: UUID, val eventMap: EventMap) {
         players.add(eventPlayer)
         Hotbar.giveHotbar(profile)
 
-        Bukkit.broadcastMessage("${CC.GREEN}${player.name}${CC.YELLOW} has joined the event. ${CC.GRAY}(${players.size}/${requiredPlayers})")
+        Bukkit.broadcastMessage("${CC.GREEN}${player.name}${CC.YELLOW} entrou no evento. ${CC.GRAY}(${players.size}/${requiredPlayers})")
     }
 
     open fun handleDisconnect(eventPlayer: EventPlayer) {
-        sendMessage("${CC.SECONDARY}${eventPlayer.name}${CC.PRIMARY} disconnected.")
+        sendMessage("${CC.SECONDARY}${eventPlayer.name}${CC.PRIMARY} desconectou.")
 
         eventPlayer.dead = true
         eventPlayer.offline = true

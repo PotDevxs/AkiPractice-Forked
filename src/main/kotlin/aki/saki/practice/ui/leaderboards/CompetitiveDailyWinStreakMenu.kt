@@ -35,7 +35,7 @@ class CompetitiveDailyWinStreakMenu(val p: PracticePlugin): Menu() {
     val GLASS_PANE = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 37 ,38, 39, 40, 41 ,42 ,43, 44)
 
     override fun getTitle(p0: Player?): String {
-        return CC.translate("&7Ranked ELO Leaderboards")
+        return CC.translate("&7Ranking de ELO competitivo")
     }
 
     override fun getButtons(p0: Player): MutableMap<Int, Button> {
@@ -68,12 +68,12 @@ class CompetitiveDailyWinStreakMenu(val p: PracticePlugin): Menu() {
                             .replace("<elo>", elo.toString())
                     }
                 val lore= mutableListOf(
-                    "&bYour score: ${p.profileManager.findById(p0.uniqueId)!!.globalStatistic.elo}"
+                    "&bSua pontuação: ${p.profileManager.findById(p0.uniqueId)!!.globalStatistic.elo}"
                 )
                 lore.addAll(lb)
 
                 return ItemBuilder(Material.NETHER_STAR)
-                    .name("${CC.PRIMARY}Global Leaderboards")
+                    .name("${CC.PRIMARY}Ranking global")
                     .lore(CC.translate(lore))
                     .build()
             }
@@ -84,20 +84,20 @@ class CompetitiveDailyWinStreakMenu(val p: PracticePlugin): Menu() {
         buttons[5] = object : Button() {
             override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.SKULL_ITEM).setSkullTexture(p0.name)
-                    .name("&bToggle View")
+                    .name("&bAlternar visualização")
                     .lore(
                         CC.translate(listOf(
-                            "&7Select one of the following",
-                            "&7views to see other leaderboards!",
+                            "&7Selecione uma das visões abaixo",
+                            "&7para ver outros rankings!",
                             "",
-                            "&fCurrent view:",
-                            "&7Ranked ELO",
-                            "&7Casual Wins",
-                            "&7Ranked Wins",
-                            "&7Best Casual Daily Win Streak",
-                            "&a▸ Best Competitive Daily Win Streak",
+                            "&fVisão atual:",
+                            "&7ELO competitivo",
+                            "&7Vitórias casuais",
+                            "&7Vitórias competitivas",
+                            "&7Melhor sequência casual diária",
+                            "&a▸ Melhor sequência competitiva diária",
                             "",
-                            "&aClick to scroll though!"
+                            "&aClique para alternar!"
                         )))
                     .build()
             }
@@ -126,7 +126,7 @@ class CompetitiveDailyWinStreakMenu(val p: PracticePlugin): Menu() {
                     slot++
                 }
                 val lore = listOf(
-                    "${CC.PRIMARY}Your score: &f${
+                    "${CC.PRIMARY}Sua pontuação: &f${
                         p.profileManager.findById(p0.uniqueId)!!.getKitStatistic(kits.name)!!.rankedBestStreak
                     }"
                 ).toMutableList()

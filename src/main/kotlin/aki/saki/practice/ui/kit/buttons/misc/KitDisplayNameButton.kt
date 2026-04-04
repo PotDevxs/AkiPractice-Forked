@@ -36,13 +36,13 @@ class KitDisplayNameButton(
 ): Button() {
     override fun getButtonItem(p0: Player?): ItemStack {
         return ItemBuilder(Material.NAME_TAG)
-            .name("&b&lEdit the display name!")
+            .name("&b&lEditar nome de exibição!")
             .lore(listOf(
                 "",
-                "&7Click to edit the display name",
-                "&7this name will be shown on the unranked/ranked menu",
+                "&7Clique para editar o nome de exibição",
+                "&7este nome será mostrado no menu casual/competitivo",
                 "",
-                "&eThe current display name is: &f${kit.displayName}",
+                "&eO nome de exibição atual é: &f${kit.displayName}",
                 ""
             ))
             .build()
@@ -53,7 +53,7 @@ class KitDisplayNameButton(
         player.beginConversation(
             ConversationFactory(PracticePlugin.instance).withModality(true).withPrefix(NullConversationPrefix())
                 .withFirstPrompt(KitDisplayNameEditPrompt(kit, player)).withEscapeSequence("/no").withLocalEcho(false)
-                .withTimeout(25).thatExcludesNonPlayersWithMessage("Go away evil console").buildConversation(player)
+                .withTimeout(25).thatExcludesNonPlayersWithMessage("Somente jogadores podem usar isso").buildConversation(player)
         )
     }
 }

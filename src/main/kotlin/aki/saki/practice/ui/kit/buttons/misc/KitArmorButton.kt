@@ -36,10 +36,10 @@ class KitArmorButton(
 ): Button() {
     override fun getButtonItem(player: Player): ItemStack {
         return ItemBuilder(Material.DIAMOND_CHESTPLATE)
-            .name("&b&lKit Presets")
+            .name("&b&lPresets de kit")
             .lore(listOf(
                 "",
-                "&7Click to see the default kit presets available to apply.",
+                "&7Clique para ver os presets padrão disponíveis para aplicar.",
                 ""
             ))
             .build()
