@@ -29,6 +29,6 @@ object ChatListener : Listener {
         val profile = PracticePlugin.instance.profileManager.findById(event.player.uniqueId) ?: return
         val campTag = CampManager.getByPlayer(event.player.uniqueId)?.let { "&8[&7${it.tag}&8] " } ?: ""
         val prefix = CC.translate("&7[&eLv.${profile.level}&7] $campTag&f")
-        event.format = prefix + "%1\$s&f: %2\$s"
+        event.format = "$prefix%1\$s&f: %2\$s"
     }
 }

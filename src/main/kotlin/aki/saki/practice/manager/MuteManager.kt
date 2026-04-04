@@ -27,7 +27,7 @@ object MuteManager {
             try {
                 val uuid = UUID.fromString(uuidStr)
                 val exp = config.getLong("mutes.$uuidStr.expiresAt", 0L)
-                if (exp > 0 && exp <= now) return@forEach
+                if (exp in 1..now) return@forEach
                 muted.add(uuid)
                 config.getString("mutes.$uuidStr.reason")?.let { reasons[uuid] = it }
                 if (exp > 0) expiresAt[uuid] = exp

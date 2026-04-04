@@ -8,18 +8,15 @@
  */
 package aki.saki.practice.holograms
 
-import dev.yek4h.spigot.util.CC
 import aki.saki.practice.PracticePlugin
 import net.minecraft.server.v1_8_R3.*
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.pow
 

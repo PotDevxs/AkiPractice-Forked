@@ -74,7 +74,7 @@ object FFAListener : Listener {
                     } else {
                         val ffaPlayer = FFAManager.getByUUID(profile.ffa!!)!!.getFFAPlayer(player.uniqueId)
 
-                        ffaPlayer!!.lastDamager = damager.uniqueId
+                        ffaPlayer.lastDamager = damager.uniqueId
                         ffaPlayer.lastDamaged = System.currentTimeMillis()
                     }
                 }

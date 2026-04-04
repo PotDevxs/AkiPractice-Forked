@@ -82,7 +82,7 @@ class DuelCommand {
             return
         }
         val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
-        val duelRequest = profile?.getDuelRequest(target.uniqueId)
+        val duelRequest = profile.getDuelRequest(target.uniqueId)
 
         if (duelRequest == null) {
             player.sendMessage(Locale.INVALID_DUEL.getMessage())
