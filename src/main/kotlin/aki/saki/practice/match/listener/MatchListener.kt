@@ -15,6 +15,7 @@ import aki.saki.practice.match.Match
 import aki.saki.practice.match.MatchState
 import aki.saki.practice.match.impl.*
 import aki.saki.practice.match.player.TeamMatchPlayer
+import aki.saki.practice.knockback.KnockbackService
 import aki.saki.practice.profile.ProfileState
 import aki.saki.practice.utils.Cooldown
 import aki.saki.practice.utils.TimeUtil
@@ -296,6 +297,7 @@ object MatchListener : Listener {
                     }
 
                     matchPlayer.combo = 0
+                    KnockbackService.queueHit(player, damager, match.kit.knockbackProfile)
                 }
             } else {
                 event.isCancelled = true

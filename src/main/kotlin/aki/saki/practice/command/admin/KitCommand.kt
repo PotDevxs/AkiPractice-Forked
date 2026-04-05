@@ -14,6 +14,7 @@ import com.jonahseguin.drink.annotation.Sender
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.kit.admin.AdminKitManageMenu
 import aki.saki.practice.manager.QueueManager
+import aki.saki.practice.knockback.KnockbackService
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.profile.Profile
 import aki.saki.practice.profile.statistics.KitStatistic
@@ -120,8 +121,14 @@ class KitCommand {
     fun setKb(@Sender sender: CommandSender, kit: Kit, string: String) {
         val player = sender as? Player ?: return
 
-        kit.knockbackProfile = string
-        player.sendMessage("${CC.PRIMARY}KB do kit ${CC.SECONDARY}${kit.name}${CC.PRIMARY} definido para ${CC.SECONDARY}$string${CC.PRIMARY} com sucesso!")
+        if (!KnockbackService.hasProfile(string)) {
+            player.sendMessage("${CC.RED}Perfil de KB inválido. Perfis disponíveis: ${CC.SECONDARY}${KnockbackService.getProfileNames().joinToString("${CC.GRAY}, ${CC.SECONDARY}")}")
+            return
+        }
+
+        kit.knockbackProfile = KnockbackService.getProfile(string).name
+        PracticePlugin.instance.kitManager.save()
+        player.sendMessage("${CC.PRIMARY}KB do kit ${CC.SECONDARY}${kit.name}${CC.PRIMARY} definido para ${CC.SECONDARY}${kit.knockbackProfile}${CC.PRIMARY} com sucesso!")
     }
 
     @Command(name = "icon", desc = "Set the icon of a Kit")

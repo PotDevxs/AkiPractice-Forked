@@ -21,7 +21,6 @@ import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
 import aki.saki.practice.utils.PlayerUtil
 import aki.saki.practice.utils.item.CustomItemStack
-import dev.yek4h.spigot.knockback.KnockbackAPI
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -77,10 +76,6 @@ object MatchManager {
         } else {
             generateMatchMessage(firstPlayer, secondPlayer, false, arena, kit, true)
         }
-
-
-        KnockbackAPI.applyKnockback(KnockbackAPI.getByName(kit.knockbackProfile), firstPlayer)
-        KnockbackAPI.applyKnockback(KnockbackAPI.getByName(kit.knockbackProfile), secondPlayer)
 
         Match.matches[match.uuid] = match
         QueueManager.updatePlayingCount(match, match.players.size)

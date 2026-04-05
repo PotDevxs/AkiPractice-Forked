@@ -14,6 +14,7 @@ import aki.saki.practice.event.impl.BracketsEvent
 import aki.saki.practice.event.player.EventPlayerState
 import aki.saki.practice.manager.EventManager
 import aki.saki.practice.PracticePlugin
+import aki.saki.practice.knockback.KnockbackService
 import aki.saki.practice.profile.ProfileState
 import aki.saki.practice.utils.CC
 import org.bukkit.Material
@@ -256,6 +257,17 @@ object EventListener : Listener {
 
                 if (!currentEvent.canHit(player, damager)) {
                     event.isCancelled = true
+                    return
+                }
+
+                val profileName = when (currentEvent.type) {
+                    EventType.BRACKETS -> (currentEvent as BracketsEvent).kit.knockbackProfile
+                    EventType.SUMO -> "sumo"
+                    else -> null
+                }
+
+                if (profileName != null) {
+                    KnockbackService.queueHit(player, damager, profileName)
                 }
             }
         }

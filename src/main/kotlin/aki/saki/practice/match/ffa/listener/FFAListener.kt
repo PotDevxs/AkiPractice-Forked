@@ -11,6 +11,7 @@ package aki.saki.practice.match.ffa.listener
 import aki.saki.practice.constants.Constants
 import aki.saki.practice.manager.FFAManager
 import aki.saki.practice.PracticePlugin
+import aki.saki.practice.knockback.KnockbackService
 import aki.saki.practice.profile.ProfileState
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -72,10 +73,12 @@ object FFAListener : Listener {
                     if (Constants.SAFE_ZONE!!.contains(player.location) || Constants.SAFE_ZONE!!.contains(damager.location)) {
                         event.isCancelled = true
                     } else {
-                        val ffaPlayer = FFAManager.getByUUID(profile.ffa!!)!!.getFFAPlayer(player.uniqueId)
+                        val ffa = FFAManager.getByUUID(profile.ffa!!) ?: return
+                        val ffaPlayer = ffa.getFFAPlayer(player.uniqueId)
 
                         ffaPlayer.lastDamager = damager.uniqueId
                         ffaPlayer.lastDamaged = System.currentTimeMillis()
+                        KnockbackService.queueHit(player, damager, ffa.kit.knockbackProfile)
                     }
                 }
             }
