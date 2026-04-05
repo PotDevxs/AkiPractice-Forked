@@ -16,9 +16,9 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -34,7 +34,7 @@ class CasualDailyWinStreakMenu(val p: PracticePlugin): Menu() {
 
     val GLASS_PANE = arrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 37 ,38, 39, 40, 41 ,42 ,43, 44)
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return CC.translate("&7Rankings de Melhor Sequência Casual")
     }
 
@@ -45,7 +45,7 @@ class CasualDailyWinStreakMenu(val p: PracticePlugin): Menu() {
         GLASS_PANE.forEach {
 
             buttons[it] = object : Button() {
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(Material.STAINED_GLASS_PANE)
                         .name(" ")
                         .durability(7)
@@ -102,7 +102,7 @@ class CasualDailyWinStreakMenu(val p: PracticePlugin): Menu() {
                     .build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 when (clickType) {
                     ClickType.LEFT -> {
                         player.updateInventory()
@@ -147,7 +147,7 @@ class CasualDailyWinStreakMenu(val p: PracticePlugin): Menu() {
                             .replace("<wins>", wins.toString())
                     })
                 buttons[slot] = object : Button() {
-                    override fun getButtonItem(p0: Player?): ItemStack {
+                    override fun getButtonItem(p0: Player): ItemStack {
                         return ItemBuilder(kits.displayItem)
                             .durability(kits.displayItem.durability.toInt())
                             .name(CC.translate(kits.displayName))

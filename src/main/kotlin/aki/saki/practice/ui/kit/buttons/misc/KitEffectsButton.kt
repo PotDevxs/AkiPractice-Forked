@@ -11,7 +11,7 @@ package aki.saki.practice.ui.kit.buttons.misc
 import aki.saki.practice.kit.Kit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Button
 
 
 /*
@@ -26,7 +26,7 @@ import rip.katz.api.menu.Button
 class KitEffectsButton(
     val kit: Kit
 ): Button() {
-    override fun getButtonItem(p0: Player?): ItemStack {
+    override fun getButtonItem(p0: Player): ItemStack {
         TODO("Not yet implemented")
     }
 }

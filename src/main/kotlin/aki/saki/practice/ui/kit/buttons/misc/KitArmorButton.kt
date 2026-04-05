@@ -18,8 +18,8 @@ import org.bukkit.conversations.NullConversationPrefix
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*

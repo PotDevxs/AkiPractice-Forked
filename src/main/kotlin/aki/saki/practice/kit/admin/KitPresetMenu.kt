@@ -9,8 +9,8 @@
 package aki.saki.practice.kit.admin
 
 import aki.saki.practice.PracticePlugin
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack
 
 class KitPresetMenu(val kit: Kit): Menu() {
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return "${CC.SECONDARY}${CC.BOLD}Presets"
     }
 
@@ -29,11 +29,11 @@ class KitPresetMenu(val kit: Kit): Menu() {
         return 36
     }
 
-    override fun getButtons(p0: Player?): MutableMap<Int, Button> {
+    override fun getButtons(p0: Player): MutableMap<Int, Button> {
         val toReturn = mutableMapOf<Int, Button>()
 
         toReturn[10] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.LEASH)
                     .name("${CC.SECONDARY}Sumo")
                     .lore(listOf(
@@ -42,7 +42,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                         CC.CHAT_BAR
                     )).build()
             }
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 kit.sumo = true
                 kit.fallDamage = false
                 kit.hunger = false
@@ -54,7 +54,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
         }
 
         toReturn[12] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.BED)
                     .name("${CC.SECONDARY}Bed Fights ${CC.GRAY}(Bedwars)")
                     .lore(listOf(
@@ -64,7 +64,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                         CC.CHAT_BAR
                     )).build()
             }
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 kit.bedFights = true
                 kit.hunger = false
                 kit.fallDamage = true
@@ -77,7 +77,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
         }
 
         toReturn[14] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.STICK)
                     .name("${CC.SECONDARY}MLGRush")
                     .lore(listOf(
@@ -87,7 +87,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                         CC.CHAT_BAR
                     )).build()
             }
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 kit.mlgRush = true
                 kit.hunger = false
                 kit.fallDamage = true
@@ -100,7 +100,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
         }
 
         toReturn[16] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.CLAY)
                     .durability(11)
                     .name("${CC.SECONDARY}Bridge")
@@ -111,7 +111,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                         CC.CHAT_BAR
                     )).build()
             }
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 kit.bridge = true
                 kit.hunger = false
                 kit.fallDamage = false
@@ -124,7 +124,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
         }
 
         toReturn[19] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.FIREBALL)
                     .name("${CC.SECONDARY}Fireball Fight")
                     .lore(listOf(
@@ -134,7 +134,7 @@ class KitPresetMenu(val kit: Kit): Menu() {
                         CC.CHAT_BAR
                     )).build()
             }
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 kit.fireballFight = true
                 kit.hunger = false
                 kit.fallDamage = false

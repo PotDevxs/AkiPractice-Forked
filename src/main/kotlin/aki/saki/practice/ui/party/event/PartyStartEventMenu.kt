@@ -8,8 +8,8 @@
  */
 package aki.saki.practice.ui.party.event
 
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.manager.PartyManager
 import aki.saki.practice.ui.party.ffa.PartyFFAKitSelect
 import aki.saki.practice.ui.party.split.PartySplitKitSelect
@@ -46,13 +46,13 @@ class PartyStartEventMenu: Menu() {
 
         toReturn[11] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.GOLD_AXE)
                     .name("${CC.PRIMARY}FFA")
                     .build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (clickType?.isLeftClick!!) {
                     val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
 
@@ -72,7 +72,7 @@ class PartyStartEventMenu: Menu() {
 
         toReturn[15] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.DIAMOND_AXE)
                     .name("${CC.PRIMARY}Split")
                     .build()

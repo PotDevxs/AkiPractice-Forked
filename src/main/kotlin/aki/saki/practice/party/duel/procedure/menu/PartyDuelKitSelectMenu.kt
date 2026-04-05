@@ -9,8 +9,8 @@
 package aki.saki.practice.party.duel.procedure.menu
 
 import aki.saki.practice.PracticePlugin
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.manager.ArenaManager
 import aki.saki.practice.party.duel.procedure.PartyDuelProcedure
@@ -33,11 +33,11 @@ import org.bukkit.inventory.ItemStack
 
 class PartyDuelKitSelectMenu: Menu() {
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return "Selecione um kit"
     }
 
-    override fun onClose(player: Player?) {
+    override fun onClose(player: Player) {
         if (!isClosedByMenu) {
 
             PartyDuelProcedure.duelProcedures.removeIf { it.issuer == player?.uniqueId }
@@ -45,19 +45,19 @@ class PartyDuelKitSelectMenu: Menu() {
         }
     }
 
-    override fun getButtons(p0: Player?): MutableMap<Int, Button> {
+    override fun getButtons(p0: Player): MutableMap<Int, Button> {
         val toReturn: MutableMap<Int, Button> = mutableMapOf()
 
         for (kit in PracticePlugin.instance.kitManager.kits.values) {
             toReturn[toReturn.size] = object : Button() {
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(kit.displayItem)
                         .name("${CC.PRIMARY}${kit.name}")
                         .addFlags(ItemFlag.HIDE_ATTRIBUTES)
                         .build()
                 }
 
-                override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (clickType?.isLeftClick!!) {
 
                         val duelProcedure = PartyDuelProcedure.getByUUID(player.uniqueId)

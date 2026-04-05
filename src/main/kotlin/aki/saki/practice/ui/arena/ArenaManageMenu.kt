@@ -8,8 +8,8 @@
  */
 package aki.saki.practice.ui.arena
 
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.arena.Arena
 import aki.saki.practice.utils.ItemBuilder
 import org.bukkit.Material
@@ -29,16 +29,16 @@ import org.bukkit.inventory.ItemStack
 
 class ArenaManageMenu(private val arena: Arena): Menu() {
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return "Gerenciamento de arena"
     }
 
-    override fun getButtons(player: Player?): MutableMap<Int, Button> {
+    override fun getButtons(player: Player): MutableMap<Int, Button> {
         val toReturn: MutableMap<Int, Button> = mutableMapOf()
 
         toReturn[0] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.PAPER)
                     .name("&eDuplicatas")
                     .lore(listOf(
@@ -47,7 +47,7 @@ class ArenaManageMenu(private val arena: Arena): Menu() {
                     )).build()
             }
 
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (clickType?.isLeftClick!!) {
 
                 }

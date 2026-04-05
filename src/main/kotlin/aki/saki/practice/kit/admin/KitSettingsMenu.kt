@@ -21,8 +21,8 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
 
 class KitSettingsMenu(private val kit: Kit) : Menu() {
 
@@ -66,7 +66,7 @@ class KitSettingsMenu(private val kit: Kit) : Menu() {
         private val durability: Short = 0
     ) : Button() {
 
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             val state = stateGetter(kit)
             return ItemBuilder(material)
                 .durability(durability.toInt())
@@ -79,7 +79,7 @@ class KitSettingsMenu(private val kit: Kit) : Menu() {
                 ).build()
         }
 
-        override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
             stateSetter(kit)
             PracticePlugin.instance.kitManager.save()
 
@@ -90,7 +90,7 @@ class KitSettingsMenu(private val kit: Kit) : Menu() {
             }
         }
 
-        override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+        override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
             return true
         }
 

@@ -20,10 +20,10 @@ import aki.saki.practice.ui.kit.buttons.misc.KitQueuePosButton
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
-import rip.katz.api.utils.CC
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.utils.CC
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -38,7 +38,7 @@ import rip.katz.api.utils.ItemBuilder
 class KitCommandMenuEditor(
     val kit: Kit
 ): Menu() {
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
          return CC.color("&bEditor de kits!")
     }
 
@@ -46,11 +46,11 @@ class KitCommandMenuEditor(
         return true
     }
 
-    override fun getButtons(p0: Player?): MutableMap<Int, Button> {
+    override fun getButtons(p0: Player): MutableMap<Int, Button> {
         val buttons = HashMap<Int, Button>()
         for (i in 0..35) {
             buttons[i] = object : Button() {
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(Material.STAINED_GLASS_PANE)
                         .durability(7)
                         .clearLore()

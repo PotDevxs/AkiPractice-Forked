@@ -8,8 +8,8 @@
  */
 package aki.saki.practice.ui.match
 
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.match.snapshot.MatchSnapshot
 import aki.saki.practice.utils.*
 import org.apache.commons.lang.StringEscapeUtils
@@ -18,7 +18,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
-import rip.katz.api.menu.buttons.DisplayButton
+import aki.saki.practice.menu.buttons.DisplayButton
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -34,11 +34,11 @@ import kotlin.math.roundToInt
 
 class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
 
-    override fun getTitle(player: Player?): String {
+    override fun getTitle(player: Player): String {
         return "Inventário de ${matchSnapshot.username}"
     }
 
-    override fun getButtons(player: Player?): Map<Int, Button> {
+    override fun getButtons(player: Player): Map<Int, Button> {
         val buttonMap = mutableMapOf<Int, Button>()
         val orderedContents = InventoryUtil.fixInventoryOrder(matchSnapshot.contents)
 
@@ -85,7 +85,7 @@ class MatchDetailsMenu(private val matchSnapshot: MatchSnapshot) : Menu() {
             } ?: ItemStack(Material.AIR)
         }
 
-        override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
             val opponentSnapshot = MatchSnapshot.getByUuid(opponentUuid)
 
             opponentSnapshot?.let {

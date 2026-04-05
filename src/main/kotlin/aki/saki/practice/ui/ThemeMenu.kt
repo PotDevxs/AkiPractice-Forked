@@ -16,12 +16,12 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
 
 class ThemeMenu : Menu() {
 
-    override fun getTitle(p0: Player?): String = "Tema (Cores)"
+    override fun getTitle(p0: Player): String = "Tema (Cores)"
 
     override fun getButtons(player: Player): MutableMap<Int, Button> {
         val toReturn = mutableMapOf<Int, Button>()
@@ -31,21 +31,21 @@ class ThemeMenu : Menu() {
         val secondary = settings.themeSecondary ?: "Padrão"
 
         toReturn[4] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack = ItemBuilder(Material.NAME_TAG)
+            override fun getButtonItem(p0: Player): ItemStack = ItemBuilder(Material.NAME_TAG)
                 .name("${ThemeHelper.getPrimary(player)}Cor primária: ${CC.GRAY}$primary")
                 .lore("${CC.GRAY}Clique em uma cor abaixo para definir.")
                 .build()
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {}
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean = false
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {}
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean = false
         }
 
         toReturn[13] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack = ItemBuilder(Material.PAPER)
+            override fun getButtonItem(p0: Player): ItemStack = ItemBuilder(Material.PAPER)
                 .name("${ThemeHelper.getSecondary(player)}Cor secundária: ${CC.GRAY}$secondary")
                 .lore("${CC.GRAY}Clique em uma cor abaixo para definir.")
                 .build()
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {}
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean = false
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {}
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean = false
         }
 
         val colors = listOf(
@@ -77,7 +77,7 @@ class ThemeMenu : Menu() {
         colors.forEachIndexed { index, (color, material, data) ->
             val slot = 18 + index
             toReturn[slot] = object : Button() {
-                override fun getButtonItem(p0: Player?): ItemStack = ItemBuilder(material)
+                override fun getButtonItem(p0: Player): ItemStack = ItemBuilder(material)
                     .durability(data.toInt())
                     .name("${color}${color.name}")
                     .lore(
@@ -85,7 +85,7 @@ class ThemeMenu : Menu() {
                         "${CC.GRAY}Secundária: Clique direito"
                     )
                     .build()
-                override fun clicked(p: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (p == null) return
                     val prof = PracticePlugin.instance.profileManager.findById(p.uniqueId)!!
                     val name = color.name
@@ -98,16 +98,16 @@ class ThemeMenu : Menu() {
                     }
                     prof.save(true)
                 }
-                override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean = true
+                override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean = true
             }
         }
 
         toReturn[31] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack = ItemBuilder(Material.BARRIER)
+            override fun getButtonItem(p0: Player): ItemStack = ItemBuilder(Material.BARRIER)
                 .name("${CC.RED}Resetar tema")
                 .lore("${CC.GRAY}Voltar às cores padrão do servidor")
                 .build()
-            override fun clicked(p: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (p == null) return
                 val prof = PracticePlugin.instance.profileManager.findById(p.uniqueId)!!
                 prof.settings.themePrimary = null
@@ -115,7 +115,7 @@ class ThemeMenu : Menu() {
                 prof.save(true)
                 p.sendMessage(CC.translate("&aTema resetado."))
             }
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean = true
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean = true
         }
 
         return toReturn

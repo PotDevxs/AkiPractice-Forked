@@ -9,8 +9,8 @@
 package aki.saki.practice.ui.party.ffa
 
 import aki.saki.practice.PracticePlugin
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.manager.ArenaManager
 import aki.saki.practice.match.Match
@@ -36,7 +36,7 @@ import org.bukkit.inventory.ItemStack
 
 class PartyFFAKitSelect(private val party: Party): Menu() {
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return "Selecione um kit!"
     }
 
@@ -49,11 +49,11 @@ class PartyFFAKitSelect(private val party: Party): Menu() {
 
             toReturn[toReturn.size] = object : Button() {
 
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(kit.displayItem).name("${CC.PRIMARY}${kit.name}").build()
                 }
 
-                override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (clickType?.isLeftClick!!) {
 
                         if (party.players.size < 2) {

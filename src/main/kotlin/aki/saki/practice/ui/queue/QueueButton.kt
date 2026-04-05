@@ -8,7 +8,7 @@
  */
 package aki.saki.practice.ui.queue
 
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Button
 import aki.saki.practice.manager.QueueManager
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.profile.ProfileState
@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack
 
 class QueueButton(private val queue: Queue) : Button() {
 
-    override fun getButtonItem(player: Player?): ItemStack {
+    override fun getButtonItem(player: Player): ItemStack {
         val playing = QueueManager.getPlayingCount(queue.kit, queue.type)
 
         return ItemBuilder(queue.kit.displayItem.clone())
@@ -40,7 +40,7 @@ class QueueButton(private val queue: Queue) : Button() {
             ).build()
     }
 
-    override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+    override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
         if (clickType?.isLeftClick == true) {
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
 

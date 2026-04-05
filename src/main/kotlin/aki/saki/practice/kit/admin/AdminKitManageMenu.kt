@@ -8,8 +8,8 @@
  */
 package aki.saki.practice.kit.admin
 
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack
 
 class AdminKitManageMenu(private val kit: Kit): Menu() {
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return "Gerenciando kit ${kit.name}"
     }
 
@@ -32,25 +32,25 @@ class AdminKitManageMenu(private val kit: Kit): Menu() {
         val toReturn: MutableMap<Int, Button> = mutableMapOf()
 
         toReturn[11] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.NAME_TAG)
                     .name("${CC.SECONDARY}Escolha um dos seus presets")
                     .build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 KitPresetMenu(kit).openMenu(player)
             }
         }
 
         toReturn[15] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.REDSTONE_BLOCK)
                     .name("${CC.SECONDARY}Configurações")
                     .build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 KitSettingsMenu(kit).openMenu(player)
             }
         }

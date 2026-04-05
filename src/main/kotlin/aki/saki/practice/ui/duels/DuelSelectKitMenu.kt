@@ -9,8 +9,8 @@
 package aki.saki.practice.ui.duels
 
 import aki.saki.practice.PracticePlugin
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.duel.procedure.DuelProcedure
 import aki.saki.practice.duel.procedure.DuelProcedureStage
 import aki.saki.practice.kit.Kit
@@ -34,11 +34,11 @@ import org.bukkit.inventory.ItemStack
 
 class DuelSelectKitMenu: Menu() {
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return "Selecione um kit"
     }
 
-    override fun onClose(player: Player?) {
+    override fun onClose(player: Player) {
         if (!isClosedByMenu) {
 
             DuelProcedure.duelProcedures.removeIf { it.uuid == player?.uniqueId }
@@ -46,12 +46,12 @@ class DuelSelectKitMenu: Menu() {
         }
     }
 
-    override fun getButtons(p0: Player?): MutableMap<Int, Button> {
+    override fun getButtons(p0: Player): MutableMap<Int, Button> {
         val toReturn: MutableMap<Int, Button> = mutableMapOf()
 
         for (kit in PracticePlugin.instance.kitManager.kits.values) {
             toReturn[toReturn.size] = object : Button() {
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(kit.displayItem)
                         .clearLore()
                         .name(kit.displayName)
@@ -59,7 +59,7 @@ class DuelSelectKitMenu: Menu() {
                         .build()
                 }
 
-                override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (clickType?.isLeftClick!!) {
 
                         val duelProcedure = DuelProcedure.getByUUID(player.uniqueId)

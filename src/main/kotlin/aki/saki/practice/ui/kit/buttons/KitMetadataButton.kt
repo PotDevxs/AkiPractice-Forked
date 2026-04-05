@@ -15,8 +15,8 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -31,7 +31,7 @@ import rip.katz.api.utils.ItemBuilder
 class KitMetadataButton(
   val kit: Kit
 ) : Button() {
-    override fun getButtonItem(p0: Player?): ItemStack {
+    override fun getButtonItem(p0: Player): ItemStack {
         return ItemBuilder(Material.ENCHANTED_BOOK)
             .enchantment(Enchantment.DURABILITY, 10)
             .name("&b&lMetadados do kit")

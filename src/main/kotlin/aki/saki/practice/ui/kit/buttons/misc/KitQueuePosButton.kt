@@ -15,8 +15,8 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -32,7 +32,7 @@ class KitQueuePosButton(
     val kit: Kit
 ) : Button() {
 
-    override fun getButtonItem(player: Player?): ItemStack {
+    override fun getButtonItem(player: Player): ItemStack {
         val unrankedOrNot = PracticePlugin.instance.kitManager.unrankedOrNot
         val positionType = if (unrankedOrNot) "&aCasual" else "&cCompetitivo"
         val position = if (unrankedOrNot) kit.unrankedPosition else kit.rankedPosition

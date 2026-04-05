@@ -18,9 +18,9 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.buttons.BackButton
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.buttons.BackButton
 
 
 /**
@@ -38,7 +38,7 @@ class KitManagementMenu(val kit: Kit): Menu() {
 
     init {
         isPlaceholder = true
-        isUpdateAfterClick = false
+        updateAfterClick = false
     }
 
     override fun getTitle(player: Player): String {
@@ -83,7 +83,7 @@ class KitManagementMenu(val kit: Kit): Menu() {
     }
 
     private class DeleteKitButton(private val kit: Kit?, private val kitLoadout: EditedKit) : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .name("&cApagar")
                 .durability(14)
@@ -97,7 +97,7 @@ class KitManagementMenu(val kit: Kit): Menu() {
                 .build()
         }
 
-        override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
 
             profile.getKitStatistic(kit!!.name)?.deleteKit(kitLoadout)
@@ -106,13 +106,13 @@ class KitManagementMenu(val kit: Kit): Menu() {
     }
 
     private class CreateKitButton(private val index: Int) : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.IRON_SWORD)
                 .name("${CC.PRIMARY}Criar kit")
                 .build()
         }
 
-        override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
             val kit = profile.kitEditorData?.kit
 
@@ -137,14 +137,14 @@ class KitManagementMenu(val kit: Kit): Menu() {
     }
 
     private class RenameKitButton(private val kit: Kit, private val kitLoadout: EditedKit) : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.SIGN)
                 .name("${CC.PRIMARY}Renomear")
                 .lore(CC.translate("${CC.PRIMARY}Clique aqui para renomear esse kit."))
                 .build()
         }
 
-        override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarSlot: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarSlot: Int) {
             //currentlyOpenedMenus[player.uniqueId]?.isClosedByMenu = true
             player.updateInventory()
             player.closeInventory()
@@ -159,14 +159,14 @@ class KitManagementMenu(val kit: Kit): Menu() {
 
     private class LoadKitButton(private val index: Int) : Button() {
 
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.BOOK)
                 .name("${CC.PRIMARY}Carregar/Editar")
                 .lore(CC.translate("${CC.PRIMARY}Clique aqui para editar esse kit."))
                 .build()
         }
 
-        override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarSlot: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarSlot: Int) {
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
 
             if (profile.kitEditorData?.kit == null) {
@@ -201,7 +201,7 @@ class KitManagementMenu(val kit: Kit): Menu() {
 
     @AllArgsConstructor
     private class KitDisplayButton(private val kitLoadout: EditedKit) : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.BOOK)
                 .name("${CC.PRIMARY}${kitLoadout.name}")
                 .build()

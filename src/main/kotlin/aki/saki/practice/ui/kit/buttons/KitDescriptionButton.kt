@@ -12,8 +12,8 @@ import aki.saki.practice.kit.Kit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -28,7 +28,7 @@ import rip.katz.api.utils.ItemBuilder
 class KitDescriptionButton(
     val kit: Kit
 ) : Button() {
-    override fun getButtonItem(player: Player?): ItemStack {
+    override fun getButtonItem(player: Player): ItemStack {
         val modes = mapOf(
             "Modo competitivo" to kit.ranked,
             "Modo BedFights" to kit.bedFights,

@@ -18,8 +18,8 @@ import org.bukkit.conversations.NullConversationPrefix
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -34,7 +34,7 @@ import rip.katz.api.utils.ItemBuilder
 class KitDisplayNameButton(
     val kit: Kit
 ): Button() {
-    override fun getButtonItem(p0: Player?): ItemStack {
+    override fun getButtonItem(p0: Player): ItemStack {
         return ItemBuilder(Material.NAME_TAG)
             .name("&b&lEditar nome de exibição!")
             .lore(listOf(

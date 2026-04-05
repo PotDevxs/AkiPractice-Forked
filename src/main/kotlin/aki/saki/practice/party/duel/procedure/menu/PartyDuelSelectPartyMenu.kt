@@ -9,8 +9,8 @@
 package aki.saki.practice.party.duel.procedure.menu
 
 import aki.saki.practice.PracticePlugin
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.pagination.PaginatedMenu
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.pagination.PaginatedMenu
 import aki.saki.practice.manager.PartyManager
 import aki.saki.practice.party.duel.procedure.PartyDuelProcedure
 import aki.saki.practice.utils.CC
@@ -33,7 +33,7 @@ import org.bukkit.inventory.ItemStack
 
 class PartyDuelSelectPartyMenu : PaginatedMenu() {
 
-    override fun getPrePaginatedTitle(player: Player?): String {
+    override fun getPrePaginatedTitle(player: Player): String {
         return "Selecione um grupo!"
     }
 
@@ -44,7 +44,7 @@ class PartyDuelSelectPartyMenu : PaginatedMenu() {
         PartyManager.parties.filter { it.uuid != profile.party }.forEach { party ->
             buttons[buttons.size] = object : Button() {
 
-                override fun getButtonItem(player: Player?): ItemStack {
+                override fun getButtonItem(player: Player): ItemStack {
                     return ItemBuilder(Material.NETHER_STAR)
                         .name("${CC.PRIMARY}${Bukkit.getPlayer(party.leader)?.name}")
                         .lore(
@@ -55,7 +55,7 @@ class PartyDuelSelectPartyMenu : PaginatedMenu() {
                         ).build()
                 }
 
-                override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (clickType?.isLeftClick == true) {
                         val duelProcedure = PartyDuelProcedure.getByUUID(player?.uniqueId!!)
                         duelProcedure?.party = party.uuid

@@ -8,8 +8,8 @@
  */
 package aki.saki.practice.party.duel.procedure.menu
 
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.pagination.PaginatedMenu
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.pagination.PaginatedMenu
 import aki.saki.practice.arena.Arena
 import aki.saki.practice.arena.type.ArenaType
 import aki.saki.practice.duel.procedure.DuelProcedure
@@ -32,11 +32,11 @@ import org.bukkit.inventory.ItemStack
 
 class PartyDuelArenaSelectMenu: PaginatedMenu() {
 
-    override fun getPrePaginatedTitle(p0: Player?): String {
+    override fun getPrePaginatedTitle(p0: Player): String {
         return "Selecione uma arena"
     }
 
-    override fun onClose(player: Player?) {
+    override fun onClose(player: Player) {
         if (!isClosedByMenu) {
 
             DuelProcedure.duelProcedures.removeIf { it.uuid == player?.uniqueId }
@@ -44,7 +44,7 @@ class PartyDuelArenaSelectMenu: PaginatedMenu() {
         }
     }
 
-    override fun getAllPagesButtons(player: Player?): MutableMap<Int, Button> {
+    override fun getAllPagesButtons(player: Player): MutableMap<Int, Button> {
         val toReturn: MutableMap<Int, Button> = mutableMapOf()
 
         val duelProcedure = PartyDuelProcedure.getByUUID(player?.uniqueId!!)
@@ -60,13 +60,13 @@ class PartyDuelArenaSelectMenu: PaginatedMenu() {
 
             toReturn[toReturn.size] = object : Button() {
 
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(Material.PAPER)
                         .name("${CC.PRIMARY}${arena.name}")
                         .build()
                 }
 
-                override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (clickType?.isLeftClick!!) {
 
                         if (duelProcedure == null) {

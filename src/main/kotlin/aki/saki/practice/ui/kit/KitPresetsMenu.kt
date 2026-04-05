@@ -18,9 +18,9 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.Potion
 import org.bukkit.potion.PotionType
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -36,11 +36,11 @@ class KitPresetsMenu(
     val kit: Kit,
     val player: Player
 ) : Menu() {
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return CC.translate("&bPreset de kit")
     }
 
-    override fun getButtons(p0: Player?): MutableMap<Int, Button> {
+    override fun getButtons(p0: Player): MutableMap<Int, Button> {
         val buttons = HashMap<Int, Button>()
         repeat(36) { i ->
             buttons[i] = createEmptyButton()
@@ -93,7 +93,7 @@ class KitPresetsMenu(
 
     private fun createEmptyButton(): Button {
         return object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.STAINED_GLASS_PANE).durability(7)
                     .name("")
                     .build()
@@ -105,7 +105,7 @@ class KitPresetsMenu(
         material: Material, name: String, durability: Int, lore: List<String>, presetAction: () -> Unit
     ): Button {
         return object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(material).durability(durability)
                     .name(name)
                     .lore(lore)

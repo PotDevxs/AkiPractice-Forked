@@ -23,8 +23,8 @@ import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -76,7 +76,7 @@ class UnrankedQueueButton(
             .build()
     }
 
-    override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+    override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
         if (clickType?.isLeftClick == true) {
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
 

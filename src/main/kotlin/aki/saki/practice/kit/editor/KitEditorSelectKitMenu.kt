@@ -9,8 +9,8 @@
 package aki.saki.practice.kit.editor
 
 import aki.saki.practice.PracticePlugin
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
@@ -30,11 +30,11 @@ import org.bukkit.inventory.ItemStack
 
 class KitEditorSelectKitMenu: Menu() {
 
-    override fun getTitle(player: Player?): String {
+    override fun getTitle(player: Player): String {
         return "Selecione um kit"
     }
 
-    override fun getButtons(player: Player?): Map<Int, Button> {
+    override fun getButtons(player: Player): Map<Int, Button> {
         val buttons: MutableMap<Int, Button> = mutableMapOf()
         PracticePlugin.instance.kitManager.kits.values.forEach { kit ->
             if (kit.enabled) {
@@ -46,14 +46,14 @@ class KitEditorSelectKitMenu: Menu() {
 
     private class KitDisplayButton(private val kit: Kit) : Button() {
 
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(kit.displayItem)
                 .clearLore()
                 .name("${CC.PRIMARY}${kit.name}")
                 .build()
         }
 
-        override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
             player.closeInventory()
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
             profile.kitEditorData?.kit = kit

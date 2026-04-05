@@ -22,8 +22,8 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
 
 
 /**
@@ -50,11 +50,11 @@ class EventHostMenu: Menu() {
 
         toReturn[10] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.LEASH).name("${CC.PRIMARY}Sumo").build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (!player.hasPermission("lpractice.event.host")) {
                     player.sendMessage("${CC.RED}Você não tem permissão para hospedar este evento!")
                     return
@@ -82,11 +82,11 @@ class EventHostMenu: Menu() {
 
         toReturn[12] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.TNT).name("${CC.PRIMARY}TNT Tag").build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (!player.hasPermission("lpractice.event.host")) {
                     player.sendMessage("${CC.RED}Você não tem permissão para hospedar este evento!")
                     return
@@ -113,11 +113,11 @@ class EventHostMenu: Menu() {
 
         toReturn[14] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.TNT).name("${CC.PRIMARY}TNT Run").build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (!player.hasPermission("lpractice.event.host")) {
                     player.sendMessage("${CC.RED}Você não tem permissão para hospedar este evento!")
                     return
@@ -144,11 +144,11 @@ class EventHostMenu: Menu() {
 
         toReturn[16] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.DIAMOND_SWORD).name("${CC.PRIMARY}Brackets").build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (!player.hasPermission("lpractice.event.host")) {
                     player.sendMessage("${CC.RED}Você não tem permissão para hospedar este evento!")
                     return

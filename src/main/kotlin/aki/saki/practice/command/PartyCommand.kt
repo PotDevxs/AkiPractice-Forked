@@ -24,7 +24,7 @@ import aki.saki.practice.utils.TextBuilder
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import rip.katz.api.utils.CC
+import aki.saki.practice.utils.CC
 
 /*
  * This project can't be redistributed without

@@ -17,8 +17,8 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
 
 
 /**
@@ -32,7 +32,7 @@ import rip.katz.api.menu.Menu
 
 class SettingsMenu: Menu() {
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return "Configurações"
     }
 
@@ -43,7 +43,7 @@ class SettingsMenu: Menu() {
 
         toReturn[0] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.PAINTING).name("${CC.PRIMARY}Placar")
                     .lore(listOf(
                         if (settings?.scoreboard!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
@@ -51,19 +51,19 @@ class SettingsMenu: Menu() {
                     )).build()
             }
 
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 settings?.scoreboard = !settings?.scoreboard!!
                 profile.save(true)
             }
 
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
                 return true
             }
         }
 
         toReturn[1] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.DIAMOND_SWORD).name("${CC.PRIMARY}Duelos")
                     .lore(listOf(
                         if (settings?.duels!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
@@ -71,19 +71,19 @@ class SettingsMenu: Menu() {
                     )).build()
             }
 
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 settings?.duels = !settings?.duels!!
                 profile.save(true)
             }
 
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
                 return true
             }
         }
 
         toReturn[2] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.REDSTONE).name("${CC.PRIMARY}Espectadores")
                     .lore(listOf(
                         if (settings?.spectators!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
@@ -91,26 +91,26 @@ class SettingsMenu: Menu() {
                     )).build()
             }
 
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 settings?.spectators = !settings?.spectators!!
                 profile.save(true)
             }
 
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
                 return true
             }
         }
 
         toReturn[3] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.ENCHANTED_BOOK).name("${CC.PRIMARY}Restrição de ping")
                     .lore(listOf(
                         "${CC.PRIMARY}Restrição de ping: ${CC.SECONDARY}${if (settings?.pingRestriction == 0) "Sem limite" else settings?.pingRestriction}"
                     )).build()
             }
 
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (clickType?.isLeftClick!!) {
                     when(settings?.pingRestriction) {
                         300 -> {
@@ -193,14 +193,14 @@ class SettingsMenu: Menu() {
 
             }
 
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
                 return true
             }
         }
 
         toReturn[4] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.NETHER_STAR).name("${CC.PRIMARY}Avaliação de mapa")
                     .lore(listOf(
                         if (settings?.mapRating!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
@@ -208,19 +208,19 @@ class SettingsMenu: Menu() {
                     )).build()
             }
 
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 settings?.mapRating = !settings?.mapRating!!
                 profile.save(true)
             }
 
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
                 return true
             }
         }
 
         if (player.hasPermission(ThemeHelper.PERMISSION)) {
             toReturn[5] = object : Button() {
-                override fun getButtonItem(p0: Player?): ItemStack = ItemBuilder(Material.INK_SACK).durability(10)
+                override fun getButtonItem(p0: Player): ItemStack = ItemBuilder(Material.INK_SACK).durability(10)
                     .name("${ThemeHelper.getPrimary(player)}Tema (Cores)")
                     .lore(
                         "${CC.GRAY}Cor primária: ${ThemeHelper.getPrimary(player)}${settings?.themePrimary ?: "Padrão"}",
@@ -228,10 +228,10 @@ class SettingsMenu: Menu() {
                         "",
                         "${CC.GRAY}Clique para personalizar cores."
                     ).build()
-                override fun clicked(p: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     ThemeMenu().openMenu(p!!)
                 }
-                override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean = true
+                override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean = true
             }
         }
 

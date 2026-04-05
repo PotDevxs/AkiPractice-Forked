@@ -8,15 +8,15 @@
  */
 package aki.saki.practice.ui.match
 
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.utils.*
 import org.apache.commons.lang.StringEscapeUtils
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffect
-import rip.katz.api.menu.buttons.DisplayButton
+import aki.saki.practice.menu.buttons.DisplayButton
 import kotlin.math.roundToInt
 
 /**
@@ -31,11 +31,11 @@ import kotlin.math.roundToInt
 
 class ViewInventoryMenu(private val target: Player) : Menu() {
 
-    override fun getTitle(player: Player?): String {
+    override fun getTitle(player: Player): String {
         return "${CC.PRIMARY}Inventário de ${target.name}"
     }
 
-    override fun getButtons(player: Player?): Map<Int, Button> {
+    override fun getButtons(player: Player): Map<Int, Button> {
         val buttons = mutableMapOf<Int, Button>()
 
         player ?: return buttons
@@ -67,7 +67,7 @@ class ViewInventoryMenu(private val target: Player) : Menu() {
     }*/
 
     private class HealthButton(private val health: Int) : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.MELON)
                 .name("${CC.PRIMARY}Vida: ${CC.SECONDARY}$health/10 ${StringEscapeUtils.unescapeJava("\u2764")}")
                 .amount(if (health == 0) 1 else health)
@@ -76,7 +76,7 @@ class ViewInventoryMenu(private val target: Player) : Menu() {
     }
 
     private class HungerButton(private val hunger: Int) : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.COOKED_BEEF)
                 .name("${CC.PRIMARY}Fome: ${CC.SECONDARY}$hunger/20")
                 .amount(if (hunger == 0) 1 else hunger)
@@ -85,7 +85,7 @@ class ViewInventoryMenu(private val target: Player) : Menu() {
     }
 
     private class EffectsButton(private val effects: Collection<PotionEffect>) : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             val builder = ItemBuilder(Material.POTION).name("${CC.PRIMARY}Efeitos de poção")
 
             if (effects.isEmpty()) {

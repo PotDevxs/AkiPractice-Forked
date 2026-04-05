@@ -8,8 +8,8 @@
  */
 package aki.saki.practice.ui.party
 
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.pagination.PaginatedMenu
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.pagination.PaginatedMenu
 import aki.saki.practice.party.Party
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.profile.hotbar.Hotbar
@@ -33,7 +33,7 @@ import org.bukkit.inventory.ItemStack
 
 class PartyPlayersMenu(private val party: Party) : PaginatedMenu() {
 
-    override fun getPrePaginatedTitle(player: Player?): String {
+    override fun getPrePaginatedTitle(player: Player): String {
         return "Jogadores do grupo"
     }
 
@@ -47,7 +47,7 @@ class PartyPlayersMenu(private val party: Party) : PaginatedMenu() {
         party.players.mapNotNull { Bukkit.getPlayer(it) }.forEach { partyPlayer ->
             buttons[buttons.size] = object : Button() {
 
-                override fun getButtonItem(player: Player?): ItemStack {
+                override fun getButtonItem(player: Player): ItemStack {
                     return ItemBuilder(Material.IRON_SWORD)
                         .name("&e${partyPlayer.name}")
                         .lore(
@@ -62,7 +62,7 @@ class PartyPlayersMenu(private val party: Party) : PaginatedMenu() {
                         .buildSkull()
                 }
 
-                override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (player?.uniqueId != party.leader) {
                         player?.sendMessage("${CC.RED}Você não pode fazer isso!")
                         return

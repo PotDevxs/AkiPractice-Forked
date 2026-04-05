@@ -9,8 +9,8 @@
 package aki.saki.practice.ui.ffa
 
 import aki.saki.practice.PracticePlugin
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.constants.Constants
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.manager.FFAManager
@@ -34,11 +34,11 @@ import org.bukkit.inventory.ItemStack
 
 class FFAChoosingMenu: Menu() {
 
-    override fun getTitle(p0: Player?): String {
+    override fun getTitle(p0: Player): String {
         return "FFA"
     }
 
-    override fun getButtons(p0: Player?): MutableMap<Int, Button> {
+    override fun getButtons(p0: Player): MutableMap<Int, Button> {
 
         val toReturn: MutableMap<Int, Button> = mutableMapOf()
 
@@ -49,13 +49,13 @@ class FFAChoosingMenu: Menu() {
 
             toReturn[toReturn.size] = object : Button() {
 
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(kit.displayItem.clone()).name("${CC.PRIMARY}${kit.name}")
                         .lore("${CC.PRIMARY}Jogando agora: ${CC.SECONDARY}${ffa.players.size}")
                         .build()
                 }
 
-                override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (clickType?.isLeftClick!!) {
                         if (aki.saki.practice.manager.FFABanManager.isBanned(player.uniqueId)) {
                             player.sendMessage(aki.saki.practice.Locale.FFA_BAN_BANNED_MSG.getMessage())

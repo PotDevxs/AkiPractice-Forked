@@ -9,8 +9,8 @@
 package aki.saki.practice.ui.party
 
 import com.google.common.base.Joiner
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.party.Party
 import aki.saki.practice.party.PartyType
 import aki.saki.practice.utils.CC
@@ -50,7 +50,7 @@ class PartyInformationMenu(private val party: Party): Menu() {
 
         toReturn[10] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.NETHER_STAR).name("${CC.PRIMARY}Líder do grupo")
                     .lore(listOf(
                         "${CC.PRIMARY}Líder: ${CC.SECONDARY}${Bukkit.getPlayer(party.leader).name}"
@@ -60,7 +60,7 @@ class PartyInformationMenu(private val party: Party): Menu() {
 
         toReturn[13] = object : Button() {
 
-            override fun getButtonItem(player: Player?): ItemStack {
+            override fun getButtonItem(player: Player): ItemStack {
                 return ItemBuilder(Material.HOPPER).name("${CC.PRIMARY}Privacidade")
                     .lore(listOf(
                         if (party.partyType == PartyType.PRIVATE) "&a⚫ &ePrivado" else "&7⚫ &ePrivado",
@@ -69,7 +69,7 @@ class PartyInformationMenu(private val party: Party): Menu() {
                     .build()
             }
 
-            override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 if (party.leader != player.uniqueId) {
                     player.sendMessage("${CC.RED}Você não pode alterar a privacidade do grupo!")
                     return
@@ -84,14 +84,14 @@ class PartyInformationMenu(private val party: Party): Menu() {
                 player.sendMessage("${CC.GREEN}Privacidade do grupo alterada com sucesso!")
             }
 
-            override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
                 return true
             }
         }
 
         toReturn[16] = object : Button() {
 
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.BOOK).name("${CC.PRIMARY}Jogadores")
                     .lore(listOf(
                         "${CC.PRIMARY}Jogadores no grupo: ${CC.SECONDARY}${Joiner.on("&7, ${CC.SECONDARY}").join(party.players.stream()
@@ -99,7 +99,7 @@ class PartyInformationMenu(private val party: Party): Menu() {
                     )).build()
             }
 
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 PartyPlayersMenu(party).openMenu(player)
             }
         }

@@ -22,9 +22,9 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.buttons.DisplayButton
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.buttons.DisplayButton
 import java.util.*
 
 
@@ -118,7 +118,7 @@ class KitEditorMenu(private val index: Int): Menu() {
 
     private class ArmorDisplayButton(private val itemStack: ItemStack?) : Button() {
 
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return if (itemStack == null || itemStack.type === Material.AIR) {
                 ItemStack(Material.AIR)
             } else ItemBuilder(itemStack.clone())
@@ -138,7 +138,7 @@ class KitEditorMenu(private val index: Int): Menu() {
     }
 
     private class ClearInventoryButton : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .durability(7)
                 .name("${CC.PRIMARY}Limpar inventário")
@@ -151,20 +151,20 @@ class KitEditorMenu(private val index: Int): Menu() {
                 .build()
         }
 
-        override fun clicked(player: Player, i: Int, clickType: ClickType?, hb: Int) {
+        override fun clicked(player: Player, i: Int, clickType: ClickType, hb: Int) {
             playNeutral(player)
             player.inventory.contents = arrayOfNulls<ItemStack>(36)
             player.updateInventory()
         }
 
-        override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+        override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
             return true
         }
     }
 
     @AllArgsConstructor
     private class LoadDefaultKitButton : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .durability(7)
                 .name("${CC.PRIMARY}Carregar kit padrão")
@@ -177,21 +177,21 @@ class KitEditorMenu(private val index: Int): Menu() {
                 .build()
         }
 
-        override fun clicked(player: Player, i: Int, clickType: ClickType?, hb: Int) {
+        override fun clicked(player: Player, i: Int, clickType: ClickType, hb: Int) {
             playNeutral(player)
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
             player.inventory.contents = profile.kitEditorData!!.kit!!.content
             player.updateInventory()
         }
 
-        override fun shouldUpdate(player: Player?, slot: Int, clickType: ClickType?): Boolean {
+        override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
             return true
         }
     }
 
     private class SaveButton : Button() {
 
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .durability(5)
                 .name("&aSalvar")
@@ -199,7 +199,7 @@ class KitEditorMenu(private val index: Int): Menu() {
                 .build()
         }
 
-        override fun clicked(player: Player, i: Int, clickType: ClickType?, hb: Int) {
+        override fun clicked(player: Player, i: Int, clickType: ClickType, hb: Int) {
             playNeutral(player)
             player.closeInventory()
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
@@ -212,7 +212,7 @@ class KitEditorMenu(private val index: Int): Menu() {
     }
 
     private class CancelButton(private val index: Int) : Button() {
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(Material.STAINED_CLAY)
                 .durability(14)
                 .name("&cCancelar")
@@ -225,7 +225,7 @@ class KitEditorMenu(private val index: Int): Menu() {
                 .build()
         }
 
-        override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
             playNeutral(player)
             val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
             if (profile.kitEditorData?.kit != null) {

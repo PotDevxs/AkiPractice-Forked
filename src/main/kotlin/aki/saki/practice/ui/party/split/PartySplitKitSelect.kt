@@ -10,8 +10,8 @@ package aki.saki.practice.ui.party.split
 
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.kit.Kit
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.manager.ArenaManager
 import aki.saki.practice.manager.MatchManager
 import aki.saki.practice.party.Party
@@ -24,7 +24,7 @@ import org.bukkit.inventory.ItemStack
 
 class PartySplitKitSelect(private val party: Party): Menu() {
 
-    override fun getTitle(player: Player?): String {
+    override fun getTitle(player: Player): String {
         return "Selecione um kit!"
     }
 
@@ -43,11 +43,11 @@ class PartySplitKitSelect(private val party: Party): Menu() {
         private val party: Party
     ) : Button() {
 
-        override fun getButtonItem(player: Player?): ItemStack {
+        override fun getButtonItem(player: Player): ItemStack {
             return ItemBuilder(kit.displayItem).name("${CC.PRIMARY}${kit.name}").build()
         }
 
-        override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+        override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
             if (clickType?.isLeftClick == true) {
                 if (party.players.size < 2) {
                     player.sendMessage("${CC.RED}Você precisa de pelo menos 2 jogadores para iniciar uma partida Split!")

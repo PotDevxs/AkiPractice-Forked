@@ -17,11 +17,11 @@ import org.bukkit.conversations.NullConversationPrefix
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.pagination.PaginatedMenu
-import rip.katz.api.utils.CC
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.pagination.PaginatedMenu
+import aki.saki.practice.utils.CC
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -69,11 +69,11 @@ class KitMenu: PaginatedMenu() {
         return buttons
     }
 
-    override fun getGlobalButtons(player: Player?): MutableMap<Int, Button> {
+    override fun getGlobalButtons(player: Player): MutableMap<Int, Button> {
         val buttons = HashMap<Int, Button>()
 
         buttons[4] = object : Button () {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.GOLD_NUGGET)
                     .name("&bClique aqui para criar um kit!")
                     .build()

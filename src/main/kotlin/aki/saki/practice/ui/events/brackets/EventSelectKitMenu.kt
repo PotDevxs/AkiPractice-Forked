@@ -9,8 +9,8 @@
 package aki.saki.practice.ui.events.brackets
 
 import aki.saki.practice.PracticePlugin
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.event.impl.BracketsEvent
 import aki.saki.practice.event.procedure.BracketEventProcedure
 import aki.saki.practice.kit.Kit
@@ -38,7 +38,7 @@ class EventSelectKitMenu: Menu() {
         return "Selecione um kit!"
     }
 
-    override fun onClose(player: Player?) {
+    override fun onClose(player: Player) {
         if (!isClosedByMenu) {
             BracketEventProcedure.procedures.remove(player?.uniqueId)
         }
@@ -52,14 +52,14 @@ class EventSelectKitMenu: Menu() {
 
             toReturn[toReturn.size] = object : Button() {
 
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(kit.displayItem)
                         .name("${CC.YELLOW}${kit.name}")
                         .addFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE)
                         .build()
                 }
 
-                override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     val procedure = BracketEventProcedure.procedures[player?.uniqueId]
 
                     if (procedure == null) {

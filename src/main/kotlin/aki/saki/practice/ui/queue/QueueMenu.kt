@@ -8,8 +8,8 @@
  */
 package aki.saki.practice.ui.queue
 
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.manager.QueueManager
 import aki.saki.practice.queue.Queue
 import aki.saki.practice.queue.QueueType
@@ -17,11 +17,11 @@ import aki.saki.practice.utils.CC
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.utils.ItemBuilder
 
 class QueueMenu(private val queueType: QueueType) : Menu() {
 
-    override fun getTitle(player: Player?): String {
+    override fun getTitle(player: Player): String {
         return when (queueType) {
             QueueType.RANKED -> "${CC.SECONDARY}${CC.BOLD}Fila Competitiva"
             QueueType.UNRANKED -> "${CC.SECONDARY}${CC.BOLD}Fila Casual"
@@ -32,7 +32,7 @@ class QueueMenu(private val queueType: QueueType) : Menu() {
         return 45
     }
 
-    override fun getButtons(player: Player?): MutableMap<Int, Button> {
+    override fun getButtons(player: Player): MutableMap<Int, Button> {
         val toReturn: MutableMap<Int, Button> = mutableMapOf()
 
         val queues = QueueManager.queues.values

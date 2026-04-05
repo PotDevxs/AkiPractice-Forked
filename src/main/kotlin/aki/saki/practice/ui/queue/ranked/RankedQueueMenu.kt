@@ -15,10 +15,10 @@ import aki.saki.practice.ui.queue.unranked.UnrankedQueueButton
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
-import rip.katz.api.utils.CC
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.utils.CC
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -37,7 +37,7 @@ class RankedQueueMenu : Menu() {
     init {
         isAutoUpdate = true
     }
-    override fun getTitle(player: Player?): String {
+    override fun getTitle(player: Player): String {
         return CC.color("&7Menu da fila competitiva")
     }
 
@@ -45,13 +45,13 @@ class RankedQueueMenu : Menu() {
         return menuSize
     }
 
-    override fun getButtons(player: Player?): MutableMap<Int, Button> {
+    override fun getButtons(player: Player): MutableMap<Int, Button> {
         val buttons = HashMap<Int, Button>()
         val kitManager = PracticePlugin.instance.kitManager
 
         for (size in 0..<menuSize) {
             buttons[size] = object : Button() {
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(Material.STAINED_GLASS_PANE)
                         .name("")
                         .durability(7)

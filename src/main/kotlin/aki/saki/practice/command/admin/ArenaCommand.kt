@@ -18,7 +18,7 @@ import aki.saki.practice.ui.arena.ArenaManageMenu
 import aki.saki.practice.utils.Cuboid
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import rip.katz.api.utils.CC
+import aki.saki.practice.utils.CC
 
 
 /*

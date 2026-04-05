@@ -16,11 +16,11 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.Button
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.pagination.PaginatedMenu
-import rip.katz.api.utils.CC
-import rip.katz.api.utils.ItemBuilder
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.pagination.PaginatedMenu
+import aki.saki.practice.utils.CC
+import aki.saki.practice.utils.ItemBuilder
 
 
 /*
@@ -34,7 +34,7 @@ import rip.katz.api.utils.ItemBuilder
 
 class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
 
-    override fun getPrePaginatedTitle(p0: Player?): String {
+    override fun getPrePaginatedTitle(p0: Player): String {
         return CC.color("&b&lEditor de metadados do kit")
     }
 
@@ -42,12 +42,12 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
         return true
     }
 
-    override fun getAllPagesButtons(p0: Player?): MutableMap<Int, Button> {
+    override fun getAllPagesButtons(p0: Player): MutableMap<Int, Button> {
         val buttons = mutableMapOf<Int, Button>()
 
         // Default filler button
         val fillerButton = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.STAINED_GLASS_PANE)
                     .durability(7)
                     .name("").build()
@@ -113,7 +113,7 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
         }
 
         buttons[33] = object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(Material.RAW_FISH).durability(3)
                     .name("&b&lDamage Ticks Value")
                     .lore(CC.color(listOf(
@@ -123,7 +123,7 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
                     .build()
             }
 
-            override fun clicked(player: Player?, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                 when (clickType) {
                     ClickType.LEFT -> {
                         kit.damageTicks++
@@ -142,7 +142,7 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
 
     private fun createToggleButton(material: Material, name: String, description: String, value: Boolean, toggleAction: () -> Unit): Button {
         return object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 val status = if (value) "&aAtivado" else "&cDesativado"
                 return ItemBuilder(material)
                     .name(CC.color(name))
@@ -160,7 +160,7 @@ class KitMetadataList(private val kit: Kit) : PaginatedMenu() {
 
     private fun createInfoButton(material: Material, durability: Int, name: String, vararg description: String): Button {
         return object : Button() {
-            override fun getButtonItem(p0: Player?): ItemStack {
+            override fun getButtonItem(p0: Player): ItemStack {
                 return ItemBuilder(material)
                     .durability(durability)
                     .name(CC.color(name))

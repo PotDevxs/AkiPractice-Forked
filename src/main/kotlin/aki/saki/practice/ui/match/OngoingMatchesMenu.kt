@@ -8,14 +8,14 @@
  */
 package aki.saki.practice.ui.match
 
-import rip.katz.api.menu.Menu
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Menu
+import aki.saki.practice.menu.Button
 import aki.saki.practice.match.Match
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import rip.katz.api.menu.buttons.DisplayButton
+import aki.saki.practice.menu.buttons.DisplayButton
 
 /*
  * This project can't be redistributed without
@@ -27,9 +27,9 @@ import rip.katz.api.menu.buttons.DisplayButton
  */
 
 class OngoingMatchesMenu : Menu() {
-    override fun getTitle(player: Player?) = "${CC.PRIMARY}Partidas em andamento"
+    override fun getTitle(player: Player) = "${CC.PRIMARY}Partidas em andamento"
 
-    override fun getButtons(player: Player?): MutableMap<Int, Button> {
+    override fun getButtons(player: Player): MutableMap<Int, Button> {
         val buttonMap = mutableMapOf<Int, Button>()
         val ongoingMatches = Match.matches.values
 

@@ -8,7 +8,7 @@
  */
 package aki.saki.practice.ui.duels
 
-import rip.katz.api.menu.Button
+import aki.saki.practice.menu.Button
 import aki.saki.practice.arena.Arena
 import aki.saki.practice.arena.type.ArenaType
 import aki.saki.practice.duel.procedure.DuelProcedure
@@ -19,7 +19,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import rip.katz.api.menu.pagination.PaginatedMenu
+import aki.saki.practice.menu.pagination.PaginatedMenu
 
 
 /**
@@ -33,11 +33,11 @@ import rip.katz.api.menu.pagination.PaginatedMenu
 
 class DuelSelectArenaMenu : PaginatedMenu() {
 
-    override fun getPrePaginatedTitle(p0: Player?): String {
+    override fun getPrePaginatedTitle(p0: Player): String {
         return "Selecione uma arena"
     }
 
-    override fun onClose(player: Player?) {
+    override fun onClose(player: Player) {
         if (!isClosedByMenu) {
             DuelProcedure.duelProcedures.removeIf { it.uuid == player?.uniqueId }
         }
@@ -78,13 +78,13 @@ class DuelSelectArenaMenu : PaginatedMenu() {
 
             toReturn[toReturn.size] = object : Button() {
 
-                override fun getButtonItem(p0: Player?): ItemStack {
+                override fun getButtonItem(p0: Player): ItemStack {
                     return ItemBuilder(Material.PAPER)
                         .name("${CC.PRIMARY}${arena.name} $color$ratingText")
                         .build()
                 }
 
-                override fun clicked(player: Player, slot: Int, clickType: ClickType?, hotbarButton: Int) {
+                override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
                     if (clickType?.isLeftClick!!) {
 
                         if (!arena.isFree()) {
