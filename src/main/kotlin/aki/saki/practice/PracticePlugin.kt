@@ -35,6 +35,8 @@ import aki.saki.practice.kit.EditedKit
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.kit.editor.listener.KitEditorListener
 import aki.saki.practice.kit.serializer.EditKitSerializer
+import aki.saki.practice.knockback.KnockbackListener
+import aki.saki.practice.knockback.KnockbackService
 import aki.saki.practice.leaderboards.Leaderboards
 import aki.saki.practice.listener.ChatListener
 import aki.saki.practice.listener.MoveListener
@@ -45,6 +47,7 @@ import aki.saki.practice.match.Match
 import aki.saki.practice.theme.AkiPracticePlaceholders
 import aki.saki.practice.match.ffa.listener.FFAListener
 import aki.saki.practice.match.listener.MatchListener
+import aki.saki.practice.menu.MenuListener
 import aki.saki.practice.profile.ProfileListener
 import aki.saki.practice.profile.ProfileManager
 import aki.saki.practice.queue.QueueType
@@ -203,6 +206,9 @@ class PracticePlugin : JavaPlugin() {
             logger.info("Loading KitManager...")
             kitManager = KitManager()
             logger.info("Successfully loaded ${if (kitManager.kits.size == 1) "1 kit!" else "${kitManager.kits.size} kits!"}")
+
+            logger.info("Loading KnockbackService...")
+            KnockbackService.load(settingsFile)
 
             logger.info("Loading QueueManager...")
             QueueManager.load()
@@ -375,6 +381,8 @@ class PracticePlugin : JavaPlugin() {
             registerEvents(MoveListener, this@PracticePlugin)
             registerEvents(ChatListener, this@PracticePlugin)
             registerEvents(ItemListener(), this@PracticePlugin)
+            registerEvents(KnockbackListener, this@PracticePlugin)
+            registerEvents(MenuListener(), this@PracticePlugin)
         }
     }
 
