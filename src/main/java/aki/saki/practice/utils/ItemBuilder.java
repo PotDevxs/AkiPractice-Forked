@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.material.MaterialData;
 
 import java.util.ArrayList;
@@ -162,6 +163,18 @@ public class ItemBuilder {
 
     public SkullBuilder skullBuilder() {
         return new SkullBuilder(this);
+    }
+
+    public ItemBuilder setSkullTexture(String ownerName) {
+        this.is.setType(Material.SKULL_ITEM);
+        this.is.setDurability((short) 3);
+        ItemMeta itemMeta = this.is.getItemMeta();
+        if (itemMeta instanceof SkullMeta) {
+            SkullMeta skullMeta = (SkullMeta) itemMeta;
+            skullMeta.setOwner(ownerName);
+            this.is.setItemMeta(skullMeta);
+        }
+        return this;
     }
 
     public ItemStack build() {

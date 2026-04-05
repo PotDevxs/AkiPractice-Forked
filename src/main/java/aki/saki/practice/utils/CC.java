@@ -64,8 +64,16 @@ public class CC {
         return ChatColor.translateAlternateColorCodes('&', in);
     }
 
+    public static String color(String in) {
+        return translate(in);
+    }
+
     public static List<String> translate(List<String> lines) {
         return lines.stream().map(CC::translate).collect(Collectors.toList());
+    }
+
+    public static List<String> color(List<String> lines) {
+        return translate(lines);
     }
 
     public static String untranslate(String in) {
