@@ -54,13 +54,12 @@ class LeaderboardCommand {
         val isUpdatable = PracticePlugin.instance.settingsFile.getBoolean("HOLOGRAMS.GLOBAL-LEADERBOARDS.UPDATABLE")
         val lbLines = PracticePlugin.instance.leaderboards.getTopProfilesByRankedKitsLines()
         val lines = PracticePlugin.instance.settingsFile.getStringList("HOLOGRAMS.GLOBAL-LEADERBOARDS.LINES").map { line ->
-            line.replace("<lines>", lbLines.joinToString("
-")
-                .replace("<updating>", ""))
+            line.replace("<lines>", lbLines.joinToString("\n"))
+                .replace("<updating>", "")
         }.toMutableList()
 
         Katto.get().hologramManager.hologramCreation(
-            Location(Bukkit.getWorld("world"), 725.5, 39.0, -1549.5),
+            location,
             updateTime,
             "globalLeaderboards",
             lines.toMutableList(),

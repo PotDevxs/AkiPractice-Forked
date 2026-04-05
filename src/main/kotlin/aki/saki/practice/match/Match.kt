@@ -8,7 +8,6 @@
  */
 package aki.saki.practice.match
 
-import com.boydti.fawe.bukkit.chat.FancyMessage
 import com.google.common.base.Joiner
 import aki.saki.practice.Locale
 import aki.saki.practice.arena.Arena
@@ -440,13 +439,25 @@ open class Match(val kit: Kit, val arena: Arena, val ranked: Boolean, var friend
     private fun ratingMessage(profile: Profile) {
         if (!profile.settings.mapRating || ArenaRatingManager.hasRated(profile.uuid, arena)) return
         profile.player.takeIf { it.isOnline }?.let { player ->
-            FancyMessage().text("${CC.PRIMARY}Rate The Map: ")
-                .then().text("${CC.DARK_RED}[1] ").command("/ratemap ${arena.name} 1").tooltip("${CC.PRIMARY}Click to vote!")
-                .then().text("${CC.RED}[2] ").command("/ratemap ${arena.name} 2").tooltip("${CC.PRIMARY}Click to vote!")
-                .then().text("${CC.YELLOW}[3] ").command("/ratemap ${arena.name} 3").tooltip("${CC.PRIMARY}Click to vote!")
-                .then().text("${CC.GREEN}[4] ").command("/ratemap ${arena.name} 4").tooltip("${CC.PRIMARY}Click to vote!")
-                .then().text("${CC.DARK_GREEN}[5] ").command("/ratemap ${arena.name} 5").tooltip("${CC.PRIMARY}Click to vote!")
-                .send(player)
+            val message = TextBuilder()
+                .setText("${CC.PRIMARY}Rate The Map: ")
+                .then()
+                .setText("${CC.DARK_RED}[1] ")
+                .setCommand("/ratemap ${arena.name} 1")
+                .then()
+                .setText("${CC.RED}[2] ")
+                .setCommand("/ratemap ${arena.name} 2")
+                .then()
+                .setText("${CC.YELLOW}[3] ")
+                .setCommand("/ratemap ${arena.name} 3")
+                .then()
+                .setText("${CC.GREEN}[4] ")
+                .setCommand("/ratemap ${arena.name} 4")
+                .then()
+                .setText("${CC.DARK_GREEN}[5] ")
+                .setCommand("/ratemap ${arena.name} 5")
+                .build()
+            player.spigot().sendMessage(message)
         }
     }
 

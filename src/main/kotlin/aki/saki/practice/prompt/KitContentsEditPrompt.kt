@@ -33,8 +33,11 @@ class KitContentsEditPrompt(
     val player: Player
 ): StringPrompt() {
     override fun getPromptText(p0: ConversationContext): String? {
-        return CC.translate("&ePlease type &aYes &eif you want to set the inventory contents to the kit named &f${kit.name}&e, type &cNo &eor &ccancel &eif you don't want to set the inventory contents 
-&c&lYOU NEED TO HAVE THE CONTENTS IN THE INVENTORY")
+        return CC.translate(
+            "&ePlease type &aYes &eif you want to set the inventory contents to the kit named &f${kit.name}&e, " +
+                "type &cNo &eor &ccancel &eif you don't want to set the inventory contents\n" +
+                "&c&lYOU NEED TO HAVE THE CONTENTS IN THE INVENTORY"
+        )
     }
 
     override fun acceptInput(context: ConversationContext, input: String): Prompt? {

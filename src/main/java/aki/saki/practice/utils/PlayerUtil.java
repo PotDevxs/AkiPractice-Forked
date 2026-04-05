@@ -17,7 +17,6 @@ import org.spigotmc.AsyncCatcher;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.UUID;
 
 public class PlayerUtil {
@@ -118,10 +117,7 @@ public class PlayerUtil {
     }
 
     public static void reset(UUID uuid) {
-        Player player = Arrays.stream(Bukkit.getOnlinePlayers())
-                .filter(p -> p.getUniqueId().equals(uuid))
-                .findFirst()
-                .orElse(null);
+        Player player = Bukkit.getPlayer(uuid);
         if (player == null) return;
         AsyncCatcher.enabled = false;
         resetBase(player);

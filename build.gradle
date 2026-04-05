@@ -1,106 +1,123 @@
-import java.nio.file.Paths
-
-/*
- * This project can't be redistributed without
- * authorization of the developer
- *
- * Project @ AkiPractice
- * @author saki © 2026
- * Date: 11/02/2026
- */
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.api.tasks.wrapper.Wrapper
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id 'idea'
     id 'java'
-    id 'java-library'
-    id 'org.jetbrains.kotlin.jvm' version '1.9.10'
-    id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.24'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'aki.saki'
 version = '1.0'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+def javaTarget = JavaVersion.VERSION_1_8
+def gitCommit = resolveGitCommit()
+
+java {
+    sourceCompatibility = javaTarget
+    targetCompatibility = javaTarget
+}
 
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url 'https://repo.papermc.io/repository/maven-public/' }
-    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-    maven { url 'https://oss.sonatype.org/content/groups/public/' }
-    maven { url 'https://maven.elmakers.com/repository/' }
-    maven { url 'https://maven.enginehub.org/repo/' }
-    maven { url 'https://repo.dmulloy2.net/repository/public/' }
-    maven { url 'https://repo.codemc.io/repository/nms/' }
-    maven { url 'https://jitpack.io' }
-    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url = uri('https://repo.aikar.co/nexus/content/groups/aikar/') }
+    maven { url = uri('https://repo.papermc.io/repository/maven-public/') }
+    maven { url = uri('https://hub.spigotmc.org/nexus/content/repositories/snapshots/') }
+    maven { url = uri('https://oss.sonatype.org/content/groups/public/') }
+    maven { url = uri('https://maven.elmakers.com/repository/') }
+    maven { url = uri('https://maven.enginehub.org/repo/') }
+    maven { url = uri('https://repo.dmulloy2.net/repository/public/') }
+    maven { url = uri('https://repo.extendedclip.com/content/repositories/placeholderapi/') }
+    maven { url = uri('https://jitpack.io') }
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${findProperty('kotlin.version') ?: '1.9.24'}"
 
     compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
-    compileOnly 'org.projectlombok:lombok:1.18.20'
+
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
 
     implementation 'com.github.jonahseguin:drink:master'
-    implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'org.mongodb:mongo-java-driver:3.12.10'
-    implementation 'com.github.ThatKawaiiSam:Assemble:master'
+    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'org.mongodb:mongo-java-driver:3.12.14'
+    if (file('libs/assemble.jar').exists()) {
+        implementation files('libs/assemble.jar')
+    } else {
+        implementation 'com.github.ThatKawaiiSam:Assemble:master'
+    }
     implementation 'com.github.cryptomorin:XSeries:7.9.1.1'
 
     compileOnly 'me.clip:placeholderapi:2.11.6'
     compileOnly 'com.github.ben-manes.caffeine:caffeine:2.9.3'
     compileOnly 'net.dmulloy2:ProtocolLib:5.1.0'
-    implementation files('libs/FAWE.jar')
-    // Ryu Core e Katto: o projeto inclui stubs em dev.ryu.core.bukkit e rip.katz.api para compilar sem os JARs.
-    // Se tiver os JARs originais, coloque em libs/ryu-bukkit.jar e libs/katto.jar e remova os stubs em src/main/kotlin/dev e src/main/kotlin/rip.
-    if (file('libs/samurai.jar').exists()) compileOnly files('libs/samurai.jar')
-
     compileOnly 'com.sk89q.worldedit:worldedit-core:6.0.0-SNAPSHOT'
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:6.0.0-SNAPSHOT'
+
+    if (file('libs/ryu-bukkit.jar').exists()) compileOnly files('libs/ryu-bukkit.jar')
+    if (file('libs/katto.jar').exists()) compileOnly files('libs/katto.jar')
+    if (file('libs/samurai.jar').exists()) compileOnly files('libs/samurai.jar')
 }
 
-compileJava.options.encoding = 'UTF-8'
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.release.set(8)
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = '1.8'
+        freeCompilerArgs += '-Xjsr305=strict'
     }
 }
 
-tasks.withType(ProcessResources) {
-    filesMatching('**/*.properties') {
-        filter { String line -> new String(line.getBytes('ISO-8859-1'), 'UTF-8') }
-    }
-    filesMatching('**/*.yml') {
-        filter { String line -> new String(line.getBytes('ISO-8859-1'), 'UTF-8') }
-    }
-    filesMatching('**/*.json') {
-        filter { String line -> new String(line.getBytes('ISO-8859-1'), 'UTF-8') }
+tasks.named('processResources', ProcessResources).configure {
+    filteringCharset = 'UTF-8'
+    inputs.property('pluginVersion', project.version)
+    inputs.property('gitCommit', gitCommit)
+
+    filesMatching('plugin.yml') {
+        expand(
+            'pluginVersion': project.version,
+            'gitCommit': gitCommit
+        )
     }
 }
 
-sourceSets {
-    main.kotlin.srcDirs += 'src/main/kotlin'
-    main.java.srcDirs += 'src/main/java'
+tasks.named('compileJava').configure {
+    dependsOn(tasks.named('compileKotlin'))
 }
 
-// Ensure Java compiles after Kotlin so Java code can resolve Kotlin classes (e.g. PracticePlugin)
-tasks.named('compileJava').configure { it.dependsOn(tasks.named('compileKotlin')) }
-
-shadowJar {
+tasks.named('shadowJar', ShadowJar).configure {
     archiveClassifier.set('')
-    project.configurations.implementation.canBeResolved = true
-    configurations = [project.configurations.implementation]
+    archiveFileName.set("${project.name}-${project.version}.jar")
 }
 
-// Ajuste para salvar na pasta build/libs dentro do projeto
-tasks.withType(Jar).configureEach {
-    archiveFileName = "${project.name}-${project.version}.jar"
+tasks.named('build').configure {
+    dependsOn(tasks.named('shadowJar'))
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    gradleVersion = '8.7'
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+String resolveGitCommit() {
+    def stdout = new ByteArrayOutputStream()
+
+    try {
+        project.exec {
+            commandLine 'git', 'rev-parse', '--short', 'HEAD'
+            standardOutput = stdout
+            errorOutput = new ByteArrayOutputStream()
+            ignoreExitValue = true
+        }
+    } catch (Exception ignored) {
+    }
+
+    def commit = stdout.toString().trim()
+    return commit ? commit : project.version.toString()
 }

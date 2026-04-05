@@ -166,11 +166,11 @@ class Profile(val uuid: UUID, var name: String? = null) : IProfile {
         matchHistory = document.getList("matchHistory", String::class.java)?.mapNotNull {
             try { PracticePlugin.GSON.fromJson(it, MatchHistoryEntry::class.java) } catch (_: Exception) { null }
         }?.toMutableList() ?: mutableListOf()
-        xp = document.getLong("xp", 0L)
+        xp = (document["xp"] as? Number)?.toLong() ?: 0L
         dailyMissionType = document.getString("dailyMissionType")
         dailyMissionProgress = (document["dailyMissionProgress"] as? Number)?.toInt() ?: 0
         dailyMissionTarget = (document["dailyMissionTarget"] as? Number)?.toInt() ?: 0
-        dailyMissionResetDay = document.getLong("dailyMissionResetDay", 0L)
+        dailyMissionResetDay = (document["dailyMissionResetDay"] as? Number)?.toLong() ?: 0L
 
         PracticePlugin.instance.kitManager.kits.values.forEach { kit ->
             if (kitStatistics.none { it.kit.equals(kit.name, false) }) {

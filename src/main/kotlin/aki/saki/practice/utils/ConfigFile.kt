@@ -66,6 +66,18 @@ class ConfigFile(plugin: Plugin, name: String) {
         return config.getInt(path, 0)
     }
 
+    fun getInt(path: String, defaultValue: Int): Int {
+        return config.getInt(path, defaultValue)
+    }
+
+    fun getLong(path: String): Long {
+        return config.getLong(path, 0L)
+    }
+
+    fun getLong(path: String, defaultValue: Long): Long {
+        return config.getLong(path, defaultValue)
+    }
+
     fun save() {
         CompletableFuture.runAsync {
             config.save(file)

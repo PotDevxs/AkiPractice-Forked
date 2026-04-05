@@ -14,6 +14,7 @@ import aki.saki.practice.mission.DailyMissionType
 import aki.saki.practice.mission.MissionManager
 import aki.saki.practice.profile.Profile
 import aki.saki.practice.utils.EloUtil
+import kotlin.math.roundToInt
 
 /**
  * This Project is property of Zowpy © 2023
@@ -52,8 +53,8 @@ object StatisticManager {
                 val loserKitStatistic = loserProfile.getKitStatistic(kit.name)
 
                 val (newWinnerElo, newLoserElo) = loserKitStatistic?.let { loserStat ->
-                    EloUtil.getNewRating(loserStat.elo, kitStatistic.elo, false) to
-                            EloUtil.getNewRating(kitStatistic.elo, loserStat.elo, true)
+                    EloUtil.getNewRating(kitStatistic.elo, loserStat.elo, true).roundToInt() to
+                        EloUtil.getNewRating(loserStat.elo, kitStatistic.elo, false).roundToInt()
                 } ?: (kitStatistic.elo to kitStatistic.elo)
 
                 kitStatistic.elo = newWinnerElo

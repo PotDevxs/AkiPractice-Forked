@@ -35,8 +35,11 @@ class KitArmorPrompt(
     val player: Player
 ): StringPrompt() {
     override fun getPromptText(p0: ConversationContext?): String {
-        return CC.translate("&ePlease type &aYes &eif you want to set the armor of the kit named &f${kit.name} &e, type &cNo &eor &ccancel &eif you don't want to set the armor 
-&c&lYOU NEED TO HAVE THE ARMOR IN YOUR INVENTORY")
+        return CC.translate(
+            "&ePlease type &aYes &eif you want to set the armor of the kit named &f${kit.name} &e, " +
+                "type &cNo &eor &ccancel &eif you don't want to set the armor\n" +
+                "&c&lYOU NEED TO HAVE THE ARMOR IN YOUR INVENTORY"
+        )
     }
 
     override fun acceptInput(context: ConversationContext, input: String): Prompt? {
