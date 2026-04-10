@@ -1,0 +1,188 @@
+# MONGODB = conexão Mongo (padrão). FLAT_FILE = JSON em pasta no data folder (localhost / testes sem Mongo).
+DATABASE:
+  TYPE: FLAT_FILE
+  FLAT_FILE:
+    FOLDER: flat-database
+
+MONGODB:
+  URI-MODE: false
+  DATABASE: "saki"
+  NORMAL:
+    HOST: "127.0.0.1"
+    PORT: 27017
+    AUTH:
+      ENABLED: false
+      USERNAME: "user"
+      PASSWORD: "pass"
+      AUTH-DATABASE: "admin"
+  URI:
+    CONNECTION-STRING: ""
+
+SPAWN: ""
+
+COLOR:
+  PRIMARY: "AQUA"
+  SECONDARY: "WHITE"
+
+MATCH:
+  REMOVE-EMPTY-BOTTLE: true
+
+KNOCKBACK:
+  SETTINGS:
+    PACKET-MODE: true
+    RESTORE-SERVER-MOTION: true
+    TRACK-SERVER-SPRINT: true
+  PROFILES:
+    default:
+      HORIZONTAL: 0.39
+      VERTICAL: 0.37
+      EXTRA-HORIZONTAL: 0.12
+      EXTRA-VERTICAL: 0.02
+      VERTICAL-MIN: 0.00
+      VERTICAL-MAX: 0.40
+      AIR-HORIZONTAL: 1.00
+      AIR-VERTICAL: 1.00
+      HORIZONTAL-FRICTION: 0.60
+      VERTICAL-FRICTION: 1.00
+      ADD-HORIZONTAL: 0.00
+      ADD-VERTICAL: 0.00
+      STOP-SPRINT: true
+    boxing:
+      HORIZONTAL: 0.36
+      VERTICAL: 0.35
+      EXTRA-HORIZONTAL: 0.08
+      EXTRA-VERTICAL: 0.01
+      VERTICAL-MIN: 0.00
+      VERTICAL-MAX: 0.39
+      AIR-HORIZONTAL: 0.98
+      AIR-VERTICAL: 0.95
+      HORIZONTAL-FRICTION: 0.60
+      VERTICAL-FRICTION: 1.00
+      ADD-HORIZONTAL: 0.00
+      ADD-VERTICAL: 0.00
+      STOP-SPRINT: true
+    combo:
+      HORIZONTAL: 0.34
+      VERTICAL: 0.33
+      EXTRA-HORIZONTAL: 0.03
+      EXTRA-VERTICAL: 0.00
+      VERTICAL-MIN: 0.00
+      VERTICAL-MAX: 0.37
+      AIR-HORIZONTAL: 0.95
+      AIR-VERTICAL: 0.90
+      HORIZONTAL-FRICTION: 0.65
+      VERTICAL-FRICTION: 1.00
+      ADD-HORIZONTAL: 0.00
+      ADD-VERTICAL: 0.00
+      STOP-SPRINT: false
+    sumo:
+      HORIZONTAL: 0.46
+      VERTICAL: 0.36
+      EXTRA-HORIZONTAL: 0.16
+      EXTRA-VERTICAL: 0.01
+      VERTICAL-MIN: 0.00
+      VERTICAL-MAX: 0.40
+      AIR-HORIZONTAL: 1.00
+      AIR-VERTICAL: 0.95
+      HORIZONTAL-FRICTION: 0.55
+      VERTICAL-FRICTION: 1.00
+      ADD-HORIZONTAL: 0.00
+      ADD-VERTICAL: 0.00
+      STOP-SPRINT: true
+
+# Efeitos ao matar (no local da morte) e ao vencer (no vencedor). Valores: FLAME, EXPLOSION, VILLAGER_HAPPY, CRIT, NONE
+COSMETICS:
+  KILL-EFFECT: EXPLOSION
+  VICTORY-EFFECT: FIREWORK
+
+# XP por partida (win/loss). Nível = xp / 100 (ex.: 500 xp = nível 5). Use 0 para desativar.
+XP:
+  PER-WIN: 25
+  PER-LOSS: 5
+
+# Missão diária: objetivo aleatório, reset a cada dia. Recompensa em XP.
+MISSION:
+  REWARD-XP: 100
+  TARGET-WIN-RANKED: 3
+  TARGET-WIN-CASUAL: 3
+  TARGET-PLAY-FFA: 5
+
+# Recompensa em XP para o vencedor de qualquer evento (Brackets, Sumo, TNT Run, TNT Tag). 0 = desativado.
+EVENT:
+  REWARD-XP: 50
+
+QUEUE:
+  # Ranked: ping máximo para matchmaking (0 = desativado). Ex: 150 = só emparelha se ambos tiverem ping <= 150
+  RANKED-MAX-PING: 0
+  # Backfill: range inicial de ELO e incremento a cada 3 segundos (já existente no código)
+  INITIAL-ELO-RANGE: 25
+  ELO-RANGE-STEP: 5
+  # Anti-boost: não emparelhar jogadores com mesmo IP na ranked (true/false)
+  ANTI-BOOST-SAME-IP: true
+
+HOLOGRAMS:
+  # Top jogadores por nível (ordenado por XP total — maior nível sempre em 1º).
+  # Defina LOCATION com /leaderboard setup-level (ou edite manualmente). "null" = desligado.
+  LEVEL-LEADERBOARDS:
+    FORMAT: "<top>. <name> &eNv. &f<level> &7(&a<xp> XP&7)"
+    LOCATION: "null"
+    ENTRIES: 10
+    UPDATABLE-TIME: 30
+    UPDATABLE: true
+    REFRESH-TIME: 1
+    LINES:
+      - "&b&lTOP NÍVEL"
+      - ""
+      - "<lines>"
+  WIN-STREAK-LEADERBOARDS:
+    FORMAT: "<top>. <name> STREAK: <streak>"
+    LOCATION: world:-414.5:159.0:-2842.5
+    UPDATABLE-TIME: 20
+    UPDATABLE: true
+    REFRESH-TIME: 1
+    LINES:
+      - "&b&lTOP WINSTREAK"
+      - ""
+      - "<lines>"
+  KIT-ELO-LEADERBOARDS:
+    FORMAT: "<top>. <name> ELO: <elo>"
+    LOCATION: world:-414.5:159.0:-2842.5
+    UPDATABLE-TIME: 20
+    UPDATABLE: true
+    REFRESH-TIME: 1
+    LINES:
+      - "&b&lTOP ELO"
+      - ""
+      - "<lines>"
+
+  GLOBAL-LEADERBOARDS:
+    FORMAT: "<top>. <name> ELO: <elo>"
+    LOCATION: world:-414.5:159.0:-2842.5
+    UPDATABLE-TIME: 20
+    UPDATABLE: true
+    REFRESH-TIME: 1
+    LINES:
+      - "&b&lTOP GLOBAL-ELO"
+      - ""
+      - "<lines>"
+
+ANIMATIONS:
+  FOOTER:
+    WRITE-EFFECT: false
+    COLOR-TRAIL-EFFECT: false
+    COLOR-TRAIL-MAIN: "&b"
+    COLOR-TRAIL-SECONDARY: "&f"
+    FLASH-COLOURS-ON-FINISH-ANIMATION: true
+    TIME: 0.5 #Calculated in seconds
+    TEXT:
+      - "saki.dev"
+      - "twitter.com/sakidev"
+  TITLE:
+    WRITE-EFFECT: false
+    COLOR-TRAIL-EFFECT: false
+    COLOR-TRAIL-MAIN: "&b"
+    COLOR-TRAIL-SECONDARY: "&f"
+    FLASH-COLOURS-ON-FINISH-ANIMATION: false
+    TIME: 0.5 #Calculated in seconds
+    TEXT:
+      - "Saki Practice"

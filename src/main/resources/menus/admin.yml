@@ -1,0 +1,111 @@
+# Painel administrativo — itens, slots e ações configuráveis.
+# Ações: internal | player_command | console_command | message | open_menu
+# open_menu: arquivo na pasta menus, opcional seção após ':', ex: levels.yml:styles
+title: "&4&lAdmin &8| &cAkiPractice"
+size: 54
+placeholder: true
+items:
+  10:
+    material: DIAMOND_SWORD
+    name: "&bGerenciar kits"
+    lore:
+      - "&7Abre o menu paginado de kits (admin)."
+    action:
+      type: internal
+      value: KIT_MENU_ADMIN
+  12:
+    material: GRASS
+    name: "&aArenas"
+    lore:
+      - "&7Comandos de criação/edição de arena."
+    action:
+      type: player_command
+      value: "arena"
+  14:
+    material: MAP
+    name: "&eMapas de evento"
+    lore:
+      - "&7/eventmap — gerir mapas de eventos."
+    action:
+      type: player_command
+      value: "eventmap"
+  16:
+    material: EYE_OF_ENDER
+    name: "&dPainel de eventos (YAML)"
+    lore:
+      - "&7Abre menus/eventos.yml"
+    action:
+      type: open_menu
+      value: "events.yml"
+  19:
+    material: BOOK
+    name: "&6Avaliações de arena"
+    lore:
+      - "&7Use com uma arena: /arenaratings <arena>"
+    action:
+      type: message
+      value: "&eUse: &f/arenaratings <nome da arena>"
+  21:
+    material: IRON_DOOR
+    name: "&cBanimentos &7(Ranked / FFA / Evento / Duelo)"
+    lore:
+      - "&7/banranked, /banffa, /banevent, /banduel"
+    action:
+      type: message
+      value: "&eComandos: &f/banranked &7| &f/banffa &7| &f/banevent &7| &f/banduel"
+  23:
+    material: PAPER
+    name: "&fReports"
+    lore:
+      - "&7/reports — fila de denúncias."
+    action:
+      type: player_command
+      value: "reports"
+  28:
+    material: GOLD_AXE
+    name: "&6Construir no mundo"
+    lore:
+      - "&7Alterna modo build (permissão necessária)."
+    action:
+      type: player_command
+      value: "build"
+  30:
+    material: COMPASS
+    name: "&bSpawn do lobby"
+    lore:
+      - "&7/setspawn — define spawn."
+    action:
+      type: player_command
+      value: "setspawn"
+  32:
+    material: SPECKLED_MELON
+    name: "&aFFA Admin"
+    lore:
+      - "&7/ffa — gerenciar FFA."
+    action:
+      type: player_command
+      value: "ffa"
+  40:
+    material: REDSTONE_COMPARATOR
+    name: "&dHotbar (YAML)"
+    lore:
+      - "&7Pré-visualizar e recarregar menus/hotbar.yml"
+    action:
+      type: open_menu
+      value: "hotbar.yml:editor_menu"
+  42:
+    material: EXPERIENCE_BOTTLE
+    name: "&eNíveis / XP (YAML)"
+    lore:
+      - "&7menus/levels.yml"
+    action:
+      type: open_menu
+      value: "levels.yml:main"
+  49:
+    material: BARRIER
+    name: "&cFechar"
+    lore:
+      - "&7Fecha o menu."
+    action:
+      type: internal
+      value: CLOSE_MENU

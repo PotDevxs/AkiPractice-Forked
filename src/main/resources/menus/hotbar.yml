@@ -1,0 +1,120 @@
+# Itens da hotbar por contexto + menu do editor (recarregar / dicas).
+# material: nome Bukkit 1.8 (ex.: INK_SACK + durability 1 ≈ vermelho)
+# action: internal (mesmo registry dos menus YAML) ou player_command
+hotbar:
+  lobby:
+    items:
+      - slot: 0
+        material: IRON_SWORD
+        name: "&aJogar Casual &7(Clique direito)"
+        unbreakable: true
+        action: { type: internal, value: UNRANKED_QUEUE }
+      - slot: 1
+        material: DIAMOND_SWORD
+        name: "&cJogar Ranqueado &7(Clique direito)"
+        unbreakable: true
+        action: { type: internal, value: RANKED_QUEUE }
+      - slot: 2
+        material: BOOK
+        name: "&6Editar kit &7(Clique direito)"
+        action: { type: internal, value: KIT_EDITOR }
+      - slot: 4
+        material: NETHER_STAR
+        name: "&dCriar party &7(Clique direito)"
+        action: { type: internal, value: PARTY_CREATE }
+      - slot: 6
+        material: ITEM_FRAME
+        name: "&eLeaderboards &7(Clique direito)"
+        action: { type: internal, value: LEADERBOARD }
+      - slot: 7
+        material: EYE_OF_ENDER
+        name: "&bEventos &7(Clique direito)"
+        action: { type: player_command, value: "event host" }
+      - slot: 8
+        material: REDSTONE_COMPARATOR
+        name: "&bConfigurações &7(Clique direito)"
+        action: { type: internal, value: SETTINGS }
+  party:
+    items:
+      - slot: 0
+        material: NETHER_STAR
+        name: "&eInformações da party"
+        action: { type: internal, value: PARTY_INFO }
+      - slot: 4
+        material: GOLD_AXE
+        name: "&eEvento da party"
+        unbreakable: true
+        action: { type: internal, value: PARTY_EVENT }
+      - slot: 5
+        material: DIAMOND_AXE
+        name: "&eDuelo de party"
+        unbreakable: true
+        action: { type: internal, value: PARTY_DUEL }
+      - slot: 8
+        material: INK_SACK
+        durability: 1
+        name: "&cSair da party"
+        action: { type: internal, value: PARTY_LEAVE }
+  queue:
+    items:
+      - slot: 8
+        material: INK_SACK
+        durability: 1
+        name: "&cSair da fila"
+        action: { type: internal, value: QUEUE_LEAVE }
+  event:
+    items:
+      - slot: 8
+        material: INK_SACK
+        durability: 1
+        name: "&cSair do evento"
+        action: { type: internal, value: EVENT_LEAVE }
+  spectate:
+    items:
+      - slot: 8
+        material: INK_SACK
+        durability: 1
+        name: "&cSair do espectador"
+        action: { type: internal, value: SPECTATE_LEAVE }
+
+# Itens extras na hotbar de evento (além do YAML) se o jogador tiver permissão:
+event_admin_item:
+  enabled: true
+  permission: "lpractice.command.event.forcestart"
+  slot: 0
+  material: HOPPER
+  name: "&eForçar início (evento)"
+  action: { type: player_command, value: "event start" }
+
+# Menu in-game para recarregar a hotbar após editar este arquivo
+editor_menu:
+  title: "&6Hotbar &8| &eYAML"
+  size: 27
+  placeholder: true
+  items:
+    11:
+      material: EMERALD
+      name: "&aRecarregar hotbar"
+      lore:
+        - "&7Relê hotbar.yml e atualiza seus itens."
+      action:
+        type: internal
+        value: HOTBAR_RELOAD
+    13:
+      material: BOOK
+      name: "&eArquivo"
+      lore:
+        - "&7plugins/AkiPractice/menus/hotbar.yml"
+        - "&7Edite &fslot, material, name, unbreakable"
+    15:
+      material: ARROW
+      name: "&7Voltar"
+      action:
+        type: open_menu
+        value: "admin.yml"
+    26:
+      material: BARRIER
+      name: "&cFechar"
+      action:
+        type: internal
+        value: CLOSE_MENU

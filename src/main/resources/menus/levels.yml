@@ -1,0 +1,108 @@
+# Menu de níveis: visualização, estilos de prefixo no chat, admin.
+# 100 XP = 1 nível (igual Profile.level)
+main:
+  title: "&e&lNíveis & XP"
+  size: 45
+  placeholder: true
+  items:
+    13:
+      material: EXPERIENCE_BOTTLE
+      name: "&eSeu progresso"
+      special: PLAYER_LEVEL_INFO
+    20:
+      material: EMERALD
+      name: "&a+100 XP"
+      lore:
+        - "&7Requer permissão."
+      permission: "practice.levels.grant_self"
+      action:
+        type: internal
+        value: LEVEL_ADD_XP
+        amount: 100
+    22:
+      material: EMERALD_BLOCK
+      name: "&a+500 XP"
+      permission: "practice.levels.grant_self"
+      action:
+        type: internal
+        value: LEVEL_ADD_XP
+        amount: 500
+    24:
+      material: NETHER_STAR
+      name: "&dEstilo do &fLv. &dno chat"
+      lore:
+        - "&7Clássico, minimal, dourado..."
+      action:
+        type: open_menu
+        value: "levels.yml:styles"
+    29:
+      material: SKULL_ITEM
+      durability: 3
+      name: "&cGerir jogadores online &7(Admin)"
+      lore:
+        - "&7Definir XP / nível de outros."
+      permission: "practice.levels.admin"
+      action:
+        type: internal
+        value: LEVEL_ADMIN_PLAYERS
+    40:
+      material: ARROW
+      name: "&7Painel admin"
+      permission: "practice.menu.admin"
+      action:
+        type: open_menu
+        value: "admin.yml"
+    44:
+      material: BARRIER
+      name: "&cFechar"
+      action:
+        type: internal
+        value: CLOSE_MENU
+
+styles:
+  title: "&dEstilo &7— &fprefixo no chat"
+  size: 27
+  placeholder: true
+  items:
+    10:
+      material: NAME_TAG
+      name: "&7Clássico &8[&eLv.X&8]"
+      lore:
+        - "&7Padrão do servidor."
+      action:
+        type: internal
+        value: LEVEL_STYLE_SET
+        style: DEFAULT
+    12:
+      material: PAPER
+      name: "&fMinimal &7— &f12❤"
+      action:
+        type: internal
+        value: LEVEL_STYLE_SET
+        style: MINIMAL
+    14:
+      material: GOLD_INGOT
+      name: "&6Dourado &7— &6★12"
+      action:
+        type: internal
+        value: LEVEL_STYLE_SET
+        style: GOLD
+    16:
+      material: DIAMOND
+      name: "&eNegrito &7— &e&l[Lv 12]"
+      action:
+        type: internal
+        value: LEVEL_STYLE_SET
+        style: BOLD
+    22:
+      material: ARROW
+      name: "&7Voltar"
+      action:
+        type: open_menu
+        value: "levels.yml:main"
+    26:
+      material: BARRIER
+      name: "&cFechar"
+      action:
+        type: internal
+        value: CLOSE_MENU

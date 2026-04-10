@@ -1,0 +1,69 @@
+/*
+ * This project can	 be redistributed without
+ * authorization of the developer
+ *
+ * Project @ AkiPractice
+ * @author saki © 2026
+ * Date: 11/02/2026
+ */
+package aki.saki.practice.utils;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+
+public class LocationUtil {
+
+    public static Location[] getFaces(Location start) {
+        Location[] faces = new Location[4];
+        faces[0] = new Location(start.getWorld(), start.getX() + 1, start.getY(), start.getZ());
+        faces[1] = new Location(start.getWorld(), start.getX() - 1, start.getY(), start.getZ());
+        faces[2] = new Location(start.getWorld(), start.getX(), start.getY() + 1, start.getZ());
+        faces[3] = new Location(start.getWorld(), start.getX(), start.getY() - 1, start.getZ());
+        return faces;
+    }
+
+    public static String serialize(Location location) {
+        return location == null ? "null" : location.getWorld().getName() + ":" + location.getX() + ":" + location.getY() + ":" + location.getZ() +
+                ":" + location.getYaw() + ":" + location.getPitch();
+    }
+
+    public static Location deserialize(String source) {
+        if (source == null || source.equalsIgnoreCase("null")) {
+            return null;
+        }
+
+        String[] split = source.split(":");
+        World world = Bukkit.getServer().getWorld(split[0]);
+
+        if (world == null) {
+            return null;
+        }
+
+        return new Location(world, Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]), Float.parseFloat(split[4]), Float.parseFloat(split[5]));
+    }
+
+    public static String r(Location location) {
+        return location == null ? "null" : location.getWorld().getName() + ":" + location.getX() + ":" + location.getY() + ":" + location.getZ();
+    }
+
+    public static Location u(String source) {
+        if (source == null || source.equalsIgnoreCase("null")) {
+            return null;
+        }
+
+        String[] split = source.split(":");
+        World world = Bukkit.getServer().getWorld(split[0]);
+
+        if (world == null) {
+            return null;
+        }
+
+        return new Location(world, Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]));
+    }
+
+    public static Location getLocation(World world, double x, double y, double z) {
+        return new Location(world, x, y, z);
+    }
+
+}

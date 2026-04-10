@@ -1,0 +1,51 @@
+# Menu de eventos — atalhos para hospedar / entrar / forçar início.
+title: "&5&lEventos"
+size: 36
+placeholder: true
+items:
+  11:
+    material: FIREWORK
+    name: "&aHospedar evento"
+    lore:
+      - "&7Abre o seletor nativo (Sumo, TNT, Brackets...)."
+    action:
+      type: internal
+      value: EVENT_HOST_MENU
+  13:
+    material: EMERALD
+    name: "&aEntrar no evento"
+    lore:
+      - "&7/event join"
+    action:
+      type: player_command
+      value: "event join"
+  15:
+    material: BLAZE_POWDER
+    name: "&6Forçar início"
+    lore:
+      - "&7/event start &8(permissão)"
+    action:
+      type: player_command
+      value: "event start"
+  22:
+    material: BOOK
+    name: "&eAjuda"
+    lore:
+      - "&7/event — lista de subcomandos."
+    action:
+      type: player_command
+      value: "event"
+  31:
+    material: ARROW
+    name: "&7Fechar"
+    lore:
+      - "&7Fecha o menu."
+    action:
+      type: internal
+      value: CLOSE_MENU
+  35:
+    material: BARRIER
+    name: "&cFechar"
+    action:
+      type: internal
+      value: CLOSE_MENU

@@ -1,0 +1,328 @@
+package aki.saki.practice.leaderboards
+
+import dev.ryu.core.bukkit.CoreAPI
+import aki.saki.practice.PracticePlugin
+import aki.saki.practice.kit.Kit
+import aki.saki.practice.profile.Profile
+import aki.saki.practice.utils.ConfigFile
+import aki.saki.practice.utils.LocationUtil
+import org.bukkit.ChatColor
+import org.bukkit.Location
+import org.bukkit.scheduler.BukkitRunnable
+import java.util.*
+
+class Leaderboards(
+    private val configFile: ConfigFile,
+    private val plugin: PracticePlugin
+) {
+
+    private var currentKitIndex = 0
+    private val kits: List<Kit> = plugin.kitManager.kits.values.filter { it.ranked }
+
+    init {
+        val globalLocation = LocationUtil.u(configFile.getString("HOLOGRAMS.GLOBAL-LEADERBOARDS.LOCATION"))
+        val globalUpdateTime = configFile.getInt("HOLOGRAMS.GLOBAL-LEADERBOARDS.UPDATABLE-TIME")
+        val globalRefreshTime = configFile.getInt("HOLOGRAMS.GLOBAL-LEADERBOARDS.REFRESH-TIME")
+        val isGlobalUpdatable = configFile.getBoolean("HOLOGRAMS.GLOBAL-LEADERBOARDS.UPDATABLE")
+
+        val kitLocation = LocationUtil.u(configFile.getString("HOLOGRAMS.KIT-ELO-LEADERBOARDS.LOCATION"))
+        val kitUpdateTime = configFile.getInt("HOLOGRAMS.KIT-ELO-LEADERBOARDS.UPDATABLE-TIME")
+        val kitRefreshTime = configFile.getInt("HOLOGRAMS.KIT-ELO-LEADERBOARDS.REFRESH-TIME")
+        val isRankedKitsUpdatable = configFile.getBoolean("HOLOGRAMS.KIT-ELO-LEADERBOARDS.UPDATABLE")
+
+        val streakLocation = LocationUtil.u(configFile.getString("HOLOGRAMS.WIN-STREAK-LEADERBOARDS.LOCATION"))
+        val streakUpdateTime = configFile.getInt("HOLOGRAMS.WIN-STREAK-LEADERBOARDS.UPDATABLE-TIME")
+        val streakRefreshTime = configFile.getInt("HOLOGRAMS.WIN-STREAK-LEADERBOARDS.REFRESH-TIME")
+        val isStreakUpdatable = configFile.getBoolean("HOLOGRAMS.WIN-STREAK-LEADERBOARDS.UPDATABLE")
+
+        val levelUpdateInterval = configFile.getInt("HOLOGRAMS.LEVEL-LEADERBOARDS.UPDATABLE-TIME").coerceAtLeast(1)
+
+        updateGlobalHologram(globalLocation, globalUpdateTime, globalRefreshTime, isGlobalUpdatable)
+
+        object : BukkitRunnable() {
+            override fun run() {
+                updateGlobalHologram(globalLocation, globalUpdateTime, globalRefreshTime, isGlobalUpdatable)
+                if (kits.isEmpty()) return
+                currentKitIndex = (currentKitIndex + 1) % kits.size
+            }
+        }.runTaskTimer(plugin, 0L, (globalUpdateTime * 20L))
+
+        object : BukkitRunnable() {
+            override fun run() {
+                updateKitEloHolograms(kitLocation, kitUpdateTime, kitRefreshTime, isRankedKitsUpdatable)
+                currentKitIndex = (currentKitIndex + 1) % kits.size
+            }
+        }.runTaskTimer(plugin, 0L, (kitUpdateTime * 20L))
+
+        updateStreakHologram(streakLocation, streakUpdateTime, streakRefreshTime, isStreakUpdatable)
+
+        object : BukkitRunnable() {
+            override fun run() {
+                val levelLocation = LocationUtil.u(configFile.getString("HOLOGRAMS.LEVEL-LEADERBOARDS.LOCATION"))
+                val levelRefreshTime = configFile.getInt("HOLOGRAMS.LEVEL-LEADERBOARDS.REFRESH-TIME").coerceAtLeast(1)
+                val isLevelUpdatable = configFile.getBoolean("HOLOGRAMS.LEVEL-LEADERBOARDS.UPDATABLE")
+                updateLevelHologram(levelLocation, levelUpdateInterval, levelRefreshTime, isLevelUpdatable)
+            }
+        }.runTaskTimer(plugin, 0L, (levelUpdateInterval * 20L))
+    }
+
+    /** Recria o holograma de nível a partir do settings.yml (ex.: após /leaderboard setup-level). */
+    fun refreshLevelHologram() {
+        val location = LocationUtil.u(configFile.getString("HOLOGRAMS.LEVEL-LEADERBOARDS.LOCATION"))
+        val updateTime = configFile.getInt("HOLOGRAMS.LEVEL-LEADERBOARDS.UPDATABLE-TIME").coerceAtLeast(1)
+        val refreshTime = configFile.getInt("HOLOGRAMS.LEVEL-LEADERBOARDS.REFRESH-TIME").coerceAtLeast(1)
+        val updatable = configFile.getBoolean("HOLOGRAMS.LEVEL-LEADERBOARDS.UPDATABLE")
+        updateLevelHologram(location, updateTime, refreshTime, updatable)
+    }
+
+    private fun updateLevelHologram(location: Location?, updateTime: Int, refreshTime: Int, isUpdatable: Boolean) {
+        if (location == null) {
+            plugin.hologramManager.hologramDestroy("levelLeaderboards")
+            return
+        }
+        val entries = configFile.getInt("HOLOGRAMS.LEVEL-LEADERBOARDS.ENTRIES", 10).coerceIn(1, 50)
+        val leaderboardLines = getTopProfilesByXp(entries)
+            .mapIndexed { index, (profile, xpTotal) ->
+                configFile.getString("HOLOGRAMS.LEVEL-LEADERBOARDS.FORMAT")
+                    .replace("<top>", (index + 1).toString())
+                    .replace("<name>", formatLeaderboardPlayerName(profile))
+                    .replace("<level>", profile.level.toString())
+                    .replace("<xp>", xpTotal.toString())
+            }
+        val formattedLines = configFile.getStringList("HOLOGRAMS.LEVEL-LEADERBOARDS.LINES").toMutableList()
+        if (formattedLines.contains("<lines>")) {
+            formattedLines.remove("<lines>")
+            formattedLines.addAll(leaderboardLines)
+        }
+        plugin.hologramManager.hologramCreation(
+            location,
+            updateTime,
+            refreshTime,
+            "levelLeaderboards",
+            formattedLines,
+            isUpdatable,
+            80.0,
+            false
+        ) {}
+    }
+
+    private fun formatLeaderboardPlayerName(profile: Profile): String {
+        val displayName = profile.name ?: "Desconhecido"
+        return "${ChatColor.valueOf(CoreAPI.grantSystem.findBestRank(CoreAPI.grantSystem.repository.findAllByPlayer(profile.uuid)).color)}$displayName"
+    }
+
+    private fun updateGlobalHologram(location: Location, updateTime: Int, refreshTime: Int, isUpdatable: Boolean) {
+        val leaderboardLines = getTopProfilesByGlobalElo()
+            .take(10)
+            .mapIndexed { index, (profile, elo) ->
+                configFile.getString("HOLOGRAMS.GLOBAL-LEADERBOARDS.FORMAT")
+                    .replace("<top>", (index + 1).toString())
+                    .replace("<name>", formatLeaderboardPlayerName(profile))
+                    .replace("<elo>", elo.toString())
+            }
+
+        val formattedLines = configFile.getStringList("HOLOGRAMS.GLOBAL-LEADERBOARDS.LINES").toMutableList()
+
+        if (formattedLines.contains("<lines>")) {
+            formattedLines.remove("<lines>")
+            formattedLines.addAll(leaderboardLines)
+        }
+
+        plugin.hologramManager.hologramCreation(
+            location,
+            updateTime,
+            refreshTime,
+            "globalLeaderboards",
+            formattedLines,
+            isUpdatable,
+            80.0,
+            false
+        ) {}
+    }
+
+    private fun updateStreakHologram(location: Location, updateTime: Int, refreshTime: Int, isUpdatable: Boolean) {
+        val leaderboardLines = getTopProfilesByDailyWinStreakLines().sortedByDescending { it.second }
+            .take(10)
+            .mapIndexed { index, (profile, dailyWinStreak) ->
+                configFile.getString("HOLOGRAMS.WIN-STREAK-LEADERBOARDS.FORMAT")
+                    .replace("<top>", (index + 1).toString())
+                    .replace("<name>", formatLeaderboardPlayerName(profile))
+                    .replace("<streak>", dailyWinStreak.toString())
+            }
+        val formattedLines = configFile.getStringList("HOLOGRAMS.WIN-STREAK-LEADERBOARDS.LINES").toMutableList()
+
+        if (formattedLines.contains("<lines>")) {
+            formattedLines.remove("<lines>")
+            formattedLines.addAll(leaderboardLines)
+        }
+
+        plugin.hologramManager.hologramCreation(
+            location,
+            updateTime,
+            refreshTime,
+            "winStreakLeaderboards",
+            formattedLines,
+            isUpdatable,
+            80.0,
+            false
+        ) {}
+    }
+
+    private fun updateKitEloHolograms(location: Location, updateTime: Int, refreshTime: Int, isUpdatable: Boolean) {
+        val currentKit = kits[currentKitIndex]
+        val leaderboardLines = getTopProfilesByKitEloLines(currentKit).sortedByDescending { it.second }
+            .take(10)
+            .mapIndexed { index, (profile, elo) ->
+                configFile.getString("HOLOGRAMS.GLOBAL-LEADERBOARDS.FORMAT")
+                    .replace("<top>", (index + 1).toString())
+                    .replace("<name>", formatLeaderboardPlayerName(profile))
+                    .replace("<elo>", elo.toString())
+            }
+        val formattedLines = configFile.getStringList("HOLOGRAMS.KIT-ELO-LEADERBOARDS.LINES").map { line ->
+            line.replace("<kit>", currentKit.name)
+        }.toMutableList()
+
+        if (formattedLines.contains("<lines>")) {
+            formattedLines.remove("<lines>")
+            formattedLines.addAll(leaderboardLines)
+        }
+
+        plugin.hologramManager.hologramCreation(
+            location,
+            updateTime,
+            refreshTime,
+            "kitEloLeaderboards",
+            formattedLines,
+            isUpdatable,
+            80.0,
+            false
+        ) {}
+    }
+
+    private fun getTopProfilesByKitEloLines(kit: Kit, limit: Int = 10): MutableList<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("kitStatistics.${kit.name}.elo", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to (profile.getKitStatistic(kit.name)?.elo ?: 0)
+            }
+            .toMutableList()
+    }
+
+    fun getTopProfilesByRankedKitsLines(limit: Int = 10): List<Map.Entry<Profile, Int>> {
+        val rankedKits = plugin.kitManager.kits.values.filter { it.ranked }
+        val profilesEloMap = mutableMapOf<Profile, MutableList<Int>>()
+
+        for (kit in rankedKits) {
+            for (document in plugin.database.profileFindSorted("kitStatistics.${kit.name}.elo", true, limit)) {
+                val profile = plugin.profileManager.parse(document)
+                val elo = profile.getKitStatistic(kit.name)?.elo ?: 0
+                profilesEloMap.computeIfAbsent(profile) { mutableListOf() }.add(elo)
+            }
+        }
+
+        val averageEloMap = profilesEloMap.mapValues { entry ->
+            val elos = entry.value
+            if (elos.isNotEmpty()) elos.sum() / elos.size else 0
+        }
+
+        val sortedProfiles = averageEloMap.entries.sortedByDescending { it.value }.take(limit)
+
+        return sortedProfiles
+    }
+
+    fun getTopProfilesByKitWins(kit: Kit, limit: Int = 10): List<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("kitStatistics.${kit.name}.wins", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to (profile.getKitStatistic(kit.name)?.wins ?: 0)
+            }
+            .sortedByDescending { it.second }
+    }
+
+    /** Ordenado por XP total descendente (maior nível / mais XP no topo). */
+    fun getTopProfilesByXp(limit: Int = 10): List<Pair<Profile, Long>> {
+        return plugin.database.profileFindSorted("xp", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to profile.xp
+            }
+            .sortedByDescending { it.second }
+    }
+
+    fun getTopProfilesByGlobalElo(limit: Int = 10): List<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("globalStatistics.elo", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to profile.globalStatistic.elo
+            }
+            .sortedByDescending { it.second }
+    }
+
+    fun getAverageEloForPlayer(playerUuid: UUID): Int {
+        val rankedKits = plugin.kitManager.kits.values.filter { it.ranked }
+        val document = plugin.database.profileFindById(playerUuid.toString())
+            ?: throw IllegalArgumentException("Player not found")
+        val profile = plugin.profileManager.parse(document)
+        val elos = rankedKits.mapNotNull { kit -> profile.getKitStatistic(kit.name)?.elo }
+        return if (elos.isNotEmpty()) elos.sum() / elos.size else 1000
+    }
+
+    private fun getTopProfilesByDailyWinStreakLines(limit: Int = 10): MutableList<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("globalStatistic.dailyWinStreak", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to profile.globalStatistic.dailyWinStreak
+            }
+            .toMutableList()
+    }
+
+    fun getTopProfilesByKitCasualDailyWins(kit: Kit, limit: Int = 10): List<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("kitStatistics.${kit.name}.bestCasualStreak", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to (profile.getKitStatistic(kit.name)?.bestCasualStreak ?: 0)
+            }
+            .sortedByDescending { it.second }
+    }
+
+    fun getTopProfilesByKitCompetitiveDailyWins(kit: Kit, limit: Int = 10): List<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("kitStatistics.${kit.name}.rankedBestStreak", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to (profile.getKitStatistic(kit.name)?.rankedBestStreak ?: 0)
+            }
+            .sortedByDescending { it.second }
+    }
+
+    fun getTopProfilesByKitRankedWins(kit: Kit, limit: Int = 10): List<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("kitStatistics.${kit.name}.rankedWins", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to (profile.getKitStatistic(kit.name)?.rankedWins ?: 0)
+            }
+            .sortedByDescending { it.second }
+    }
+
+    fun getTopProfilesByKitElo(kit: Kit, limit: Int = 10): List<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("kitStatistics.${kit.name}.elo", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to (profile.getKitStatistic(kit.name)?.elo ?: 0)
+            }
+            .sortedByDescending { it.second }
+    }
+
+    fun getLeaderboardPosition(profile: Profile, kit: Kit): Int {
+        val profiles = getTopProfilesByKitElo(kit, 1000)
+        return profiles.indexOfFirst { it.first.uuid == profile.uuid } + 1
+    }
+
+    fun getTopProfilesByDailyWinStreak(limit: Int = 10): List<Pair<Profile, Int>> {
+        return plugin.database.profileFindSorted("globalStatistic.dailyWinStreak", true, limit)
+            .map { document ->
+                val profile = plugin.profileManager.parse(document)
+                profile to profile.globalStatistic.dailyWinStreak
+            }
+            .sortedByDescending { it.second }
+    }
+}

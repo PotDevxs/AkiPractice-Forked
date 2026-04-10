@@ -1,0 +1,242 @@
+/*
+ * This project can	 be redistributed without
+ * authorization of the developer
+ *
+ * Project @ AkiPractice
+ * @author saki © 2026
+ * Date: 11/02/2026
+ */
+package aki.saki.practice.ui
+
+import aki.saki.practice.PracticePlugin
+import aki.saki.practice.theme.ThemeHelper
+import aki.saki.practice.ui.ThemeMenu
+import aki.saki.practice.utils.CC
+import aki.saki.practice.utils.ItemBuilder
+import org.bukkit.Material
+import org.bukkit.entity.Player
+import org.bukkit.event.inventory.ClickType
+import org.bukkit.inventory.ItemStack
+import aki.saki.practice.menu.Button
+import aki.saki.practice.menu.Menu
+
+
+/**
+ * This Project is property of Zowpy © 2022
+ * Redistribution of this Project is not allowed
+ *
+ * @author Zowpy
+ * Created: 3/23/2022
+ * Project: lPractice
+ */
+
+class SettingsMenu: Menu() {
+
+    override fun getTitle(p0: Player): String {
+        return "Configurações"
+    }
+
+    override fun getButtons(player: Player): MutableMap<Int, Button> {
+        val toReturn: MutableMap<Int, Button> = mutableMapOf()
+        val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId)!!
+        val settings = profile?.settings
+
+        toReturn[0] = object : Button() {
+
+            override fun getButtonItem(p0: Player): ItemStack {
+                return ItemBuilder(Material.PAINTING).name("${CC.PRIMARY}Placar")
+                    .lore(listOf(
+                        if (settings?.scoreboard!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
+                        if (!settings.scoreboard) "${CC.GREEN}⚫ Desativado" else "${CC.RED}⚫ Desativado"
+                    )).build()
+            }
+
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
+                settings?.scoreboard = !settings?.scoreboard!!
+                profile.save(true)
+            }
+
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
+                return true
+            }
+        }
+
+        toReturn[1] = object : Button() {
+
+            override fun getButtonItem(p0: Player): ItemStack {
+                return ItemBuilder(Material.DIAMOND_SWORD).name("${CC.PRIMARY}Duelos")
+                    .lore(listOf(
+                        if (settings?.duels!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
+                        if (!settings.duels) "${CC.GREEN}⚫ Desativado" else "${CC.RED}⚫ Desativado"
+                    )).build()
+            }
+
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
+                settings?.duels = !settings?.duels!!
+                profile.save(true)
+            }
+
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
+                return true
+            }
+        }
+
+        toReturn[2] = object : Button() {
+
+            override fun getButtonItem(p0: Player): ItemStack {
+                return ItemBuilder(Material.REDSTONE).name("${CC.PRIMARY}Espectadores")
+                    .lore(listOf(
+                        if (settings?.spectators!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
+                        if (!settings.spectators) "${CC.GREEN}⚫ Desativado" else "${CC.RED}⚫ Desativado"
+                    )).build()
+            }
+
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
+                settings?.spectators = !settings?.spectators!!
+                profile.save(true)
+            }
+
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
+                return true
+            }
+        }
+
+        toReturn[3] = object : Button() {
+
+            override fun getButtonItem(p0: Player): ItemStack {
+                return ItemBuilder(Material.ENCHANTED_BOOK).name("${CC.PRIMARY}Restrição de ping")
+                    .lore(listOf(
+                        "${CC.PRIMARY}Restrição de ping: ${CC.SECONDARY}${if (settings?.pingRestriction == 0) "Sem limite" else settings?.pingRestriction}"
+                    )).build()
+            }
+
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
+                if (clickType?.isLeftClick!!) {
+                    when(settings?.pingRestriction) {
+                        300 -> {
+                            settings.pingRestriction = 0
+                        }
+
+                        0 -> {
+                            settings.pingRestriction = 50
+                        }
+
+                        50 -> {
+                            settings.pingRestriction = 75
+                        }
+
+                        75 -> {
+                            settings.pingRestriction = 100
+                        }
+
+                        100 -> {
+                            settings.pingRestriction = 125
+                        }
+
+                        125 -> {
+                            settings.pingRestriction = 150
+                        }
+
+                        150 -> {
+                            settings.pingRestriction = 200
+                        }
+
+                        200 -> {
+                            settings.pingRestriction = 250
+                        }
+
+                        250 -> {
+                            settings.pingRestriction = 300
+                        }
+                    }
+                    profile.save()
+                }else if (clickType.isRightClick) {
+                    when(settings?.pingRestriction) {
+                        300 -> {
+                            settings.pingRestriction = 250
+                        }
+
+                        0 -> {
+                            settings.pingRestriction = 300
+                        }
+
+                        50 -> {
+                            settings.pingRestriction = 0
+                        }
+
+                        75 -> {
+                            settings.pingRestriction = 50
+                        }
+
+                        100 -> {
+                            settings.pingRestriction = 75
+                        }
+
+                        125 -> {
+                            settings.pingRestriction = 100
+                        }
+
+                        150 -> {
+                            settings.pingRestriction = 125
+                        }
+
+                        200 -> {
+                            settings.pingRestriction = 150
+                        }
+
+                        250 -> {
+                            settings.pingRestriction = 200
+                        }
+                    }
+                    profile?.save()
+                }
+
+            }
+
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
+                return true
+            }
+        }
+
+        toReturn[4] = object : Button() {
+
+            override fun getButtonItem(p0: Player): ItemStack {
+                return ItemBuilder(Material.NETHER_STAR).name("${CC.PRIMARY}Avaliação de mapa")
+                    .lore(listOf(
+                        if (settings?.mapRating!!) "${CC.GREEN}⚫ Ativado" else "${CC.RED}⚫ Ativado",
+                        if (!settings.mapRating) "${CC.GREEN}⚫ Desativado" else "${CC.RED}⚫ Desativado"
+                    )).build()
+            }
+
+            override fun clicked(player: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
+                settings?.mapRating = !settings?.mapRating!!
+                profile.save(true)
+            }
+
+            override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean {
+                return true
+            }
+        }
+
+        if (player.hasPermission(ThemeHelper.PERMISSION)) {
+            toReturn[5] = object : Button() {
+                override fun getButtonItem(p0: Player): ItemStack = ItemBuilder(Material.INK_SACK).durability(10)
+                    .name("${ThemeHelper.getPrimary(player)}Tema (Cores)")
+                    .lore(
+                        "${CC.GRAY}Cor primária: ${ThemeHelper.getPrimary(player)}${settings?.themePrimary ?: "Padrão"}",
+                        "${CC.GRAY}Cor secundária: ${ThemeHelper.getSecondary(player)}${settings?.themeSecondary ?: "Padrão"}",
+                        "",
+                        "${CC.GRAY}Clique para personalizar cores."
+                    ).build()
+                override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
+                    ThemeMenu().openMenu(p!!)
+                }
+                override fun shouldUpdate(player: Player, slot: Int, clickType: ClickType): Boolean = true
+            }
+        }
+
+        return toReturn
+    }
+
+
+}
