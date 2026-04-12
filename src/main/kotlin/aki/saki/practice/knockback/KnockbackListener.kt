@@ -1,7 +1,6 @@
 package aki.saki.practice.knockback
 
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityVelocity
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import aki.saki.practice.nms.NmsBridge
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -24,17 +23,19 @@ object KnockbackListener : Listener {
             return
         }
 
-        val handle = (player as CraftPlayer).handle
-        handle.motX = computedVelocity.x
-        handle.motY = computedVelocity.y
-        handle.motZ = computedVelocity.z
-        handle.playerConnection.sendPacket(PacketPlayOutEntityVelocity(handle))
-        handle.velocityChanged = false
+        NmsBridge.ensureLoaded()
+        val handle = NmsBridge.getHandle(player)
+        NmsBridge.setEntityMot(handle, computedVelocity.x, computedVelocity.y, computedVelocity.z)
+        NmsBridge.sendPacketEntityVelocity(handle)
+        NmsBridge.setVelocityChanged(handle, false)
 
         if (KnockbackService.restoreServerMotion) {
-            handle.motX = pendingHit.victimVelocity.x
-            handle.motY = pendingHit.victimVelocity.y
-            handle.motZ = pendingHit.victimVelocity.z
+            NmsBridge.setEntityMot(
+                handle,
+                pendingHit.victimVelocity.x,
+                pendingHit.victimVelocity.y,
+                pendingHit.victimVelocity.z
+            )
         }
 
         event.isCancelled = true

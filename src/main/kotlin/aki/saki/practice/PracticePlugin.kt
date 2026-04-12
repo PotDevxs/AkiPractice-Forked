@@ -1,16 +1,7 @@
-/*
- * This project can	 be redistributed without
- * authorization of the developer
- *
- * Project @ AkiPractice
- * @author saki © 2026
- * Date: 11/02/2026
- */
 package aki.saki.practice
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.LongSerializationPolicy
 import com.jonahseguin.drink.CommandService
 import com.jonahseguin.drink.Drink
 import io.github.thatkawaiisam.assemble.Assemble
@@ -26,6 +17,7 @@ import aki.saki.practice.database.FlatFilePracticeDatabase
 import aki.saki.practice.database.MongoManager
 import aki.saki.practice.database.MongoPracticeDatabase
 import aki.saki.practice.database.PracticeDatabase
+import aki.saki.practice.database.SqlPracticeDatabase
 import aki.saki.practice.duel.DuelRequest
 import aki.saki.practice.duel.gson.DuelRequestGsonAdapter
 import aki.saki.practice.event.listener.EventListener
@@ -48,6 +40,7 @@ import aki.saki.practice.menus.HotbarYamlLoader
 import aki.saki.practice.menus.MenuYamlSupport
 import aki.saki.practice.match.Match
 import aki.saki.practice.theme.AkiPracticePlaceholders
+import aki.saki.practice.theme.PracticePlaceholders
 import aki.saki.practice.match.ffa.listener.FFAListener
 import aki.saki.practice.match.listener.MatchListener
 import aki.saki.practice.menu.MenuListener
@@ -61,6 +54,7 @@ import aki.saki.practice.utils.ConfigFile
 import aki.saki.practice.utils.InventoryUtil
 import aki.saki.practice.utils.item.ItemListener
 import aki.saki.practice.utils.providers.*
+import aki.saki.practice.nms.NmsBridge
 import org.bukkit.Material
 import org.bukkit.entity.ExperienceOrb
 import org.bukkit.entity.Item
@@ -96,6 +90,7 @@ class PracticePlugin : JavaPlugin() {
     override fun onEnable() {
         commandService = Drink.get(this)
         instance = this
+        NmsBridge.ensureLoaded()
 
         // Load configuration files
         loadConfigFiles()
@@ -138,11 +133,14 @@ class PracticePlugin : JavaPlugin() {
     private fun buildDatabase(): PracticeDatabase {
         val raw = settingsFile.config.getString("DATABASE.TYPE") ?: "MONGODB"
         val type = raw.uppercase().replace('-', '_')
-        return if (type == "FLAT_FILE" || type == "FLATFILE") {
-            val folder = settingsFile.config.getString("DATABASE.FLAT_FILE.FOLDER") ?: "flat-database"
-            FlatFilePracticeDatabase(this, File(dataFolder, folder))
-        } else {
-            MongoPracticeDatabase(MongoManager())
+        return when (type) {
+            "FLAT_FILE", "FLATFILE" -> {
+                val folder = settingsFile.config.getString("DATABASE.FLAT_FILE.FOLDER") ?: "flat-database"
+                FlatFilePracticeDatabase(this, File(dataFolder, folder))
+            }
+            "MYSQL", "MARIADB", "POSTGRESQL", "POSTGRES", "PG" ->
+                SqlPracticeDatabase.fromSettings(this, settingsFile.config)
+            else -> MongoPracticeDatabase(MongoManager())
         }
     }
 
@@ -187,11 +185,12 @@ class PracticePlugin : JavaPlugin() {
         registerListeners()
         logger.info("Listeners registered")
 
-        // PlaceholderAPI (opcional: %akipractice_primary%, %akipractice_secondary%)
+        // PlaceholderAPI: %akipractice_*% e %practice_*% (level, xp, missão, tema…)
         try {
             if (server.pluginManager.getPlugin("PlaceholderAPI") != null) {
                 AkiPracticePlaceholders().register()
-                logger.info("PlaceholderAPI expansion registered")
+                PracticePlaceholders().register()
+                logger.info("PlaceholderAPI expansions registered (akipractice, practice)")
             }
         } catch (_: Throwable) { }
     }

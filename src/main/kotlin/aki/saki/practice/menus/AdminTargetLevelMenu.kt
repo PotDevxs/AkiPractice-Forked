@@ -11,6 +11,7 @@ import aki.saki.practice.PracticePlugin
 import aki.saki.practice.menu.Button
 import aki.saki.practice.menu.Menu
 import aki.saki.practice.menu.buttons.BackButton
+import aki.saki.practice.profile.Profile
 import aki.saki.practice.profile.hotbar.Hotbar
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.ItemBuilder
@@ -28,18 +29,20 @@ class AdminTargetLevelMenu(private val target: Player) : Menu() {
     override fun getSize(): Int = 27
 
     override fun getButtons(player: Player): Map<Int, Button> {
+        val targetPlayer = target
         val map = mutableMapOf<Int, Button>()
         map[4] = object : Button() {
             override fun getButtonItem(p: Player): ItemStack {
-                val prof = profile() ?: return ItemBuilder(Material.BARRIER).name("&cOffline").build()
-                return ItemBuilder(Material.EXPERIENCE_BOTTLE)
-                    .name("&e${target.name}")
+                val prof = profileForTarget() ?: return ItemBuilder(Material.BARRIER).name("&cOffline").build()
+                return ItemBuilder(Material.EXP_BOTTLE)
+                    .name("&e${targetPlayer.name}")
                     .lore(
                         "&7Nível: &f${prof.level}",
                         "&7XP: &f${prof.xp}"
                     )
                     .build()
             }
+
             override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {}
         }
         map[10] = xpButton("&a+100 XP", Material.EMERALD, 100)
@@ -49,7 +52,7 @@ class AdminTargetLevelMenu(private val target: Player) : Menu() {
             override fun getButtonItem(p: Player): ItemStack =
                 ItemBuilder(Material.LAVA_BUCKET).name("&cZerar XP").lore("&7XP e nível voltam a 0.").build()
             override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
-                val prof = profile() ?: return
+                val prof = profileForTarget() ?: return
                 prof.xp = 0L
                 prof.save(true)
                 refreshTarget(p)
@@ -59,7 +62,7 @@ class AdminTargetLevelMenu(private val target: Player) : Menu() {
             override fun getButtonItem(p: Player): ItemStack =
                 ItemBuilder(Material.GOLD_INGOT).name("&6+1 nível").lore("&7Soma 100 XP até o próximo nível cheio.").build()
             override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
-                val prof = profile() ?: return
+                val prof = profileForTarget() ?: return
                 val need = 100L - (prof.xp % 100L)
                 if (need == 100L) prof.xp += 100L else prof.xp += need
                 prof.save(true)
@@ -70,7 +73,7 @@ class AdminTargetLevelMenu(private val target: Player) : Menu() {
             override fun getButtonItem(p: Player): ItemStack =
                 ItemBuilder(Material.IRON_INGOT).name("&e-1 nível").build()
             override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
-                val prof = profile() ?: return
+                val prof = profileForTarget() ?: return
                 val newLevel = max(0, prof.level - 1)
                 prof.xp = newLevel * 100L
                 prof.save(true)
@@ -88,11 +91,11 @@ class AdminTargetLevelMenu(private val target: Player) : Menu() {
         return map
     }
 
-    private fun profile() =
+    private fun profileForTarget(): Profile? =
         if (target.isOnline) PracticePlugin.instance.profileManager.findById(target.uniqueId) else null
 
     private fun refreshTarget(admin: Player) {
-        val prof = profile() ?: return
+        val prof = profileForTarget() ?: return
         target.sendMessage(CC.translate("&eSeu XP/nível foi atualizado por um administrador."))
         Hotbar.giveHotbar(prof)
         aki.saki.practice.menu.MenuManager.refresh(admin)
@@ -102,7 +105,7 @@ class AdminTargetLevelMenu(private val target: Player) : Menu() {
         return object : Button() {
             override fun getButtonItem(p: Player): ItemStack = ItemBuilder(mat).name(name).build()
             override fun clicked(p: Player, slot: Int, clickType: ClickType, hotbarButton: Int) {
-                val prof = profile() ?: return
+                val prof = profileForTarget() ?: return
                 if (delta < 0) {
                     prof.xp = max(0L, prof.xp + delta.toLong())
                 } else {

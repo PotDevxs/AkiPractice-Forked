@@ -18,15 +18,11 @@ import com.google.common.base.Preconditions
 import com.google.common.collect.HashBasedTable
 import lombok.SneakyThrows
 import aki.saki.practice.PracticePlugin
-import net.minecraft.server.v1_8_R3.EntityItem
-import net.minecraft.server.v1_8_R3.MathHelper
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy
+import aki.saki.practice.nms.NmsBridge
+import aki.saki.practice.nms.ServerVersion
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -41,6 +37,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 import java.lang.reflect.Field
 import java.util.*
+import kotlin.math.floor
 
 
 /**
@@ -87,7 +84,10 @@ class EntityHider(plugin: PracticePlugin, policy: Policy) {
     fun init() {
         manager.addPacketListener(protocolListener)
         plugin.server.pluginManager.registerEvents(bukkitListener, plugin)
-        itemOwner = EntityItem::class.java.getDeclaredField("f")
+        NmsBridge.ensureLoaded()
+        val entityItemClass = Class.forName("${ServerVersion.nmsPackage}.EntityItem")
+        itemOwner = entityItemClass.declaredFields.find { it.type == String::class.java }
+            ?: entityItemClass.declaredFields.find { it.type == java.util.UUID::class.java }
         itemOwner?.isAccessible = true
     }
 
@@ -202,7 +202,8 @@ class EntityHider(plugin: PracticePlugin, policy: Policy) {
                 val receiver: Player = event.player
                 val item: Item = event.item
                 if (item.itemStack.type !== Material.ARROW) return
-                val entity = (item as CraftEntity).handle.bukkitEntity as? Arrow ?: return
+                val nmsItem = NmsBridge.getEntityHandle(item)
+                val entity = nmsItem.javaClass.getMethod("getBukkitEntity").invoke(nmsItem) as? Arrow ?: return
                 val arrow = entity as Arrow
                 if (arrow.shooter !is Player) return
                 val shooter: Player = arrow.shooter as Player
@@ -254,9 +255,9 @@ class EntityHider(plugin: PracticePlugin, policy: Policy) {
                     var isVisible = false
                     var isInMatch = false
                     for (potion in receiver.getWorld().getEntitiesByClass(ThrownPotion::class.java)) {
-                        val potionX: Int = MathHelper.floor(x.toDouble())
-                        val potionY: Int = MathHelper.floor(y.toDouble())
-                        val potionZ: Int = MathHelper.floor(z.toDouble())
+                        val potionX: Int = floor(x.toDouble()).toInt()
+                        val potionY: Int = floor(y.toDouble()).toInt()
+                        val potionZ: Int = floor(z.toDouble()).toInt()
                         if (potion.shooter !is Player) continue
                         if (x != potionX || y != potionY || z != potionZ) continue
                         isInMatch = true
@@ -329,19 +330,20 @@ class EntityHider(plugin: PracticePlugin, policy: Policy) {
                         event.isCancelled = true
                     }
                 } else {
-                    val entity = (receiver.world as CraftWorld).handle.a(entityID)
+                    val entity = NmsBridge.getBukkitEntityById(receiver.world, entityID)
+                    if (entity == null) return
                     if (entity is Player) {
-                        val player: Player = entity as Player
+                        val player: Player = entity
                         if (receiver.canSee(player)) return
                         event.isCancelled = true
                     } else if (entity is Projectile) {
-                        val projectile = entity as Projectile
+                        val projectile = entity
                         if (projectile.shooter !is Player) return
                         val shooter: Player = projectile.shooter as Player
                         if (receiver.canSee(shooter)) return
                         event.isCancelled = true
                     } else if (entity is Item) {
-                        val item: Item = entity as Item
+                        val item: Item = entity
                         val dropper: Player = getPlayerWhoDropped(item) ?: return
                         if (receiver.canSee(dropper)) return
                         event.isCancelled = true
@@ -446,16 +448,19 @@ class EntityHider(plugin: PracticePlugin, policy: Policy) {
 
     private fun getPlayerWhoDropped(item: Item): Player? {
         return try {
-            val name = itemOwner?.get((item as CraftEntity).handle) as String ?: return null
-            Bukkit.getPlayer(name)
+            val raw = itemOwner?.get(NmsBridge.getEntityHandle(item)) ?: return null
+            when (raw) {
+                is String -> Bukkit.getPlayer(raw)
+                is java.util.UUID -> Bukkit.getPlayer(raw)
+                else -> null
+            }
         } catch (e: Exception) {
             null
         }
     }
 
     fun destroy(player: Player, entityId: Int) {
-        val packet = PacketPlayOutEntityDestroy(entityId)
-        (player as CraftPlayer).handle.playerConnection.sendPacket(packet)
+        NmsBridge.sendPacket(player, NmsBridge.newPacketEntityDestroy(entityId))
     }
 
     init {

@@ -10,6 +10,7 @@ package aki.saki.practice.menus
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.menu.Button
 import aki.saki.practice.menu.Menu
+import aki.saki.practice.mission.MissionManager
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
@@ -74,12 +75,27 @@ private class YamlSlotButton(
         if ("PLAYER_LEVEL_INFO".equals(special, ignoreCase = true)) {
             val profile = plugin.profileManager.findById(player.uniqueId) ?: return fallback()
             val xpIn = (profile.xp % 100).toInt()
-            return aki.saki.practice.utils.ItemBuilder(org.bukkit.Material.EXPERIENCE_BOTTLE)
+            return aki.saki.practice.utils.ItemBuilder(org.bukkit.Material.EXP_BOTTLE)
                 .name("&eNível &f${profile.level}")
                 .lore(
                     "&7XP total: &f${profile.xp}",
                     "&7Progresso no nível: &f$xpIn&7/&f100",
                     "&7Estilo no chat: &f${profile.settings.levelChatStyle ?: "DEFAULT"}"
+                )
+                .build()
+        }
+        if ("DAILY_MISSION_INFO".equals(special, ignoreCase = true)) {
+            val profile = plugin.profileManager.findById(player.uniqueId) ?: return fallback()
+            MissionManager.checkAndResetDaily(profile)
+            val desc = MissionManager.formatMissionProgress(profile) ?: "&7Nenhuma missão ativa"
+            val reward = plugin.settingsFile.getInt("MISSION.REWARD-XP", 100)
+            return aki.saki.practice.utils.ItemBuilder(org.bukkit.Material.BOOK)
+                .name("&e&lMissão diária")
+                .lore(
+                    "&7$desc",
+                    "",
+                    "&7Recompensa: &a+$reward XP",
+                    "&8Clique &7— &f/mission"
                 )
                 .build()
         }

@@ -1,12 +1,17 @@
+/*
+ * Project @ AkiPractice
+ * @author saki © 2026
+ *
+ * Placeholders %practice_*% (alias do identificador "practice").
+ */
 package aki.saki.practice.theme
 
-import aki.saki.practice.PracticePlugin
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
 import org.bukkit.OfflinePlayer
 
-class AkiPracticePlaceholders : PlaceholderExpansion() {
+class PracticePlaceholders : PlaceholderExpansion() {
 
-    override fun getIdentifier(): String = "akipractice"
+    override fun getIdentifier(): String = "practice"
     override fun getAuthor(): String = "AkiPractice"
     override fun getVersion(): String = "1.0.0"
 

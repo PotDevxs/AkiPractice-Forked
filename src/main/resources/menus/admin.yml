@@ -94,7 +94,7 @@ items:
       type: open_menu
       value: "hotbar.yml:editor_menu"
   42:
-    material: EXPERIENCE_BOTTLE
+    material: EXP_BOTTLE
     name: "&eNíveis / XP (YAML)"
     lore:
       - "&7menus/levels.yml"

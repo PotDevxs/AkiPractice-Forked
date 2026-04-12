@@ -8,6 +8,7 @@ import aki.saki.practice.PracticePlugin
 import aki.saki.practice.profile.Profile
 import aki.saki.practice.utils.CC
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import java.util.*
 
 object MissionManager {
@@ -16,16 +17,31 @@ object MissionManager {
 
     fun currentDay(): Long = System.currentTimeMillis() / DAY_MS
 
+    /**
+     * Garante reset do dia e uma missão ativa. Persiste o perfil se alterar algo.
+     */
     fun checkAndResetDaily(profile: Profile) {
-        val last = profile.dailyMissionResetDay
         val today = currentDay()
-        if (last < today) {
+        var dirty = false
+        if (profile.dailyMissionResetDay < today) {
             profile.dailyMissionType = null
             profile.dailyMissionProgress = 0
             profile.dailyMissionTarget = 0
             profile.dailyMissionResetDay = today
-            assignMission(profile)
+            dirty = true
         }
+        if (profile.dailyMissionType == null) {
+            assignMission(profile)
+            dirty = true
+        }
+        if (dirty) profile.save(true)
+    }
+
+    /** Linha de progresso (sem efeitos colaterais — ex.: PlaceholderAPI). */
+    fun formatMissionProgress(profile: Profile): String? {
+        val typeKey = profile.dailyMissionType ?: return null
+        val type = DailyMissionType.entries.find { it.key == typeKey } ?: return null
+        return "${type.description}: ${profile.dailyMissionProgress}/${profile.dailyMissionTarget}"
     }
 
     fun assignMission(profile: Profile) {
@@ -50,6 +66,7 @@ object MissionManager {
         if (profile.dailyMissionProgress >= profile.dailyMissionTarget) {
             giveReward(profile)
             assignMission(profile)
+            profile.save(true)
         }
     }
 
@@ -61,10 +78,21 @@ object MissionManager {
         player.sendMessage(CC.translate("&a&lMissão diária concluída! &f+$rewardXp XP."))
     }
 
-    fun getDescription(profile: Profile): String? {
+    fun sendMissionBookMessage(player: Player) {
+        val profile = PracticePlugin.instance.profileManager.findById(player.uniqueId) ?: run {
+            player.sendMessage(CC.translate("&cPerfil não encontrado."))
+            return
+        }
         checkAndResetDaily(profile)
-        val typeKey = profile.dailyMissionType ?: return null
-        val type = DailyMissionType.entries.find { it.key == typeKey } ?: return null
-        return "${type.description}: ${profile.dailyMissionProgress}/${profile.dailyMissionTarget}"
+        val desc = formatMissionProgress(profile)
+        player.sendMessage(CC.translate("&7&m--------&r &eMissão diária &7&m--------"))
+        if (desc == null) {
+            player.sendMessage(CC.translate("&7Nenhuma missão ativa."))
+            return
+        }
+        val reward = PracticePlugin.instance.settingsFile.getInt("MISSION.REWARD-XP", 100)
+        player.sendMessage(CC.translate("&f$desc"))
+        player.sendMessage(CC.translate("&7Recompensa: &a+$reward XP"))
     }
+
 }

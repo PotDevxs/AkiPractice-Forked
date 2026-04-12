@@ -1,7 +1,3 @@
-/*
- * Project @ AkiPractice
- * @author saki © 2026
- */
 package aki.saki.practice.manager
 
 import aki.saki.practice.PracticePlugin

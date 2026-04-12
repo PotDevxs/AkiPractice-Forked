@@ -57,9 +57,15 @@ public class PlayerUtil {
 
     public static int getPing(Player player) {
         try {
+            return (Integer) Player.class.getMethod("getPing").invoke(player);
+        } catch (NoSuchMethodException ignored) {
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             Object entityPlayer = player.getClass().getMethod("getHandle").invoke(player);
             Field pingField = entityPlayer.getClass().getDeclaredField("ping");
-
+            pingField.setAccessible(true);
             return pingField.getInt(entityPlayer);
         } catch (NoSuchFieldException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
             throw new RuntimeException(e);

@@ -16,12 +16,9 @@ import aki.saki.practice.profile.ProfileState
 import aki.saki.practice.profile.hotbar.Hotbar
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.PlayerUtil
+import aki.saki.practice.nms.NmsBridge
 import aki.saki.practice.utils.wrapper.WrapperPlayServerSpawnEntity
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityMetadata
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Item
 import org.bukkit.event.player.PlayerDropItemEvent
 import java.util.*
@@ -76,10 +73,11 @@ class FFA(val kit: Kit) {
 
             packet.sendPacket(ffaPlayer.player)
 
-            val dataWatcher = (item as CraftEntity).handle.dataWatcher
+            val nmsEntity = NmsBridge.getEntityHandle(item)
+            val dataWatcher = NmsBridge.getDataWatcher(nmsEntity)
 
-            val metadata = PacketPlayOutEntityMetadata((item as Item).entityId, dataWatcher, true)
-            (ffaPlayer.player as CraftPlayer).handle.playerConnection.sendPacket(metadata)
+            val metadata = NmsBridge.newPacketEntityMetadata(item.entityId, dataWatcher, true)
+            NmsBridge.sendPacket(ffaPlayer.player, metadata)
         }
     }
 
@@ -108,11 +106,8 @@ class FFA(val kit: Kit) {
         if (!offline) {
             val player = ffaPlayer.player
             val profile = PracticePlugin.instance.profileManager.findById(ffaPlayer.uuid)
-            val entityPlayer = (player as CraftPlayer).handle
-
             for (item in droppedItems) {
-                val destroy = PacketPlayOutEntityDestroy(item.entityId)
-                entityPlayer.playerConnection.sendPacket(destroy)
+                NmsBridge.sendPacket(player, NmsBridge.newPacketEntityDestroy(item.entityId))
             }
 
             PlayerUtil.reset(player)
@@ -148,8 +143,7 @@ class FFA(val kit: Kit) {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (inFFA(player.uniqueId)) continue
 
-                val destroy = PacketPlayOutEntityDestroy(item.entityId)
-                (player as CraftPlayer).handle.playerConnection.sendPacket(destroy)
+                NmsBridge.sendPacket(player, NmsBridge.newPacketEntityDestroy(item.entityId))
             }
         }, 1L)
     }

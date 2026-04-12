@@ -13,13 +13,13 @@ import aki.saki.practice.constants.Constants
 import aki.saki.practice.manager.FFAManager
 import aki.saki.practice.manager.QueueManager
 import aki.saki.practice.match.Match
+import aki.saki.practice.mission.MissionManager
 import aki.saki.practice.profile.hotbar.Hotbar
 import aki.saki.practice.utils.CC
 import aki.saki.practice.utils.PlayerUtil
+import aki.saki.practice.nms.NmsBridge
 import aki.saki.practice.utils.item.CustomItemStack
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -90,9 +90,13 @@ object ProfileListener : Listener {
         }
 
         Constants.SPAWN?.let { player.teleport(it) }
+        MissionManager.checkAndResetDaily(profile)
+        if (PracticePlugin.instance.settingsFile.config.getBoolean("MISSION.SHOW-JOIN-HINT", true)) {
+            MissionManager.formatMissionProgress(profile)?.let { line ->
+                player.sendMessage(CC.translate("&7Missão diária: &f$line"))
+            }
+        }
         Hotbar.giveHotbar(profile)
-
-        val entityPlayer = (player as CraftPlayer).handle
 
         /*¡Bukkit.getOnlinePlayers().forEach {
             player.hidePlayer(it)
@@ -100,8 +104,9 @@ object ProfileListener : Listener {
         }*/
 
         FFAManager.ffaMatches.forEach { ffa ->
-            ffa.droppedItems.map { PacketPlayOutEntityDestroy(it.entityId) }
-                .forEach { entityPlayer.playerConnection.sendPacket(it) }
+            ffa.droppedItems.forEach { item ->
+                NmsBridge.sendPacket(player, NmsBridge.newPacketEntityDestroy(item.entityId))
+            }
         }
     }
 

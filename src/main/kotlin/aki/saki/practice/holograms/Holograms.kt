@@ -1,40 +1,20 @@
-/*
- * This project can	 be redistributed without
- * authorization of the developer
- *
- * Project @ AkiPractice
- * @author saki © 2026
- * Date: 11/02/2026
- */
 package aki.saki.practice.holograms
 
 import aki.saki.practice.PracticePlugin
-import net.minecraft.server.v1_8_R3.*
+import aki.saki.practice.nms.NmsBridge
 import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
+import java.io.Serializable
+import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.pow
 
-/*
- * This project can't be redistributed without
- * authorization of the developer
- *
- * Project @ lPractice
- * Author: yek4h © 2024
- * Date: 23/06/2024
- */
-
 abstract class Holograms(val location: Location, val time: Int, val refreshHologram: Int, var name: String? = null, val distance: Double, val distanceCalcByListener: Boolean) {
 
-    private val armorStands: MutableMap<Int, EntityArmorStand> = ConcurrentHashMap()
-    private val previousLines: MutableList<String> = mutableListOf()
-    val itemEntities: MutableMap<EntityItem, ItemStack> = ConcurrentHashMap()
-
+    private val armorStands: MutableMap<Int, Any> = ConcurrentHashMap()
     lateinit var run: BukkitTask
     val lines: MutableList<String> = ArrayList()
     var actualTime: Int = time
@@ -43,6 +23,7 @@ abstract class Holograms(val location: Location, val time: Int, val refreshHolog
     var itemTop: Boolean = true
 
     fun start() {
+        NmsBridge.ensureLoaded()
         update()
         updateLines()
 
@@ -65,9 +46,10 @@ abstract class Holograms(val location: Location, val time: Int, val refreshHolog
         if (this::run.isInitialized) {
             run.cancel()
         }
-        armorStands.values.forEach { armorStand ->
+        armorStands.forEach { (index, armorStand) ->
+            val line = lines.getOrNull(index) ?: ""
             Bukkit.getOnlinePlayers().forEach { player ->
-                hide(player, mapOf(armorStand to armorStand.customName))
+                hide(player, mapOf(armorStand to line))
             }
         }
         armorStands.clear()
@@ -93,8 +75,8 @@ abstract class Holograms(val location: Location, val time: Int, val refreshHolog
         lines[index] = line
         val armorStand = armorStands[index]
         armorStand?.let {
-            it.customName = line
-            it.customNameVisible = !line.equals("<void>", ignoreCase = true)
+            NmsBridge.armorStandSetCustomName(it, line)
+            NmsBridge.armorStandSetCustomNameVisible(it, !line.equals("<void>", ignoreCase = true))
             Bukkit.getOnlinePlayers().forEach { player ->
                 updateArmorStand(player, it)
             }
@@ -104,14 +86,14 @@ abstract class Holograms(val location: Location, val time: Int, val refreshHolog
     open fun addLine(line: String) {
         var y = location.y - (lines.size * 0.25)
         if (line.isBlank()) {
-            y -= 0.25 // Add extra space for blank lines
+            y -= 0.25
             lines.add("<void>")
         } else {
-            val stand = EntityArmorStand((location.world as CraftWorld).handle, location.x, y, location.z)
-            stand.customName = line
-            stand.customNameVisible = true
-            stand.isInvisible = true
-            stand.isSmall = true
+            val stand = NmsBridge.newEntityArmorStand(location.world!!, location.x, y, location.z)
+            NmsBridge.armorStandSetCustomName(stand, line)
+            NmsBridge.armorStandSetCustomNameVisible(stand, true)
+            NmsBridge.armorStandSetInvisible(stand, true)
+            NmsBridge.armorStandSetSmall(stand, true)
             armorStands[lines.size] = stand
             lines.add(line)
             Bukkit.getOnlinePlayers().forEach { player ->
@@ -126,44 +108,58 @@ abstract class Holograms(val location: Location, val time: Int, val refreshHolog
             armorStand?.let {
                 armorStands.remove(i)
                 Bukkit.getOnlinePlayers().forEach { player ->
-                    hide(player, mapOf(it to it.customName))
+                    hide(player, mapOf(it to lines.getOrNull(i) ?: ""))
                 }
             }
         }
         lines.subList(newSize, lines.size).clear()
     }
 
-    open fun show(player: Player, standsToShow: Map<EntityArmorStand, String>) {
+    open fun show(player: Player, standsToShow: Map<Any, String>) {
         standsToShow.forEach { (armorStand, line) ->
-            armorStand.customName = line
-            val connection = (player as CraftPlayer).handle.playerConnection
-            connection.sendPacket(PacketPlayOutSpawnEntityLiving(armorStand))
-            connection.sendPacket(PacketPlayOutEntityMetadata(armorStand.id, armorStand.dataWatcher, true))
+            NmsBridge.armorStandSetCustomName(armorStand, line)
+            val spawn = NmsBridge.newPacketSpawnEntityLiving(armorStand)
+            val meta = NmsBridge.newPacketEntityMetadata(
+                NmsBridge.getEntityId(armorStand),
+                NmsBridge.getDataWatcher(armorStand),
+                true
+            )
+            NmsBridge.sendPacket(player, spawn)
+            NmsBridge.sendPacket(player, meta)
         }
     }
 
-    open fun updateArmorStand(player: Player, armorStand: EntityArmorStand) {
-        val connection = (player as CraftPlayer).handle.playerConnection
-        connection.sendPacket(PacketPlayOutEntityMetadata(armorStand.id, armorStand.dataWatcher, true))
+    open fun updateArmorStand(player: Player, armorStand: Any) {
+        val meta = NmsBridge.newPacketEntityMetadata(
+            NmsBridge.getEntityId(armorStand),
+            NmsBridge.getDataWatcher(armorStand),
+            true
+        )
+        NmsBridge.sendPacket(player, meta)
     }
 
     open fun show(player: Player) {
         armorStands.values.forEach { armorStand ->
-            val connection = (player as CraftPlayer).handle.playerConnection
-            connection.sendPacket(PacketPlayOutSpawnEntityLiving(armorStand))
-            connection.sendPacket(PacketPlayOutEntityMetadata(armorStand.id, armorStand.dataWatcher, true))
+            val spawn = NmsBridge.newPacketSpawnEntityLiving(armorStand)
+            val meta = NmsBridge.newPacketEntityMetadata(
+                NmsBridge.getEntityId(armorStand),
+                NmsBridge.getDataWatcher(armorStand),
+                true
+            )
+            NmsBridge.sendPacket(player, spawn)
+            NmsBridge.sendPacket(player, meta)
         }
     }
 
     open fun hide(player: Player) {
         armorStands.values.forEach { armorStand ->
-            (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutEntityDestroy(armorStand.id))
+            NmsBridge.sendPacket(player, NmsBridge.newPacketEntityDestroy(NmsBridge.getEntityId(armorStand)))
         }
     }
 
-    protected open fun hide(player: Player, armorStands: Map<EntityArmorStand, String>) {
+    protected open fun hide(player: Player, armorStands: Map<Any, String>) {
         armorStands.keys.forEach { armorStand ->
-            (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutEntityDestroy(armorStand.id))
+            NmsBridge.sendPacket(player, NmsBridge.newPacketEntityDestroy(NmsBridge.getEntityId(armorStand)))
         }
     }
 
@@ -174,4 +170,8 @@ abstract class Holograms(val location: Location, val time: Int, val refreshHolog
 
         return distanceSquared <= rangeSquared
     }
+}
+
+private fun Holograms.mapOf(pair: Serializable): Map<Any, String> {
+    return TODO("Provide the return value")
 }

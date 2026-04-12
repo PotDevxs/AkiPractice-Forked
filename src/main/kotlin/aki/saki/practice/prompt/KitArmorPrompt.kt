@@ -1,34 +1,14 @@
-/*
- * This project can	 be redistributed without
- * authorization of the developer
- *
- * Project @ AkiPractice
- * @author saki © 2026
- * Date: 11/02/2026
- */
 package aki.saki.practice.prompt
 
 import aki.saki.practice.PracticePlugin
 import aki.saki.practice.kit.Kit
 import aki.saki.practice.ui.kit.KitCommandMenuEditor
-import aki.saki.practice.ui.kit.KitMenu
-import aki.saki.practice.ui.kit.KitMetadataList
 import aki.saki.practice.utils.CC
 import org.bukkit.ChatColor
 import org.bukkit.conversations.ConversationContext
 import org.bukkit.conversations.Prompt
 import org.bukkit.conversations.StringPrompt
 import org.bukkit.entity.Player
-
-
-/*
- * This project can't be redistributed without
- * authorization of the developer
- *
- * Project @ lPractice
- * @author yek4h © 2024
- * Date: 13/06/2024
-*/
 
 class KitArmorPrompt(
     val kit: Kit,

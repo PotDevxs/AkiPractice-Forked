@@ -11,7 +11,7 @@ import org.bson.Document
 import java.util.concurrent.CompletableFuture
 
 /**
- * Camada de persistência: MongoDB (produção) ou arquivos JSON (testes em localhost sem Mongo).
+ * Camada de persistência: MongoDB, MySQL/PostgreSQL (JDBC + JSON por linha) ou arquivos JSON (flat-file).
  */
 interface PracticeDatabase : AutoCloseable {
 

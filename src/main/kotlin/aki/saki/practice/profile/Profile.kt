@@ -17,6 +17,7 @@ import aki.saki.practice.duel.DuelRequest
 import aki.saki.practice.match.Match
 import aki.saki.practice.party.invitation.PartyInvitation
 import aki.saki.practice.profile.editor.KitEditorData
+import aki.saki.practice.reward.LevelRewardApplier
 import aki.saki.practice.profile.settings.Settings
 import aki.saki.practice.profile.statistics.KitStatistic
 import aki.saki.practice.profile.statistics.global.GlobalStatistics
@@ -189,7 +190,9 @@ class Profile(val uuid: UUID, var name: String? = null) : IProfile {
 
     fun addXp(amount: Long) {
         if (amount <= 0) return
+        val before = xp
         xp += amount
+        LevelRewardApplier.afterXpChange(this, before, xp)
     }
 
     override fun delete() {

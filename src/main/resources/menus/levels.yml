@@ -6,9 +6,16 @@ main:
   placeholder: true
   items:
     13:
-      material: EXPERIENCE_BOTTLE
+      material: EXP_BOTTLE
       name: "&eSeu progresso"
       special: PLAYER_LEVEL_INFO
+    15:
+      material: BOOK
+      name: "&eMissão diária"
+      special: DAILY_MISSION_INFO
+      action:
+        type: internal
+        value: DAILY_MISSION
     20:
       material: EMERALD
       name: "&a+100 XP"

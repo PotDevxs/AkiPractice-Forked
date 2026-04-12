@@ -1,8 +1,19 @@
-# MONGODB = conexão Mongo (padrão). FLAT_FILE = JSON em pasta no data folder (localhost / testes sem Mongo).
+# TYPE: MONGODB | FLAT_FILE | MYSQL | MARIADB | POSTGRESQL | POSTGRES | PG
+# SQL: exige bloco DATABASE.SQL (host, utilizador, nome da base). DIALECT opcional se TYPE já for MYSQL ou POSTGRESQL.
 DATABASE:
   TYPE: FLAT_FILE
   FLAT_FILE:
     FOLDER: flat-database
+  SQL:
+    DIALECT: MYSQL
+    HOST: "127.0.0.1"
+    PORT: 3306
+    DATABASE: "practice"
+    USERNAME: "root"
+    PASSWORD: ""
+    POOL_SIZE: 10
+    # Opcional: URL JDBC completa (ignora HOST/PORT/DATABASE se preenchida)
+    JDBC_URL: ""
 
 MONGODB:
   URI-MODE: false
@@ -100,12 +111,33 @@ XP:
   PER-WIN: 25
   PER-LOSS: 5
 
+# Ao subir de nível (100 XP = 1 nível): mensagens, comandos de consola e itens no inventário.
+# Se o jogador subir vários níveis de uma vez, todas as recompensas intermediárias são aplicadas.
+LEVEL-REWARDS:
+  ENABLED: false
+  DEFAULT-LEVEL-UP-MESSAGE: "&eSubiste para o nível &f%level%&e!"
+  BROADCAST: false
+  BROADCAST-MESSAGE: "&e%player% &7subiu para o nível &f%level%&7!"
+  LEVELS:
+    # Exemplo (descomente e ajuste):
+    # "5":
+    #   LEVEL-UP-MESSAGE: "&6Recompensa de marco: nível 5!"
+    #   MESSAGES:
+    #     - "&7Ganhaste um prémio por alcançares o nível 5."
+    #   COMMANDS:
+    #     - "say Parabéns %player% pelo nível %level%!"
+    #   ITEMS:
+    #     - "DIAMOND:1"
+    #     - "GOLD_INGOT:3"
+
 # Missão diária: objetivo aleatório, reset a cada dia. Recompensa em XP.
 MISSION:
   REWARD-XP: 100
   TARGET-WIN-RANKED: 3
   TARGET-WIN-CASUAL: 3
   TARGET-PLAY-FFA: 5
+  # Mensagem no chat ao entrar (resumo da missão do dia)
+  SHOW-JOIN-HINT: true
 
 # Recompensa em XP para o vencedor de qualquer evento (Brackets, Sumo, TNT Run, TNT Tag). 0 = desativado.
 EVENT:
@@ -186,3 +218,7 @@ ANIMATIONS:
     TIME: 0.5 #Calculated in seconds
     TEXT:
       - "Saki Practice"
+
+# PlaceholderAPI (com PlaceholderAPI no servidor): use %practice_<id>% ou %akipractice_<id>%
+# theme, primary, secondary | level, lvl | xp | xp_in_level | xp_to_next
+# daily_mission, mission | daily_mission_progress | daily_mission_target | daily_mission_type

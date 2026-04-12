@@ -34,8 +34,8 @@ import aki.saki.practice.utils.ConfigFile
 import aki.saki.practice.utils.PlayerUtil
 import aki.saki.practice.utils.TimeUtil
 import org.apache.commons.lang.StringUtils
+import aki.saki.practice.nms.NmsBridge
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.stream.Collectors
@@ -384,9 +384,9 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
 
             val opponentName = match.getOpponentString(player.uniqueId)
             val opponent = if (opponentName != null) Bukkit.getPlayer(opponentName) else null
-            val playerPing = (player as? CraftPlayer)?.handle?.ping?.toString() ?: "N/D"
-            val opponentPing = if (opponent != null && opponent is CraftPlayer) {
-                opponent.handle.ping.toString()
+            val playerPing = runCatching { NmsBridge.getPing(player).toString() }.getOrDefault("N/D")
+            val opponentPing = if (opponent != null) {
+                runCatching { NmsBridge.getPing(opponent).toString() }.getOrDefault("N/D")
             } else {
                 "N/D"
             }
@@ -415,9 +415,9 @@ class ScoreboardAdapter(private val configFile: ConfigFile) : AssembleAdapter {
 
         val opponentName = match.getOpponentString(player.uniqueId)
         val opponent = if (opponentName != null) Bukkit.getPlayer(opponentName) else null
-        val playerPing = (player as? CraftPlayer)?.handle?.ping?.toString() ?: "N/D"
-        val opponentPing = if (opponent != null && opponent is CraftPlayer) {
-            opponent.handle.ping.toString()
+        val playerPing = runCatching { NmsBridge.getPing(player).toString() }.getOrDefault("N/D")
+        val opponentPing = if (opponent != null) {
+            runCatching { NmsBridge.getPing(opponent).toString() }.getOrDefault("N/D")
         } else {
             "N/D"
         }

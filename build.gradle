@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'aki.saki'
-version = '1.0'
+version = '2.0'
 
 def javaTarget = JavaVersion.VERSION_1_8
 def gitCommit = resolveGitCommit()
@@ -44,6 +44,9 @@ dependencies {
     implementation 'com.github.jonahseguin:drink:master'
     implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'org.mongodb:mongo-java-driver:3.12.14'
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+    implementation 'com.mysql:mysql-connector-j:8.0.33'
+    implementation 'org.postgresql:postgresql:42.7.3'
     if (file('libs/assemble.jar').exists()) {
         implementation files('libs/assemble.jar')
     } else {

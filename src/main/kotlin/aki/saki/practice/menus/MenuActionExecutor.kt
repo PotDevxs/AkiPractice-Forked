@@ -29,6 +29,7 @@ import aki.saki.practice.ui.party.PartyInformationMenu
 import aki.saki.practice.ui.party.event.PartyStartEventMenu
 import aki.saki.practice.ui.queue.ranked.RankedQueueMenu
 import aki.saki.practice.ui.queue.unranked.UnrankedQueueMenu
+import aki.saki.practice.mission.MissionManager
 import aki.saki.practice.profile.hotbar.Hotbar
 import aki.saki.practice.utils.CC
 import org.bukkit.Bukkit
@@ -142,6 +143,7 @@ object MenuActionExecutor {
                 }
                 OnlinePlayersLevelMenu().openMenu(player)
             }
+            "DAILY_MISSION" -> MissionManager.sendMissionBookMessage(player)
         }
     }
 
